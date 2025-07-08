@@ -12,17 +12,7 @@
                     <h1 class="text-2xl font-bold text-primary">Manajemen Video</h1>
                     <p class="text-gray-600">Kelola video dokumentasi dan profil desa</p>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ route('admin.dashboard') }}" class="text-primary hover:text-blue-800 transition-colors">
-                        ← Dashboard
-                    </a>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-                            Logout
-                        </button>
-                    </form>
-                </div>
+                
             </div>
         </div>
     </div>

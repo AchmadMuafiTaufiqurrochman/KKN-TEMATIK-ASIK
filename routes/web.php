@@ -21,6 +21,14 @@ Route::get('/video-profile', [VideoController::class, 'index'])->name('video-pro
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
+Route::prefix('admin')->middleware('auth', 'is_admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::resource('/residents', Admin\ResidentController::class); // admin.residents.index
+    Route::resource('/videos', Admin\VideoController::class);       // admin.videos.index
+    Route::resource('/maps', Admin\MapController::class);           // admin.maps.index
+});
+
+
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
