@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Manajemen Warga - Admin Desa Mekar Sari')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 pt-20">
+<div class="min-h-screen bg-gray-50 pt-0">
     <!-- Admin Header -->
     <div class="bg-white shadow-sm border-b">
         <div class="container mx-auto px-4 py-4">
@@ -151,14 +151,14 @@
                 </div>
                 
                 <div class="flex gap-4">
-                    <select name="rt" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <select name="rt" class="px-4 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                         <option value="">Semua RT</option>
                         <option value="01" {{ request('rt') === '01' ? 'selected' : '' }}>RT 01</option>
                         <option value="02" {{ request('rt') === '02' ? 'selected' : '' }}>RT 02</option>
                         <option value="03" {{ request('rt') === '03' ? 'selected' : '' }}>RT 03</option>
                     </select>
                     
-                    <select name="rw" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <select name="rw" class="px-4 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                         <option value="">Semua RW</option>
                         <option value="01" {{ request('rw') === '01' ? 'selected' : '' }}>RW 01</option>
                         <option value="02" {{ request('rw') === '02' ? 'selected' : '' }}>RW 02</option>

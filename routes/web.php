@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\VillagerController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
+use App\Http\Controllers\Admin\ResidentController;
+
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -25,6 +27,7 @@ Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Admin routes (protected)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -47,4 +50,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
+
+    
 });

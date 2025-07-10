@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Manajemen Lokasi - Admin Desa Mekar Sari')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 pt-20">
+<div class="min-h-screen bg-gray-50 pt-0">
     <!-- Admin Header -->
     <div class="bg-white shadow-sm border-b">
         <div class="container mx-auto px-4 py-4">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="grid lg:grid-cols-4 gap-8">
+        <div class="container mx-auto px-4 py-8">
             <!-- Map Preview -->
             <div class="lg:col-span-3">
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
@@ -122,7 +122,7 @@
                 </div>
 
                 <!-- Locations Table -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-primary text-white">
@@ -261,7 +261,7 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Lokasi</label>
-                        <select name="type" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select name="type" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="">Pilih Tipe</option>
                             <option value="balai">Balai Desa</option>
                             <option value="pertanian">Pertanian</option>
@@ -277,7 +277,7 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select name="status" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="active">Aktif</option>
                             <option value="inactive">Tidak Aktif</option>
                         </select>
