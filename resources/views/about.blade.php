@@ -3,7 +3,7 @@
 @section('title', 'Tentang Desa - Profil Digital Desa Mekar Sari')
 
 @section('content')
-<section class="py-20 bg-gray-50 pt-32">
+<section class="py-20 bg-gray-50 pt-10">
     <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">

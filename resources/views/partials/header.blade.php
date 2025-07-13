@@ -7,7 +7,7 @@
                     <span class="text-primary font-bold text-xl">MS</span>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold">Desa Mekar Sari</h1>
+                    <h1 class="text-xl font-bold">Desa Wonokarang</h1>
                     <p class="text-sm opacity-90">Profil Digital</p>
                 </div>
             </a>

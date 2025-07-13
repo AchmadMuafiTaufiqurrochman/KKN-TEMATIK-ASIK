@@ -14,7 +14,7 @@
     <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
         <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Selamat Datang di <br />
-            <span class="text-secondary">Desa Mekar Sari</span>
+            <span class="text-secondary">Desa Wonokarang</span>
         </h1>
         
         <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
