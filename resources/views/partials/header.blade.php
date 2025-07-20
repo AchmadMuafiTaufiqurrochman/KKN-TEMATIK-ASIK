@@ -32,8 +32,8 @@
                 <a href="{{ route('map') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('map') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Peta
                 </a>
-                <a href="#contact" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-secondary">
-                    Kontak
+                <a href="{{ route('berita') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('berita') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
+                    Berita
                 </a>
             </nav>
 

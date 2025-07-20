@@ -35,6 +35,10 @@
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
                     Kelola Lokasi Peta
                 </a>
+                 <a href="{{ route('admin.berita.index') }}"
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.berita.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
+                    Kelola Berita
+                </a>
             </nav>
 
             <!-- User Info -->

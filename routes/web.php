@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\VillagerController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\ResidentController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\Admin\BeritaAdminController;
+
 
 
 // Public routes
@@ -22,6 +25,8 @@ Route::get('/potential', [PotentialController::class, 'index'])->name('potential
 Route::get('/video-profile', [VideoController::class, 'index'])->name('video-profile');
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -50,6 +55,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
+
+    Route::resource('berita', App\Http\Controllers\Admin\BeritaController::class);
+
+
 
     
 });
