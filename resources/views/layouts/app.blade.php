@@ -6,7 +6,8 @@
     <title>@yield('title', 'Profil Digital Desa Mekar Sari')</title>
     <meta name="description" content="Desa Mekar Sari - Sentra Budidaya Bunga dan Pertanian Modern dengan Teknologi Terdepan">
     <meta name="keywords" content="desa mekar sari, pertanian, budidaya bunga, profil desa, wisata agro">
-    
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -47,5 +48,6 @@
     </script>
     
     @stack('scripts')
+    
 </body>
 </html>

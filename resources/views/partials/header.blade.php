@@ -1,4 +1,4 @@
-<header class="bg-primary text-white relative z-50">
+<header class="bg-primary text-white relative z-50 sticky top-0">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between py-4">
             <!-- Logo -->
