@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login Administrator - Profil Digital Desa Mekar Sari')
+@section('title', 'Login Administrator - Profil Digital Desa Wonokarang')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 pt-32">
@@ -15,7 +15,7 @@
                 Login Administrator
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Masuk ke dashboard admin Desa Mekar Sari
+                Masuk ke dashboard admin Desa Wonokarang
             </p>
         </div>
 
@@ -52,7 +52,7 @@
                             required
                             value="{{ old('email') }}"
                             class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                            placeholder="admin@mekarsari.desa.id"
+                            placeholder="admin@wonokarang.desa.id"
                         />
                     </div>
                 </div>
@@ -108,7 +108,7 @@
 
             <div class="mt-6 p-4 bg-gray-50 rounded-lg">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Demo Credentials:</h4>
-                <p class="text-sm text-gray-600">Email: admin@mekarsari.desa.id</p>
+                <p class="text-sm text-gray-600">Email: admin@wonokarang.desa.id</p>
                 <p class="text-sm text-gray-600">Password: admin123</p>
             </div>
         </div>

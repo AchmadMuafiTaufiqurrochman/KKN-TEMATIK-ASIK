@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard Admin - Profil Digital Desa Mekar Sari')
+@section('title', 'Dashboard Admin - Profil Digital Desa Wonokarang')
 
 @section('content')
     <div class="min-h-screen bg-gray-50 pt-0">
@@ -10,7 +10,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h1 class="text-2xl font-bold text-primary">Dashboard Administrator</h1>
-                        <p class="text-gray-600">Selamat datang di panel admin Desa Mekar Sari</p>
+                        <p class="text-gray-600">Selamat datang di panel admin Desa Wonokarang</p>
                     </div>
 
                 </div>

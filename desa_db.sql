@@ -68,7 +68,7 @@ CREATE TABLE `map_locations` (
 --
 
 INSERT INTO `map_locations` (`id`, `name`, `latitude`, `longitude`, `type`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Balai Desa Mekar Sari', -7.79560000, 110.36950000, 'balai', 'Kantor pemerintahan desa dan pusat pelayanan masyarakat', 'active', '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
+(1, 'Balai Desa Wonokarang', -7.79560000, 110.36950000, 'balai', 'Kantor pemerintahan desa dan pusat pelayanan masyarakat', 'active', '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
 (2, 'Area Pertanian Utama', -7.79700000, 110.37100000, 'pertanian', 'Lahan pertanian seluas 150 Ha dengan sistem irigasi modern', 'active', '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
 (3, 'Kebun Bunga Sari Indah', -7.79400000, 110.36800000, 'bunga', 'Pusat budidaya bunga potong dan tanaman hias', 'active', '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
 (4, 'Posyandu Melati', -7.79600000, 110.37000000, 'posyandu', 'Pos pelayanan kesehatan terpadu untuk balita dan lansia', 'active', '2025-07-20 07:09:16', '2025-07-20 07:09:16');
@@ -167,7 +167,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', 'admin@mekarsari.desa.id', NULL, '$2y$12$WUwy60Sxm80nJjoDvzdp3uqZZJ1hHYSeYAl40NFQsJP27huMDisO.', 'admin', NULL, '2025-07-20 07:09:16', '2025-07-20 07:09:16');
+(1, 'Administrator', 'admin@wonokarang.desa.id', NULL, '$2y$12$WUwy60Sxm80nJjoDvzdp3uqZZJ1hHYSeYAl40NFQsJP27huMDisO.', 'admin', NULL, '2025-07-20 07:09:16', '2025-07-20 07:09:16');
 
 -- --------------------------------------------------------
 
@@ -194,7 +194,7 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`id`, `title`, `category`, `video_url`, `thumbnail`, `description`, `duration`, `status`, `views`, `created_at`, `updated_at`) VALUES
-(1, 'Profil Desa Mekar Sari 2024', 'profil', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800', 'Video profil lengkap Desa Mekar Sari menampilkan potensi dan keindahan desa', '8:42', 'published', 12543, '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
+(1, 'Profil Desa Wonokarang 2024', 'profil', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800', 'Video profil lengkap Desa Wonokarang menampilkan potensi dan keindahan desa', '8:42', 'published', 12543, '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
 (2, 'Program Posyandu Balita', 'kesehatan', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800', 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa', '5:42', 'published', 1234, '2025-07-20 07:09:16', '2025-07-20 07:09:16'),
 (3, 'Pemberdayaan Perempuan Melalui UMKM', 'perempuan', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/3771115/pexels-photo-3771115.jpeg?auto=compress&cs=tinysrgb&w=800', 'Program pelatihan keterampilan untuk meningkatkan ekonomi keluarga', '8:15', 'published', 2156, '2025-07-20 07:09:16', '2025-07-20 07:09:16');
 
