@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Potensi Desa - Profil Digital Desa Mekar Sari')
+@section('title', 'Potensi Desa - Profil Digital Desa Wonokarang')
 
 @section('content')
 <section class="py-20 bg-white pt-10">
@@ -8,7 +8,7 @@
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-primary mb-4">Potensi Desa</h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Dua sektor unggulan yang menjadi kebanggaan dan sumber kemakmuran masyarakat Desa Mekar Sari
+                Dua sektor unggulan yang menjadi kebanggaan dan sumber kemakmuran masyarakat Desa Wonokarang
             </p>
         </div>
 

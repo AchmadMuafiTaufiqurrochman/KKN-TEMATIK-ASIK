@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // Buat akun admin (hindari duplikat)
         User::firstOrCreate(
-            ['email' => 'admin@mekarsari.desa.id'],
+            ['email' => 'admin@wonokarang.desa.id'],
             [
                 'name' => 'Administrator',
                 'password' => Hash::make('admin123'),
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         );
 
         User::firstOrCreate(
-            ['email' => 'admin2@mekarsari.desa.id'],
+            ['email' => 'admin2@wonokarang.desa.id'],
             [
                 'name' => 'Administrator2',
                 'password' => Hash::make('admin123'),
