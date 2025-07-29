@@ -9,7 +9,7 @@
             <h2 class="text-4xl font-bold text-primary">Aparatur Desa</h2>
             <p class="text-gray-600 mt-2">Struktur organisasi pemerintahan Desa Wonokarang</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-5 gap-8">
             @foreach($aparat as $aparat)
             <div class="bg-white rounded-xl shadow p-6 text-center">
                 <img src="{{ $aparat->photo ? asset('storage/' . $aparat->photo) : 'https://via.placeholder.com/150' }}"
