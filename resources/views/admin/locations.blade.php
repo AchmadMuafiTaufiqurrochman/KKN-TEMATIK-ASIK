@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Lokasi - Admin Desa Mekar Sari')
+@section('title', 'Manajemen Lokasi - Admin Desa Wonokarang')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-0">

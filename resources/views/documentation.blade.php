@@ -1,32 +1,67 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumentasi - Profil Digital Desa Mekar Sari')
+@section('title', 'Dokumentasi - Profil Digital Desa Wonokarang')
 
 @section('content')
 <section class="py-20 bg-gray-50 pt-10">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-primary mb-4">Dokumentasi Video</h2>
+            <h2 class="text-4xl font-bold text-primary mb-4">Berita</h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Kumpulan video dokumentasi kegiatan desa dalam bidang kesehatan, pemberdayaan perempuan, dan pertanian
+                Kumpulan berita terkini seputar kegiatan desa dalam bidang kesehatan, pemberdayaan perempuan, dan pertanian
             </p>
         </div>
 
         <!-- Category Filter -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <button onclick="filterVideos('all')" class="filter-btn bg-primary text-white px-6 py-3 rounded-full font-semibold transition-colors">
-                Semua ({{ $categories['all'] }})
+<div class="flex flex-wrap justify-center gap-4 mb-12 relative">
+    <!-- Visible Categories -->
+    <div id="visible-categories" class="flex flex-wrap justify-center gap-4">
+        <button onclick="filterVideos('all')" class="filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+            Semua ({{ $categories['all'] }})
+        </button>
+        <button onclick="filterVideos('kesehatan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+            Kesehatan ({{ $categories['kesehatan'] }})
+        </button>
+        <button onclick="filterVideos('perempuan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+            Perempuan ({{ $categories['perempuan'] }})
+        </button>
+        <button onclick="filterVideos('pemerintahan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+            Pemerintahan Desa ({{ $categories['pertanian'] }})
+        </button>
+        <button onclick="filterVideos('pembangunan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+            Pembangunan Desa ({{ $categories['pertanian'] }})
+        </button>
+    </div>
+
+    <!-- Dropdown Toggle -->
+    <div class="relative">
+        <button onclick="toggleMoreCategories()" class="flex items-center gap-2 bg-gray-100 text-primary px-4 py-2 rounded-full font-semibold border border-gray-300 transition-all duration-300 hover:shadow-md">
+            Lainnya
+            <svg id="dropdown-icon" class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+
+        <!-- Hidden Categories Dropdown -->
+        <div id="more-categories" class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
+            <button onclick="filterVideos('kegiatan')" class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                Kegiatan Masyarakat ({{ $categories['pertanian'] }})
             </button>
-            <button onclick="filterVideos('kesehatan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-primary border border-gray-200 px-6 py-3 rounded-full font-semibold transition-colors">
-                Kesehatan ({{ $categories['kesehatan'] }})
+            <button onclick="filterVideos('pengumuman')" class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                Pengumuman ({{ $categories['pertanian'] }})
             </button>
-            <button onclick="filterVideos('perempuan')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-primary border border-gray-200 px-6 py-3 rounded-full font-semibold transition-colors">
-                Perempuan ({{ $categories['perempuan'] }})
+            <button onclick="filterVideos('berita')" class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                Berita Umum ({{ $categories['pertanian'] }})
             </button>
-            <button onclick="filterVideos('pertanian')" class="filter-btn bg-white text-primary hover:bg-secondary hover:text-primary border border-gray-200 px-6 py-3 rounded-full font-semibold transition-colors">
-                Pertanian ({{ $categories['pertanian'] }})
+            <button onclick="filterVideos('umkm')" class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                UMKM dan Ekonomi Desa ({{ $categories['pertanian'] }})
+            </button>
+            <button onclick="filterVideos('karangtaruna')" class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                Karang Taruna ({{ $categories['pertanian'] }})
             </button>
         </div>
+    </div>
+</div>
 
         <!-- Videos Grid -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -119,5 +154,30 @@ function filterVideos(category) {
         noVideos.classList.add('hidden');
     }
 }
+
+ function toggleMoreCategories() {
+        const dropdown = document.getElementById('more-categories');
+        const icon = document.getElementById('dropdown-icon');
+        const isHidden = dropdown.classList.contains('hidden');
+
+        if (isHidden) {
+            dropdown.classList.remove('hidden');
+            icon.classList.add('rotate-180');
+        } else {
+            dropdown.classList.add('hidden');
+            icon.classList.remove('rotate-180');
+        }
+    }
+
+    // Optional: Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('more-categories');
+        const button = event.target.closest('button[onclick="toggleMoreCategories()"]');
+
+        if (!button && !dropdown.contains(event.target)) {
+            dropdown.classList.add('hidden');
+            document.getElementById('dropdown-icon').classList.remove('rotate-180');
+        }
+    });
 </script>
 @endsection

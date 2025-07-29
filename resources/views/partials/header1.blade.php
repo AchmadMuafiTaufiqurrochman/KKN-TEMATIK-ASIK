@@ -1,6 +1,6 @@
-<header class="bg-primary text-white relative z-50 sticky top-0">
+<header id="main-header" class="bg-transparent text-white fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out">
     <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between py-4">
+        <div class="flex items-center justify-between py-4 transition-all duration-300">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-3">
                 <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
@@ -13,7 +13,7 @@
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center space-x-8">
+             <nav class="hidden lg:flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('home') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Beranda
                 </a>
@@ -39,9 +39,9 @@
             <!-- User Menu & Social Media -->
             <div class="hidden lg:flex items-center space-x-4">
                 <div class="flex items-center space-x-2">
-                    <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                    <i data-lucide="facebook" class="w-5 h-5 social-icon"></i>
+                    <i data-lucide="instagram" class="w-5 h-5 social-icon"></i>
+                    <i data-lucide="youtube" class="w-5 h-5 social-icon"></i>
                 </div>
                 
                 @auth
@@ -79,27 +79,13 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="lg:hidden bg-primary border-t border-white/20 hidden">
         <nav class="container mx-auto px-4 py-4">
-            <a href="{{ route('home') }}" class="block py-2 transition-colors {{ request()->routeIs('home') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Beranda
-            </a>
-            <a href="{{ route('about') }}" class="block py-2 transition-colors {{ request()->routeIs('about') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Tentang Desa
-            </a>
-            <a href="{{ route('potential') }}" class="block py-2 transition-colors {{ request()->routeIs('potential') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Potensi
-            </a>
-            <a href="{{ route('video-profile') }}" class="block py-2 transition-colors {{ request()->routeIs('video-profile') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Video Profil
-            </a>
-            <a href="{{ route('documentation') }}" class="block py-2 transition-colors {{ request()->routeIs('documentation') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Dokumentasi
-            </a>
-            <a href="{{ route('map') }}" class="block py-2 transition-colors {{ request()->routeIs('map') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Peta
-            </a>
-            <a href="#contact" class="block py-2 transition-colors hover:text-secondary">
-                Kontak
-            </a>
+            <a href="{{ route('home') }}" class="block py-2 transition-colors">Beranda</a>
+            <a href="{{ route('about') }}" class="block py-2 transition-colors">Tentang Desa</a>
+            <a href="{{ route('potential') }}" class="block py-2 transition-colors">Potensi</a>
+            <a href="{{ route('video-profile') }}" class="block py-2 transition-colors">Video Profil</a>
+            <a href="{{ route('documentation') }}" class="block py-2 transition-colors">Dokumentasi</a>
+            <a href="{{ route('map') }}" class="block py-2 transition-colors">Peta</a>
+            <a href="#contact" class="block py-2 transition-colors">Kontak</a>
             
             @auth
                 <div class="pt-4 border-t border-white/20 mt-4">
@@ -124,21 +110,41 @@
             @endauth
             
             <div class="flex items-center space-x-4 pt-4 border-t border-white/20 mt-4">
-                <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary transition-colors"></i>
+                <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary transition-colors"></i>
+                <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary transition-colors"></i>
             </div>
         </nav>
     </div>
 </header>
 
+<style>
+    .nav-link {
+        @apply hover:text-secondary transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-secondary;
+    }
+    .social-icon {
+        @apply hover:text-secondary transition-colors cursor-pointer;
+    }
+</style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    mobileMenuButton.addEventListener('click', function() {
-        mobileMenu.classList.toggle('hidden');
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const header = document.getElementById('main-header');
+
+        mobileMenuButton.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'text-white');
+                header.classList.add('bg-primary', 'backdrop-blur-md', 'shadow-md', 'text-white');
+            } else {
+                header.classList.remove('bg-primary', 'backdrop-blur-md', 'shadow-md', 'text-white');
+                header.classList.add('bg-transparent', 'text-white');
+            }
+        });
     });
-});
 </script>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Warga - Admin Desa Mekar Sari')
+@section('title', 'Manajemen Warga - Admin Desa Wonokarang')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-0">
@@ -10,7 +10,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-primary">Manajemen Data Warga</h1>
-                    <p class="text-gray-600">Kelola data penduduk Desa Mekar Sari</p>
+                    <p class="text-gray-600">Kelola data penduduk Desa Wonokarang</p>
                 </div>
                
             </div>

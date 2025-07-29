@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda - Profil Digital Desa Mekar Sari')
+@section('title', 'Beranda - Profil Digital Desa Wonokarang')
 
 @section('content')
    <!-- Hero Carousel with Sliding Effect -->
@@ -87,7 +87,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Mekar Sari</h2>
+                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian
                         terbaik
@@ -102,12 +102,12 @@
                                 alt="Kepala Desa" class="w-full h-full object-cover" />
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-2">Bapak Sutrisno</h4>
-                        <p class="text-gray-600">Kepala Desa Mekar Sari</p>
+                        <p class="text-gray-600">Kepala Desa Wonokarang</p>
                     </div>
 
                     <div>
                         <p class="text-gray-700 mb-6 leading-relaxed">
-                            Desa Mekar Sari didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan
+                            Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan
                             baru.
                             Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat pertanian
                             dan budidaya bunga.
@@ -211,7 +211,7 @@
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
                     <p class="text-xl text-gray-600">
-                        Saksikan keindahan dan potensi Desa Mekar Sari
+                        Saksikan keindahan dan potensi Desa Wonokarang
                     </p>
                 </div>
 
