@@ -9,8 +9,8 @@
             <div class="container mx-auto px-4 py-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-2xl font-bold text-primary">Manajemen Video</h1>
-                        <p class="text-gray-600">Kelola video dokumentasi dan profil desa</p>
+                        <h1 class="text-2xl font-bold text-primary">Manajemen Berita</h1>
+                        <p class="text-gray-600">Kelola berita dokumentasi dan profil desa</p>
                     </div>
 
                 </div>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total'] }}</h3>
-                    <p class="text-gray-600 text-sm">Total Video</p>
+                    <p class="text-gray-600 text-sm">Total Berita</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -74,7 +74,7 @@
                 <button onclick="openAddModal()"
                     class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2">
                     <i data-lucide="plus" class="w-5 h-5"></i>
-                    Tambah Video
+                    Tambah Berita
                 </button>
 
                 <!-- Search Form -->
@@ -187,7 +187,7 @@
                     </div>
                 @empty
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-500">Tidak ada video dalam kategori ini</p>
+                        <p class="text-gray-500">Tidak ada berita dalam kategori ini</p>
                     </div>
                 @endforelse
             </div>
@@ -204,7 +204,7 @@
     <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white rounded-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
-                <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Video Baru</h3>
+                <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Berita Baru</h3>
 
                 <form id="videoForm" method="POST">
                     @csrf
@@ -212,7 +212,7 @@
 
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Video</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Berita</label>
                             <input type="text" name="title" required
                                 class="w-full px-3 py-2 border  text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>

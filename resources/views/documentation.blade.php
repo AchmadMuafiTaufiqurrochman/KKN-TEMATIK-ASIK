@@ -29,13 +29,13 @@
                         class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
                         Perempuan ({{ $categories['perempuan'] ?? 0 }})
                     </button>
+                    <button onclick="filterVideos('pertanian')"
+                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+                        Pertanian ({{ $categories['pertanian'] ?? 0 }})
+                    </button>
                     <button onclick="filterVideos('pemerintahan')"
                         class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
                         Pemerintahan Desa ({{ $categories['pemerintahan'] ?? 0 }})
-                    </button>
-                    <button onclick="filterVideos('pembangunan')"
-                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Pembangunan Desa ({{ $categories['pembangunan'] ?? 0 }})
                     </button>
                 </div>
 
@@ -57,6 +57,10 @@
                             class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
                             Kegiatan Masyarakat ({{ $categories['kegiatan'] ?? 0 }})
                         </button>
+                        <button onclick="filterVideos('pembangunan')"
+                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                            Pembangunan ({{ $categories['pembangunan'] ?? 0 }})
+                        </button>
                         <button onclick="filterVideos('pengumuman')"
                             class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
                             Pengumuman ({{ $categories['pengumuman'] ?? 0 }})
@@ -67,7 +71,7 @@
                         </button>
                         <button onclick="filterVideos('umkm')"
                             class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            UMKM dan Ekonomi Desa ({{ $categories['umkm'] ?? 0 }})
+                            UMKM ({{ $categories['umkm'] ?? 0 }})
                         </button>
                         <button onclick="filterVideos('karangtaruna')"
                             class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
