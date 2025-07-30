@@ -22,11 +22,6 @@
         {{ request()->routeIs('admin.dashboard') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
                     Dashboard
                 </a>
-
-                <a href="{{ route('admin.citizens.index') }}"
-                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.citizens.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Data Warga
-                </a>
                 <a href="{{ route('admin.videos.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.videos.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
                     Kelola Berita
