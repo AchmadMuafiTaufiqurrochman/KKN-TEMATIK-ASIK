@@ -29,7 +29,7 @@
                 </a>
                 <a href="{{ route('admin.videos.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.videos.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Video
+                    Kelola Berita
                 </a>
                 <a href="{{ route('admin.locations.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
