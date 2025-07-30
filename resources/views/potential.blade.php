@@ -6,9 +6,9 @@
 <section class="py-20 bg-white pt-10">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-primary mb-4">Potensi Desa</h2>
+            <h2 class="text-4xl font-bold text-primary mb-4">Produk Desa</h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Dua sektor unggulan yang menjadi kebanggaan dan sumber kemakmuran masyarakat Desa Wonokarang
+                Produk unggulan yang menjadi kebanggaan dan sumber kemakmuran masyarakat Desa Wonokarang
             </p>
         </div>
 
