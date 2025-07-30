@@ -25,9 +25,9 @@
                 <ul class="space-y-3">
                     <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-secondary transition-colors">Beranda</a></li>
                     <li><a href="{{ route('about') }}" class="text-gray-300 hover:text-secondary transition-colors">Tentang Desa</a></li>
-                    <li><a href="{{ route('potential') }}" class="text-gray-300 hover:text-secondary transition-colors">Potensi Desa</a></li>
-                    <li><a href="{{ route('video-profile') }}" class="text-gray-300 hover:text-secondary transition-colors">Video Profil</a></li>
-                    <li><a href="{{ route('documentation') }}" class="text-gray-300 hover:text-secondary transition-colors">Dokumentasi</a></li>
+                    <li><a href="{{ route('potential') }}" class="text-gray-300 hover:text-secondary transition-colors">Aparatur Desa</a></li>
+                    <li><a href="{{ route('video-profile') }}" class="text-gray-300 hover:text-secondary transition-colors">Produk Desa</a></li>
+                    <li><a href="{{ route('documentation') }}" class="text-gray-300 hover:text-secondary transition-colors">Berita</a></li>
                     <li><a href="{{ route('map') }}" class="text-gray-300 hover:text-secondary transition-colors">Peta Desa</a></li>
                 </ul>
             </div>

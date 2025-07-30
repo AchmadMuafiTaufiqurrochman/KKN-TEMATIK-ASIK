@@ -13,7 +13,7 @@
             @foreach($aparat as $aparat)
             <div class="bg-white rounded-xl shadow p-6 text-center">
                 <img src="{{ $aparat->photo ? asset('storage/' . $aparat->photo) : 'https://via.placeholder.com/150' }}"
-                     class="w-32 h-32 mx-auto rounded-full object-cover mb-4">
+                     class="w-40 h-40 mx-auto rounded-full object-cover mb-4">
                 <h3 class="text-xl font-semibold text-primary">{{ $aparat->name }}</h3>
                 <p class="text-gray-600">{{ $aparat->position }}</p>
             </div>
