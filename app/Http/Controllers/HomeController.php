@@ -18,8 +18,17 @@ class HomeController extends Controller
         ];
 
         $potentials = Potential::take(2)->get();
-        $featured_video = Video::where('category', 'profil')->where('status', 'published')->first();
+        $featured_video = Video::where('category', 'profil')
+            ->where('status', 'published')
+            ->first();
 
-        return view('home', compact('stats', 'potentials', 'featured_video'));
+        // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
+        $featuredVideos = Video::where('status', 'published')
+            ->whereNot('category', 'profil') // optional: exclude video profil
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('home', compact('stats', 'potentials', 'featured_video', 'featuredVideos'));
     }
 }

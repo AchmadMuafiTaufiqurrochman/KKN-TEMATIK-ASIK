@@ -13,8 +13,9 @@ use App\Http\Controllers\Admin\VillagerController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\ResidentController;
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\Admin\BeritaAdminController;
+use App\Http\Controllers\AparatController;
+use App\Http\Controllers\ProductController;
+
 
 
 
@@ -27,6 +28,10 @@ Route::get('/documentation', [DocumentationController::class, 'index'])->name('d
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
 
+// Public
+Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
+Route::get('/potential', [ProductController::class, 'index'])->name('potential');
+
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -37,13 +42,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Admin routes (protected)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-    
     // Villagers management
     Route::get('/citizens', [VillagerController::class, 'index'])->name('citizens.index');
     Route::post('/citizens', [VillagerController::class, 'store'])->name('citizens.store');
     Route::put('/citizens/{villager}', [VillagerController::class, 'update'])->name('citizens.update');
     Route::delete('/citizens/{villager}', [VillagerController::class, 'destroy'])->name('citizens.destroy');
-    
+
     // Videos management
     Route::get('/videos', [AdminVideoController::class, 'index'])->name('videos.index');
     Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
@@ -56,7 +60,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
 
-    Route::resource('berita', App\Http\Controllers\Admin\BeritaController::class);
+    Route::get('/admin/aparat', [AparatController::class, 'index'])->name('aparat.index');
+    Route::post('/admin/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::post('/admin/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
+    Route::delete('/admin/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
 
 
 

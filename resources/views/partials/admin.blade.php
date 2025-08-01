@@ -9,7 +9,7 @@
                         <span class="text-primary font-bold text-xl">MS</span>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold leading-tight">Desa Mekar Sari</h1>
+                        <h1 class="text-xl font-bold leading-tight">Desa Wonokarang</h1>
                         <p class="text-sm opacity-90 -mt-1">Admin Panel</p>
                     </div>
                 </a>
@@ -22,22 +22,17 @@
         {{ request()->routeIs('admin.dashboard') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
                     Dashboard
                 </a>
-
-                <a href="{{ route('admin.citizens.index') }}"
-                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.citizens.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Data Warga
-                </a>
                 <a href="{{ route('admin.videos.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.videos.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Video
+                    Kelola Berita
                 </a>
                 <a href="{{ route('admin.locations.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
                     Kelola Lokasi Peta
                 </a>
-                 <a href="{{ route('admin.berita.index') }}"
-                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.berita.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Berita
+                <a href="{{ route('admin.aparat.index') }}"
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.aparat.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
+                    Kelola Aparatur
                 </a>
             </nav>
 
@@ -69,7 +64,7 @@
                         <span class="text-primary font-bold text-lg">MS</span>
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold">Desa Mekar Sari</h1>
+                        <h1 class="text-lg font-bold">Desa Wonokarang</h1>
                     </div>
                 </div>
                 <button id="mobile-menu-button">
