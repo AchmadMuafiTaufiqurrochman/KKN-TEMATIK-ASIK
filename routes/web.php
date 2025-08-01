@@ -27,6 +27,7 @@ Route::get('/video-profile', [VideoController::class, 'index'])->name('video-pro
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
 Route::get('/potential', [ProductController::class, 'index'])->name('potential');
