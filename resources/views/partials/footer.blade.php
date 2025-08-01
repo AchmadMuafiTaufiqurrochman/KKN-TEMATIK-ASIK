@@ -25,9 +25,9 @@
                 <ul class="space-y-3">
                     <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-secondary transition-colors">Beranda</a></li>
                     <li><a href="{{ route('about') }}" class="text-gray-300 hover:text-secondary transition-colors">Tentang Desa</a></li>
-                    <li><a href="{{ route('potential') }}" class="text-gray-300 hover:text-secondary transition-colors">Potensi Desa</a></li>
-                    <li><a href="{{ route('video-profile') }}" class="text-gray-300 hover:text-secondary transition-colors">Video Profil</a></li>
-                    <li><a href="{{ route('documentation') }}" class="text-gray-300 hover:text-secondary transition-colors">Dokumentasi</a></li>
+                    <li><a href="{{ route('potential') }}" class="text-gray-300 hover:text-secondary transition-colors">Aparatur Desa</a></li>
+                    <li><a href="{{ route('video-profile') }}" class="text-gray-300 hover:text-secondary transition-colors">Produk Desa</a></li>
+                    <li><a href="{{ route('documentation') }}" class="text-gray-300 hover:text-secondary transition-colors">Berita</a></li>
                     <li><a href="{{ route('map') }}" class="text-gray-300 hover:text-secondary transition-colors">Peta Desa</a></li>
                 </ul>
             </div>
@@ -39,9 +39,8 @@
                     <div class="flex items-start space-x-3">
                         <i data-lucide="map-pin" class="w-5 h-5 text-secondary mt-0.5"></i>
                         <div>
-                            <p class="text-gray-300">Jl. Raya Wonokarang No. 123</p>
-                            <p class="text-gray-300">Kecamatan Semarang Barat</p>
-                            <p class="text-gray-300">Kota Semarang, Jawa Tengah</p>
+                            <p class="text-gray-300">Jl. Karangwungu, Desa Wonokarang</p>
+                            <p class="text-gray-300">Kec. Balongbendo, Kabupaten Sidoarjo, Jawa Timur</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">

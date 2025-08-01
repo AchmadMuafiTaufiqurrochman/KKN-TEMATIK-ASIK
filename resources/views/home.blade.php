@@ -239,4 +239,59 @@
             </div>
         </section>
     @endif
+
+    <!-- Dokumentasi Unggulan -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Berita terkini dan informasi penting seputar Desa Wonokarang.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            @foreach($featuredVideos as $video)
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+                    <div class="relative h-48">
+                        <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-7 h-7 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                            {{ $video->duration }}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                            {{ Str::limit($video->description, 100) }}
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                <span>{{ number_format($video->views) }} views</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                <span>{{ $video->created_at->format('d M Y') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{{ route('documentation') }}"
+                class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
+                Lihat Semua Berita
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
 @endsection

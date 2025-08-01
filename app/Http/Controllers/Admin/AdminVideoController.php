@@ -8,16 +8,42 @@ use Illuminate\Http\Request;
 
 class AdminVideoController extends Controller
 {
+    protected $allCategories = [
+        'profil',
+        'kesehatan',
+        'perempuan',
+        'pertanian',
+        'pemerintahan',
+        'pembangunan',
+        'kegiatan',
+        'pengumuman',
+        'berita',
+        'umkm',
+        'karangtaruna',
+    ];
+
     public function index(Request $request)
     {
         $query = Video::query();
 
+        // Filter berdasarkan kategori jika dipilih
         if ($request->filled('category') && $request->category !== 'all') {
             $query->where('category', $request->category);
         }
 
-        $videos = $query->orderBy('created_at', 'desc')->paginate(12);
+        // Pencarian berdasarkan judul atau deskripsi
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
 
+        // Ambil video dengan pagination dan tetap bawa parameter pencarian
+        $videos = $query->orderBy('created_at', 'desc')->paginate(12)->appends($request->all());
+
+        // Statistik
         $stats = [
             'total' => Video::count(),
             'published' => Video::where('status', 'published')->count(),
@@ -25,13 +51,11 @@ class AdminVideoController extends Controller
             'total_views' => Video::sum('views'),
         ];
 
-        $categories = [
-            'all' => Video::count(),
-            'profil' => Video::where('category', 'profil')->count(),
-            'kesehatan' => Video::where('category', 'kesehatan')->count(),
-            'perempuan' => Video::where('category', 'perempuan')->count(),
-            'pertanian' => Video::where('category', 'pertanian')->count(),
-        ];
+        // Kategori dengan jumlah video
+        $categories = ['all' => $stats['total']];
+        foreach ($this->allCategories as $cat) {
+            $categories[$cat] = Video::where('category', $cat)->count();
+        }
 
         return view('admin.videos', compact('videos', 'stats', 'categories'));
     }
@@ -40,7 +64,7 @@ class AdminVideoController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:profil,kesehatan,perempuan,pertanian',
+            'category' => 'required|in:' . implode(',', $this->allCategories),
             'video_url' => 'required|url',
             'thumbnail' => 'required|url',
             'description' => 'required|string',
@@ -57,7 +81,7 @@ class AdminVideoController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:profil,kesehatan,perempuan,pertanian',
+            'category' => 'required|in:' . implode(',', $this->allCategories),
             'video_url' => 'required|url',
             'thumbnail' => 'required|url',
             'description' => 'required|string',

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
+use App\Http\Controllers\ProductController;
 
 
 
@@ -28,6 +29,8 @@ Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
+Route::get('/potential', [ProductController::class, 'index'])->name('potential');
+
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
