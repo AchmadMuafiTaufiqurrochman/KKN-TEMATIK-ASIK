@@ -26,15 +26,35 @@
             @endif
 
             <!-- Statistics -->
-            <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="grid md:grid-cols-5 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                            <i data-lucide="play" class="w-6 h-6 text-white"></i>
+                            <i data-lucide="newspaper" class="w-6 h-6 text-white"></i>
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total'] }}</h3>
                     <p class="text-gray-600 text-sm">Total Berita</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="play" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['video_count'] ?? 0 }}</h3>
+                    <p class="text-gray-600 text-sm">Video</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="image" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['image_count'] ?? 0 }}</h3>
+                    <p class="text-gray-600 text-sm">Gambar</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -110,9 +130,14 @@
                             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div
                                     class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                    <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                                    @if($video->content_type === 'video')
+                                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                                    @else
+                                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($video->content_type === 'video')
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
                                 {{ $video->duration }}
                             </div>
