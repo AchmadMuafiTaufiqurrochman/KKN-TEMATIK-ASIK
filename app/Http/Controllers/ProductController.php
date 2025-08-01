@@ -34,7 +34,7 @@ class ProductController extends Controller
                 'title' => 'Budidaya Tanaman Hias',
                 'description' => 'Sentra tanaman hias eksotis dan bunga potong kualitas ekspor.',
                 'image' => 'https://source.unsplash.com/640x480/?flower,plant',
-                'category' => 'tanaman',
+                'category' => 'budidaya-bunga',
                 'products' => collect([
                     (object)[
                         'name' => 'Anggrek Bulan Ungu',
