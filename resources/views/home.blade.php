@@ -3,9 +3,8 @@
 @section('title', 'Beranda - Profil Digital Desa Wonokarang')
 
 @section('content')
-   <!-- Hero Carousel with Sliding Effect -->
-<section 
-    x-data="{
+    <!-- Hero Carousel with Sliding Effect -->
+    <section x-data="{
         slides: [
             'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1600',
             'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1600',
@@ -17,69 +16,70 @@
                 this.activeIndex = (this.activeIndex + 1) % this.slides.length
             }, 5000)
         }
-    }"
-    class="relative h-screen overflow-hidden"
->
-    <!-- Slider wrapper -->
-    <div class="flex transition-transform duration-1000 ease-in-out h-full w-full absolute inset-0"
-        :style="`transform: translateX(-${activeIndex * 100}%)`">
-        <template x-for="(slide, index) in slides" :key="index">
-            <div class="flex-shrink-0 w-full h-full bg-cover bg-center" :style="`background-image: url(${slide})`"></div>
-        </template>
-    </div>
-
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
-
-    <!-- Content -->
-    <div class="relative z-20 text-center text-white max-w-4xl mx-auto px-4 flex flex-col justify-center items-center h-full">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Selamat Datang di <br />
-            <span class="text-secondary">Desa Wonokarang</span>
-        </h1>
-        
-        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
-            Menjadi Sentra Budidaya Bunga & Pertanian Unggul dengan Teknologi Modern
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <a href="{{ route('about') }}" class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center gap-2 group">
-                Lihat Profil Desa
-                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-            </a>
-            
-            <a href="{{ route('potential') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
-                Jelajahi Potensi
-            </a>
+    }" class="relative h-screen overflow-hidden">
+        <!-- Slider wrapper -->
+        <div class="flex transition-transform duration-1000 ease-in-out h-full w-full absolute inset-0"
+            :style="`transform: translateX(-${activeIndex * 100}%)`">
+            <template x-for="(slide, index) in slides" :key="index">
+                <div class="flex-shrink-0 w-full h-full bg-cover bg-center" :style="`background-image: url(${slide})`"></div>
+            </template>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-8 md:gap-12">
-            <div class="flex items-center gap-2 text-center">
-                <i data-lucide="users" class="w-8 h-8 text-secondary"></i>
-                <div>
-                    <div class="text-2xl font-bold">{{ number_format($stats['total_villagers']) }}</div>
-                    <div class="text-sm opacity-90">Warga</div>
-                </div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
+
+        <!-- Content -->
+        <div
+            class="relative z-20 text-center text-white max-w-4xl mx-auto px-4 flex flex-col justify-center items-center h-full">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Selamat Datang di <br />
+                <span class="text-secondary">Desa Wonokarang</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                Menjadi Sentra Budidaya Bunga & Pertanian Unggul dengan Teknologi Modern
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <a href="{{ route('about') }}"
+                    class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center gap-2 group">
+                    Lihat Profil Desa
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+
+                <a href="{{ route('potential') }}"
+                    class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
+                    Jelajahi Potensi
+                </a>
             </div>
 
-            <div class="flex items-center gap-2 text-center">
-                <i data-lucide="leaf" class="w-8 h-8 text-secondary"></i>
-                <div>
-                    <div class="text-2xl font-bold">150 Ha</div>
-                    <div class="text-sm opacity-90">Lahan Pertanian</div>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+                <div class="flex items-center gap-2 text-center">
+                    <i data-lucide="users" class="w-8 h-8 text-secondary"></i>
+                    <div>
+                        <div class="text-2xl font-bold">{{ number_format($stats['total_villagers']) }}</div>
+                        <div class="text-sm opacity-90">Warga</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex items-center gap-2 text-center">
-                <i data-lucide="map-pin" class="w-8 h-8 text-secondary"></i>
-                <div>
-                    <div class="text-2xl font-bold">{{ $stats['total_rt'] }} RT</div>
-                    <div class="text-sm opacity-90">Rukun Tetangga</div>
+                <div class="flex items-center gap-2 text-center">
+                    <i data-lucide="leaf" class="w-8 h-8 text-secondary"></i>
+                    <div>
+                        <div class="text-2xl font-bold">150 Ha</div>
+                        <div class="text-sm opacity-90">Lahan Pertanian</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 text-center">
+                    <i data-lucide="map-pin" class="w-8 h-8 text-secondary"></i>
+                    <div>
+                        <div class="text-2xl font-bold">{{ $stats['total_rt'] }} RT</div>
+                        <div class="text-sm opacity-90">Rukun Tetangga</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <!-- About Preview -->
@@ -241,57 +241,65 @@
     @endif
 
     <!-- Dokumentasi Unggulan -->
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Berita terkini dan informasi penting seputar Desa Wonokarang.
-            </p>
-        </div>
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Berita terkini dan informasi penting seputar Desa Wonokarang.
+                </p>
+            </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            @foreach($featuredVideos as $video)
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                    <div class="relative h-48">
-                        <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" class="w-full h-full object-cover" />
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-7 h-7 text-white"></i>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+                @foreach ($featuredVideos as $video)
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+                        <div class="relative h-48">
+                            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                                class="w-full h-full object-cover" />
+                            <div
+                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div
+                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    @if ($video->type === 'video')
+                                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                                    @else
+                                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                {{ $video->duration }}
                             </div>
                         </div>
-                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                            {{ $video->duration }}
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {{ Str::limit($video->description, 100) }}
+                            </p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    <span>{{ number_format($video->views) }} views</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    <span>{{ $video->created_at->format('d M Y') }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                            {{ Str::limit($video->description, 100) }}
-                        </p>
-                        <div class="flex items-center justify-between text-sm text-gray-500">
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                                <span>{{ number_format($video->views) }} views</span>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="calendar" class="w-4 h-4"></i>
-                                <span>{{ $video->created_at->format('d M Y') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
 
-        <div class="text-center mt-12">
-            <a href="{{ route('documentation') }}"
-                class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
-                Lihat Semua Berita
-                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-            </a>
+            <div class="text-center mt-12">
+                <a href="{{ route('documentation') }}"
+                    class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
+                    Lihat Semua Berita
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 @endsection
