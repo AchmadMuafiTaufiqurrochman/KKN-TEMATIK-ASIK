@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 01 Agu 2025 pada 01.37
+-- Waktu pembuatan: 01 Agu 2025 pada 09.59
 -- Versi server: 8.0.42
 -- Versi PHP: 8.3.20
 
@@ -43,7 +43,8 @@ CREATE TABLE `aparat` (
 --
 
 INSERT INTO `aparat` (`id`, `nip`, `name`, `position`, `gender`, `photo`, `created_at`, `updated_at`) VALUES
-(3, '6666666669', 'M Syifaul Anam', 'Kades', 'L', 'aparat/T6XYKgqvLX4X3FD9jmqClxn40afhY8SuiJVwFNOw.jpg', '2025-07-30 11:04:03', '2025-07-30 11:04:03');
+(3, '6666666669', 'M Syifaul Anam', 'Kades', 'L', 'aparat/T6XYKgqvLX4X3FD9jmqClxn40afhY8SuiJVwFNOw.jpg', '2025-07-30 11:04:03', '2025-07-30 11:04:03'),
+(4, '6666668669', 'M Syifaul Anam', 'Sekdes', 'L', 'aparat/fWNNi2uD5YH07B2s5h2sIORAcrpZDiwHu7JGzxrR.jpg', '2025-08-01 03:17:55', '2025-08-01 03:17:55');
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2024_01_01_000005_create_map_locations_table', 1),
 (22, '2025_07_08_184626_create_sessions_table', 1),
 (23, '2025_07_20_140339_create_cache_table', 1),
-(24, '2025_07_29_115230_create_aparats_table', 1);
+(24, '2025_07_29_115230_create_aparats_table', 1),
+(25, '2025_08_01_101209_change_description_to_longtext_in_videos_table', 2),
+(26, '2025_08_01_122850_add_type_and_images_to_videos_table', 3),
+(27, '2025_08_01_124949_make_duration_nullable_in_videos_table', 4),
+(28, '2025_08_01_134418_modify_type_column_on_videos_table', 5),
+(29, '2025_08_01_143049_alter_videos_nullable_fields', 6),
+(30, '2025_08_01_143739_update_video_fields_nullable', 7);
 
 -- --------------------------------------------------------
 
@@ -187,7 +194,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('vHUAl1LOVMrMZeyGGnIMb40uJPU9JcKOPEbz9TN4', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicFBIek83cEhaT29yODRGSWxnRDZnZ0ZaakhwY1ZDaXlrV3VLVDJpYyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wb3RlbnRpYWwiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754011957);
+('uQUETElYYaIqnEPvY8venvGjv6SQ09a1yhTQnzJe', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZDdVY2YzZzJXQkk5TUdTMzROdkpiZGZJdTFlNjdFTVVubFU5dmZRZSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wb3RlbnRpYWwiO319', 1754041884);
 
 -- --------------------------------------------------------
 
@@ -225,25 +232,30 @@ CREATE TABLE `videos` (
   `id` bigint UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category` enum('profil','kesehatan','perempuan','pertanian','pemerintahan','pembangunan','kegiatan','pengumuman','berita','umkm','karangtaruna') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `duration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `duration` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('published','draft') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
   `views` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'video',
+  `image1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `videos`
 --
 
-INSERT INTO `videos` (`id`, `title`, `category`, `video_url`, `thumbnail`, `description`, `duration`, `status`, `views`, `created_at`, `updated_at`) VALUES
-(1, 'Profil Desa Mekar Sari 2024', 'profil', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800', 'Video profil lengkap Desa Mekar Sari menampilkan potensi dan keindahan desa', '8:42', 'published', 12546, '2025-07-29 06:43:16', '2025-07-30 14:24:16'),
-(4, 'balap', 'pertanian', 'https://vt.tiktok.com/ZS6mm7agD/', 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800', 'qqqqqq', '5:42', 'published', 0, '2025-07-30 10:32:37', '2025-07-30 10:32:37'),
-(5, 'Posyandu', 'kesehatan', 'https://youtube.com/', 'https://www.youtube.com/watch?v=vohnVqU4Q_w', 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa', '5:42', 'published', 0, '2025-07-30 10:57:22', '2025-07-30 10:57:22'),
-(6, 'Profile - Desa', 'profil', 'https://www.youtube.com/watch?v=vohnVqU4Q_w', 'https://www.youtube.com/watch?v=vohnVqU4Q_w', 'Video profil lengkap Desa Mekar Sari menampilkan potensi dan keindahan desa', '7:9', 'draft', 0, '2025-07-30 11:26:00', '2025-07-30 11:26:00');
+INSERT INTO `videos` (`id`, `title`, `category`, `video_url`, `thumbnail`, `description`, `duration`, `status`, `views`, `created_at`, `updated_at`, `type`, `image1`, `image2`) VALUES
+(1, 'Profil Desa Mekar Sari 2024', 'profil', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800', 'Video profil lengkap Desa Mekar Sari menampilkan potensi dan keindahan desa', '8:42', 'published', 12546, '2025-07-29 06:43:16', '2025-07-30 14:24:16', 'video', NULL, NULL),
+(4, 'balap', 'pertanian', 'https://vt.tiktok.com/ZS6mm7agD/', 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800', 'qqqqqq', '5:42', 'published', 0, '2025-07-30 10:32:37', '2025-07-30 10:32:37', 'video', NULL, NULL),
+(8, 'Program Posyandu Balita', 'kesehatan', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800', 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa', '5:42', 'published', 1234, '2025-08-01 03:56:31', '2025-08-01 03:56:31', 'video', NULL, NULL),
+(9, 'Pemberdayaan Perempuan Melalui UMKM', 'perempuan', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.pexels.com/photos/3771115/pexels-photo-3771115.jpeg?auto=compress&cs=tinysrgb&w=800', 'Program pelatihan keterampilan untuk meningkatkan ekonomi keluarga', '8:15', 'published', 2156, '2025-08-01 03:56:31', '2025-08-01 03:56:31', 'video', NULL, NULL),
+(16, 'dedek', 'kegiatan', NULL, 'storage/berita-gambar/2qsuciAU5FwenptVNKzUqP42QctIk8bgdcFGoacO.png', 'hvhvhh', NULL, 'published', 0, '2025-08-01 09:23:27', '2025-08-01 09:23:27', 'gambar', NULL, NULL),
+(17, 'Profil Desa 2025', 'profil', 'https://www.youtube.com/watch?v=vohnVqU4Q_w', 'https://i.pinimg.com/originals/f8/97/f5/f897f5aad025b3398157c7a12bf3d955.jpg', 'Profil Desa', '6:33', 'published', 0, '2025-08-01 09:31:45', '2025-08-01 09:31:45', 'video', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -360,7 +372,7 @@ ALTER TABLE `villagers`
 -- AUTO_INCREMENT untuk tabel `aparat`
 --
 ALTER TABLE `aparat`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `berita`
@@ -378,7 +390,7 @@ ALTER TABLE `map_locations`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT untuk tabel `potentials`
@@ -396,7 +408,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `villagers`
