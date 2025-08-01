@@ -1,6 +1,6 @@
-<header class="bg-primary text-white relative z-50 sticky top-0">
+<header id="main-header" class="bg-transparent text-white fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out">
     <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between py-4">
+        <div class="flex items-center justify-between py-4 transition-all duration-300">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-3">
                 <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
@@ -13,7 +13,7 @@
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center space-x-8">
+             <nav class="hidden lg:flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('home') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Beranda
                 </a>
@@ -39,9 +39,9 @@
             <!-- User Menu & Social Media -->
             <div class="hidden lg:flex items-center space-x-4">
                 <div class="flex items-center space-x-2">
-                    <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                    <i data-lucide="facebook" class="w-5 h-5 social-icon"></i>
+                    <i data-lucide="instagram" class="w-5 h-5 social-icon"></i>
+                    <i data-lucide="youtube" class="w-5 h-5 social-icon"></i>
                 </div>
                 
                 @auth
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <!-- Mobile Menu -->
+        <!-- Mobile Menu -->
     <div id="mobile-menu" class="lg:hidden bg-primary border-t border-white/20 hidden">
         <nav class="container mx-auto px-4 py-4">
             <a href="{{ route('home') }}" class="block py-2 transition-colors {{ request()->routeIs('home') ? 'text-secondary' : 'hover:text-secondary' }}">
@@ -130,13 +130,33 @@
     </div>
 </header>
 
+<style>
+    .nav-link {
+        @apply hover:text-secondary transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-secondary;
+    }
+    .social-icon {
+        @apply hover:text-secondary transition-colors cursor-pointer;
+    }
+</style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    mobileMenuButton.addEventListener('click', function() {
-        mobileMenu.classList.toggle('hidden');
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const header = document.getElementById('main-header');
+
+        mobileMenuButton.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'text-white');
+                header.classList.add('bg-primary', 'backdrop-blur-md', 'shadow-md', 'text-white');
+            } else {
+                header.classList.remove('bg-primary', 'backdrop-blur-md', 'shadow-md', 'text-white');
+                header.classList.add('bg-transparent', 'text-white');
+            }
+        });
     });
-});
 </script>
