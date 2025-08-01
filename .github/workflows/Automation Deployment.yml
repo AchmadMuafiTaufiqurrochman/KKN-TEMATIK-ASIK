@@ -3,9 +3,9 @@
 name: Deploy Laravel via SSH
 
 on:
-  push:
+  pull_request:
     branches:
-      - main  # ubah jika branch kamu berbeda
+      - dev
 
 jobs:
   deploy:
