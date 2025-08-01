@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Video Profil - Profil Digital Desa Mekar Sari')
+@section('title', 'Video Profil - Profil Digital Desa Wonokarang')
 
 @section('content')
 <section class="py-20 bg-white pt-10">
@@ -8,7 +8,7 @@
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Saksikan keindahan dan potensi Desa Mekar Sari melalui video profil yang menampilkan kehidupan sehari-hari masyarakat
+                Saksikan keindahan dan potensi Desa Wonokarang melalui video profil yang menampilkan kehidupan sehari-hari masyarakat
             </p>
         </div>
 
@@ -59,7 +59,7 @@
                         
                         <p class="text-gray-700 leading-relaxed mb-4">
                             Dalam video berdurasi {{ $video->duration }} ini, Anda akan melihat bagaimana teknologi modern dipadukan dengan 
-                            kearifan lokal untuk menciptakan sistem pertanian yang berkelanjutan. Desa Mekar Sari tidak hanya 
+                            kearifan lokal untuk menciptakan sistem pertanian yang berkelanjutan. Desa Wonokarang tidak hanya 
                             menjadi tempat tinggal, tetapi juga destinasi wisata agro yang mengedukasi tentang pertanian modern.
                         </p>
                         
