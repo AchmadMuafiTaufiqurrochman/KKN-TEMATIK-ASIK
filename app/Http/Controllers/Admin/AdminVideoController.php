@@ -62,7 +62,7 @@ class AdminVideoController extends Controller
 
     public function store(Request $request)
 {
-    $type = $request->input('type', 'video'); // default video
+    $type = $request->input('type', 'video');
 
     if ($type === 'video') {
         $validated = $request->validate([
@@ -75,7 +75,6 @@ class AdminVideoController extends Controller
             'status' => 'required|in:published,draft',
         ]);
     } else {
-        // Tipe gambar
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|in:' . implode(',', $this->allCategories),
@@ -84,19 +83,22 @@ class AdminVideoController extends Controller
             'status' => 'required|in:published,draft',
         ]);
 
-        // Simpan file gambar ke storage
+        // Simpan gambar
         $thumbnailPath = $request->file('thumbnail')->store('berita-gambar', 'public');
+
+        // Isi data manual
         $validated['thumbnail'] = $thumbnailPath;
-        $validated['video_url'] = '?';
-        $validated['duration'] = '?';
+        $validated['video_url'] = null;
+        $validated['duration'] = null;
     }
 
-    $validated['type'] = $type;
+ $validated['type'] = $type;
 
-    Video::create($validated);
+Video::create($validated);
 
-    return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
+return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
 }
+
 
 public function update(Request $request, Video $video)
 {

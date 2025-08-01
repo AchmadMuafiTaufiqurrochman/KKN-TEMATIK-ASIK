@@ -127,49 +127,52 @@
                         <div class="relative group">
                             <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
                                 class="w-full h-48 object-cover" />
-                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div
+                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div
-                                    class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                    @if($video->content_type === 'video')
+                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    @if ($video->type === 'video')
                                         <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
                                     @else
                                         <i data-lucide="image" class="w-8 h-8 text-white"></i>
                                     @endif
+
                                 </div>
                             </div>
-                            @if($video->content_type === 'video')
-                            <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
-                                {{ $video->duration }}
-                            </div>
-                            <div class="absolute top-2 left-2">
-                                <span
-                                    class="px-2 py-1 rounded text-xs font-semibold {{ $video->status === 'published' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800' }}">
-                                    {{ $video->status === 'published' ? 'Published' : 'Draft' }}
-                                </span>
-                            </div>
-                            <div class="absolute top-2 right-2 ">
-                                @php
-                                    $categoryColors = [
-                                        'profil' => 'bg-blue-100 text-blue-800',
-                                        'kesehatan' => 'bg-red-100 text-red-800',
-                                        'perempuan' => 'bg-purple-100 text-purple-800',
-                                        'pertanian' => 'bg-green-100 text-green-800',
-                                        'pemerintahan' => 'bg-yellow-100 text-yellow-800',
-                                        'pembangunan' => 'bg-indigo-100 text-indigo-800',
-                                        'kegiatan' => 'bg-pink-100 text-pink-800',
-                                        'pengumuman' => 'bg-teal-100 text-teal-800',
-                                        'berita' => 'bg-cyan-100 text-cyan-800',
-                                        'umkm' => 'bg-lime-100 text-lime-800',
-                                        'karangtaruna' => 'bg-orange-100 text-orange-800',
-                                    ];
-                                @endphp
+                            @if ($video->content_type === 'video')
+                                <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                                    {{ $video->duration }}
+                                </div>
+                                <div class="absolute top-2 left-2">
+                                    <span
+                                        class="px-2 py-1 rounded text-xs font-semibold {{ $video->status === 'published' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800' }}">
+                                        {{ $video->status === 'published' ? 'Published' : 'Draft' }}
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2 ">
+                                    @php
+                                        $categoryColors = [
+                                            'profil' => 'bg-blue-100 text-blue-800',
+                                            'kesehatan' => 'bg-red-100 text-red-800',
+                                            'perempuan' => 'bg-purple-100 text-purple-800',
+                                            'pertanian' => 'bg-green-100 text-green-800',
+                                            'pemerintahan' => 'bg-yellow-100 text-yellow-800',
+                                            'pembangunan' => 'bg-indigo-100 text-indigo-800',
+                                            'kegiatan' => 'bg-pink-100 text-pink-800',
+                                            'pengumuman' => 'bg-teal-100 text-teal-800',
+                                            'berita' => 'bg-cyan-100 text-cyan-800',
+                                            'umkm' => 'bg-lime-100 text-lime-800',
+                                            'karangtaruna' => 'bg-orange-100 text-orange-800',
+                                        ];
+                                    @endphp
 
-                                <span
-                                    class="px-2 py-1 rounded text-xs font-semibold {{ $categoryColors[$video->category] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ $video->category_text }}
-                                </span>
+                                    <span
+                                        class="px-2 py-1 rounded text-xs font-semibold {{ $categoryColors[$video->category] ?? 'bg-gray-100 text-gray-800' }}">
+                                        {{ $video->category_text }}
+                                    </span>
 
-                            </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="p-6">
@@ -296,7 +299,7 @@
                         <div id="gambarFields" class="space-y-4 hidden">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Upload Gambar</label>
-                                <input type="file" name="image" accept="image/*"
+                                <input type="file" name="thumbnail" accept="image/*"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
@@ -361,32 +364,32 @@
         });
 
         function openAddModal() {
-        document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
-        document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
-        document.getElementById('methodField').innerHTML = '';
-        document.getElementById('videoForm').reset();
-        document.getElementById('videoModal').classList.remove('hidden');
+            document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
+            document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
+            document.getElementById('methodField').innerHTML = '';
+            document.getElementById('videoForm').reset();
+            document.getElementById('videoModal').classList.remove('hidden');
 
-        // Reset type selection visibility
-        document.getElementById('videoFields').classList.add('hidden');
-        document.getElementById('gambarFields').classList.add('hidden');
-    }
-
-    document.getElementById('typeSelect').addEventListener('change', function () {
-        const selected = this.value;
-        const videoFields = document.getElementById('videoFields');
-        const gambarFields = document.getElementById('gambarFields');
-
-        if (selected === 'video') {
-            videoFields.classList.remove('hidden');
-            gambarFields.classList.add('hidden');
-        } else if (selected === 'gambar') {
-            gambarFields.classList.remove('hidden');
-            videoFields.classList.add('hidden');
-        } else {
-            videoFields.classList.add('hidden');
-            gambarFields.classList.add('hidden');
+            // Reset type selection visibility
+            document.getElementById('videoFields').classList.add('hidden');
+            document.getElementById('gambarFields').classList.add('hidden');
         }
-    });
+
+        document.getElementById('typeSelect').addEventListener('change', function() {
+            const selected = this.value;
+            const videoFields = document.getElementById('videoFields');
+            const gambarFields = document.getElementById('gambarFields');
+
+            if (selected === 'video') {
+                videoFields.classList.remove('hidden');
+                gambarFields.classList.add('hidden');
+            } else if (selected === 'gambar') {
+                gambarFields.classList.remove('hidden');
+                videoFields.classList.add('hidden');
+            } else {
+                videoFields.classList.add('hidden');
+                gambarFields.classList.add('hidden');
+            }
+        });
     </script>
 @endsection
