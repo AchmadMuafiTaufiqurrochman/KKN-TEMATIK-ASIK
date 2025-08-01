@@ -88,7 +88,7 @@
                     <div class="video-item bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                         data-category="{{ $video->category }}">
                         <div class="relative group">
-                            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                            <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
                                 class="w-full h-48 object-cover" />
                             <div
                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
