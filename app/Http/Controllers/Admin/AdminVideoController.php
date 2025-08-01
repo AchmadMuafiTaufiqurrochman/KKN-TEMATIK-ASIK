@@ -61,7 +61,10 @@ class AdminVideoController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    $type = $request->input('type', 'video'); // default video
+
+    if ($type === 'video') {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|in:' . implode(',', $this->allCategories),
@@ -71,28 +74,56 @@ class AdminVideoController extends Controller
             'duration' => 'required|string|max:10',
             'status' => 'required|in:published,draft',
         ]);
-
-        Video::create($validated);
-
-        return redirect()->route('admin.videos.index')->with('success', 'Video berhasil ditambahkan.');
-    }
-
-    public function update(Request $request, Video $video)
-    {
+    } else {
+        // Tipe gambar
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|in:' . implode(',', $this->allCategories),
-            'video_url' => 'required|url',
-            'thumbnail' => 'required|url',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string',
-            'duration' => 'required|string|max:10',
             'status' => 'required|in:published,draft',
         ]);
 
-        $video->update($validated);
-
-        return redirect()->route('admin.videos.index')->with('success', 'Video berhasil diperbarui.');
+        // Simpan file gambar ke storage
+        $thumbnailPath = $request->file('thumbnail')->store('berita-gambar', 'public');
+        $validated['thumbnail'] = $thumbnailPath;
+        $validated['video_url'] = '?';
+        $validated['duration'] = '?';
     }
+
+    $validated['type'] = $type;
+
+    Video::create($validated);
+
+    return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
+}
+
+public function update(Request $request, Video $video)
+{
+    $type = $request->input('type', 'video');
+
+    $rules = [
+        'title' => 'required|string|max:255',
+        'category' => 'required|in:' . implode(',', $this->allCategories),
+        'description' => 'required|string',
+        'status' => 'required|in:published,draft',
+        'type' => 'required|in:video,gambar',
+    ];
+
+    if ($type === 'video') {
+        $rules['video_url'] = 'required|url';
+        $rules['thumbnail'] = 'required|url';
+        $rules['duration'] = 'required|string|max:10';
+    } else if ($type === 'gambar') {
+        $rules['thumbnail'] = 'required|string';
+    }
+
+    $validated = $request->validate($rules);
+
+    $video->update($validated);
+
+    return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
+}
 
     public function destroy(Video $video)
     {

@@ -127,8 +127,7 @@
                         <div class="relative group">
                             <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
                                 class="w-full h-48 object-cover" />
-                            <div
-                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div
                                     class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
                                     @if($video->content_type === 'video')
@@ -231,7 +230,7 @@
             <div class="bg-white rounded-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
                 <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Berita Baru</h3>
 
-                <form id="videoForm" method="POST">
+                <form id="videoForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div id="methodField"></div>
 
@@ -239,7 +238,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Judul Berita</label>
                             <input type="text" name="title" required
-                                class="w-full px-3 py-2 border  text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                class="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
 
                         <div>
@@ -262,38 +261,59 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">URL Video (YouTube Embed)</label>
-                            <input type="url" name="video_url" required
-                                placeholder="https://www.youtube.com/embed/..."
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Berita</label>
+                            <select name="type" id="typeSelect" required
+                                class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Pilih Tipe</option>
+                                <option value="video">Video</option>
+                                <option value="gambar">Gambar</option>
+                            </select>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">URL Thumbnail</label>
-                            <input type="url" name="thumbnail" required placeholder="https://..."
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <!-- VIDEO FIELDS -->
+                        <div id="videoFields" class="space-y-4 hidden">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">URL Video (YouTube
+                                    Embed)</label>
+                                <input type="url" name="video_url" placeholder="https://www.youtube.com/embed/..."
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">URL Thumbnail</label>
+                                <input type="url" name="thumbnail" placeholder="https://..."
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Durasi</label>
+                                <input type="text" name="duration" placeholder="5:42"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+
+                        <!-- GAMBAR FIELDS -->
+                        <div id="gambarFields" class="space-y-4 hidden">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Upload Gambar</label>
+                                <input type="file" name="image" accept="image/*"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                            <textarea name="description" required rows="3"
-                                class="w-full px-3 py-2 border  text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea name="description" rows="3"
+                                class="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Durasi</label>
-                                <input type="text" name="duration" required placeholder="5:42"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                                <select name="status" required
-                                    class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                    <option value="draft">Draft</option>
-                                    <option value="published">Published</option>
-                                </select>
-                            </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select name="status" required
+                                class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                            </select>
                         </div>
                     </div>
 
@@ -308,6 +328,7 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -338,5 +359,34 @@
                 closeVideoModal();
             }
         });
+
+        function openAddModal() {
+        document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
+        document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
+        document.getElementById('methodField').innerHTML = '';
+        document.getElementById('videoForm').reset();
+        document.getElementById('videoModal').classList.remove('hidden');
+
+        // Reset type selection visibility
+        document.getElementById('videoFields').classList.add('hidden');
+        document.getElementById('gambarFields').classList.add('hidden');
+    }
+
+    document.getElementById('typeSelect').addEventListener('change', function () {
+        const selected = this.value;
+        const videoFields = document.getElementById('videoFields');
+        const gambarFields = document.getElementById('gambarFields');
+
+        if (selected === 'video') {
+            videoFields.classList.remove('hidden');
+            gambarFields.classList.add('hidden');
+        } else if (selected === 'gambar') {
+            gambarFields.classList.remove('hidden');
+            videoFields.classList.add('hidden');
+        } else {
+            videoFields.classList.add('hidden');
+            gambarFields.classList.add('hidden');
+        }
+    });
     </script>
 @endsection
