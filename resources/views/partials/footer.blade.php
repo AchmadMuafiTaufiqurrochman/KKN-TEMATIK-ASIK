@@ -39,9 +39,8 @@
                     <div class="flex items-start space-x-3">
                         <i data-lucide="map-pin" class="w-5 h-5 text-secondary mt-0.5"></i>
                         <div>
-                            <p class="text-gray-300">Jl. Raya Wonokarang No. 123</p>
-                            <p class="text-gray-300">Kecamatan Semarang Barat</p>
-                            <p class="text-gray-300">Kota Semarang, Jawa Tengah</p>
+                            <p class="text-gray-300">Jl. Karangwungu, Desa Wonokarang</p>
+                            <p class="text-gray-300">Kec. Balongbendo, Kabupaten Sidoarjo, Jawa Timur</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">

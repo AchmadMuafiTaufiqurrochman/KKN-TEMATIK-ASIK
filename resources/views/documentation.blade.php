@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumentasi - Profil Digital Desa Wonokarang')
+@section('title', 'Berita - Profil Digital Desa Wonokarang')
 
 @section('content')
     <section class="py-20 bg-gray-50 pt-10">
