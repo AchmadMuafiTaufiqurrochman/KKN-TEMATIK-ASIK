@@ -18,6 +18,7 @@ class Video extends Model
         'duration',
         'status',
         'views',
+        'type',
     ];
 
     public function incrementViews()
