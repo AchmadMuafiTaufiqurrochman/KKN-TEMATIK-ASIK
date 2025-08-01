@@ -9,29 +9,18 @@ use Illuminate\Http\Request;
 class AdminVideoController extends Controller
 {
     protected $allCategories = [
-        'profil',
-        'kesehatan',
-        'perempuan',
-        'pertanian',
-        'pemerintahan',
-        'pembangunan',
-        'kegiatan',
-        'pengumuman',
-        'berita',
-        'umkm',
-        'karangtaruna',
+        'profil', 'kesehatan', 'perempuan', 'pertanian', 'pemerintahan',
+        'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna',
     ];
 
     public function index(Request $request)
     {
         $query = Video::query();
 
-        // Filter berdasarkan kategori jika dipilih
         if ($request->filled('category') && $request->category !== 'all') {
             $query->where('category', $request->category);
         }
 
-        // Pencarian berdasarkan judul atau deskripsi
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -40,10 +29,8 @@ class AdminVideoController extends Controller
             });
         }
 
-        // Ambil video dengan pagination dan tetap bawa parameter pencarian
         $videos = $query->orderBy('created_at', 'desc')->paginate(12)->appends($request->all());
 
-        // Statistik
         $stats = [
             'total' => Video::count(),
             'published' => Video::where('status', 'published')->count(),
@@ -51,7 +38,6 @@ class AdminVideoController extends Controller
             'total_views' => Video::sum('views'),
         ];
 
-        // Kategori dengan jumlah video
         $categories = ['all' => $stats['total']];
         foreach ($this->allCategories as $cat) {
             $categories[$cat] = Video::where('category', $cat)->count();
@@ -61,71 +47,77 @@ class AdminVideoController extends Controller
     }
 
     public function store(Request $request)
-{
-    $type = $request->input('type', 'video');
+    {
+        $type = $request->input('type', 'video');
 
-    if ($type === 'video') {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|in:' . implode(',', $this->allCategories),
-            'video_url' => 'required|url',
-            'thumbnail' => 'required|url',
-            'description' => 'required|string',
-            'duration' => 'required|string|max:10',
-            'status' => 'required|in:published,draft',
-        ]);
-    } else {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|in:' . implode(',', $this->allCategories),
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'description' => 'required|string',
-            'status' => 'required|in:published,draft',
-        ]);
+        if ($type === 'video') {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'category' => 'required|in:' . implode(',', $this->allCategories),
+                'video_url' => 'required|url',
+                'thumbnail' => 'required|url',
+                'description' => 'required|string',
+                'duration' => 'required|string|max:10',
+                'status' => 'required|in:published,draft',
+            ]);
+        } else {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'category' => 'required|in:' . implode(',', $this->allCategories),
+                'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'description' => 'required|string',
+                'status' => 'required|in:published,draft',
+            ]);
 
-        // Simpan gambar
-        $thumbnailPath = $request->file('thumbnail')->store('berita-gambar', 'public');
+            // ✅ Simpan file gambar ke public storage
+            $path = $request->file('thumbnail')->store('berita-gambar', 'public');
 
-        // Isi data manual
-        $validated['thumbnail'] = $thumbnailPath;
-        $validated['video_url'] = null;
-        $validated['duration'] = null;
+            // ✅ Simpan path yang bisa diakses publik
+            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['video_url'] = null;
+            $validated['duration'] = null;
+        }
+
+        $validated['type'] = $type;
+
+        Video::create($validated);
+
+        return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
- $validated['type'] = $type;
+    public function update(Request $request, Video $video)
+    {
+        $type = $request->input('type', 'video');
 
-Video::create($validated);
+        $rules = [
+            'title' => 'required|string|max:255',
+            'category' => 'required|in:' . implode(',', $this->allCategories),
+            'description' => 'required|string',
+            'status' => 'required|in:published,draft',
+            'type' => 'required|in:video,gambar',
+        ];
 
-return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
-}
+        if ($type === 'video') {
+            $rules['video_url'] = 'required|url';
+            $rules['thumbnail'] = 'required|url';
+            $rules['duration'] = 'required|string|max:10';
+        } else if ($type === 'gambar') {
+            $rules['thumbnail'] = 'nullable|image|mimes:jpeg,png,jpg|max:2048';
+        }
 
+        $validated = $request->validate($rules);
 
-public function update(Request $request, Video $video)
-{
-    $type = $request->input('type', 'video');
+        if ($type === 'gambar' && $request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('berita-gambar', 'public');
+            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['video_url'] = null;
+            $validated['duration'] = null;
+        }
 
-    $rules = [
-        'title' => 'required|string|max:255',
-        'category' => 'required|in:' . implode(',', $this->allCategories),
-        'description' => 'required|string',
-        'status' => 'required|in:published,draft',
-        'type' => 'required|in:video,gambar',
-    ];
+        $video->update($validated);
 
-    if ($type === 'video') {
-        $rules['video_url'] = 'required|url';
-        $rules['thumbnail'] = 'required|url';
-        $rules['duration'] = 'required|string|max:10';
-    } else if ($type === 'gambar') {
-        $rules['thumbnail'] = 'required|string';
+        return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
     }
-
-    $validated = $request->validate($rules);
-
-    $video->update($validated);
-
-    return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
-}
 
     public function destroy(Video $video)
     {
