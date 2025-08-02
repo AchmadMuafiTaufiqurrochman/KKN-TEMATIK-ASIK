@@ -8,13 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Drop kolom 'category' agar bisa ubah enum
-        Schema::table('videos', function (Blueprint $table) {
-            $table->dropColumn('category');
-        });
-
-        // Tambah lagi dengan enum yang diperluas
-        Schema::table('videos', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
             $table->enum('category', [
                 'profil',
                 'kesehatan',
@@ -27,24 +23,20 @@ return new class extends Migration
                 'berita',
                 'umkm',
                 'karangtaruna',
-            ])->after('title');
+            ]);
+            $table->enum('type', ['video', 'gambar']);
+            $table->string('video_url')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('duration')->nullable();
+            $table->longText('description')->nullable();
+            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->unsignedBigInteger('views')->default(0);
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        // Rollback ke enum lama
-        Schema::table('videos', function (Blueprint $table) {
-            $table->dropColumn('category');
-        });
-
-        Schema::table('videos', function (Blueprint $table) {
-            $table->enum('category', [
-                'profil',
-                'kesehatan',
-                'perempuan',
-                'pertanian',
-            ])->after('title');
-        });
+        Schema::dropIfExists('videos');
     }
 };
