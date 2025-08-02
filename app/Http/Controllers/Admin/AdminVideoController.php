@@ -5,45 +5,59 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminVideoController extends Controller
 {
     protected $allCategories = [
-        'profil', 'kesehatan', 'perempuan', 'pertanian', 'pemerintahan',
+        'profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
         'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna',
     ];
 
     public function index(Request $request)
+{
+    $query = Video::query();
+
+    // Filter berdasarkan kategori jika ada
+    if ($request->filled('category') && $request->category !== 'all') {
+        $query->where('category', $request->category);
+    }
+
+    // Filter pencarian
+    if ($request->filled('search')) {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+
+    // Hitung statistik
+    $stats = [
+        'total' => Video::count(),
+        'video_count' => Video::where('type', 'video')->count(),
+        'image_count' => Video::where('type', 'gambar')->count(),
+        'published' => Video::where('status', 'published')->count(),
+        'draft' => Video::where('status', 'draft')->count(),
+        'total_views' => Video::sum('views'),
+    ];
+
+    // Hitung berdasarkan kategori untuk filter
+    $categories = Video::select('category')
+        ->selectRaw('COUNT(*) as count')
+        ->groupBy('category')
+        ->pluck('count', 'category')
+        ->toArray();
+
+    $categories = ['all' => Video::count()] + $categories;
+
+    // Ambil data berita dengan pagination
+    $videos = $query->latest()->paginate(9);
+
+    return view('admin.videos', compact('videos', 'stats', 'categories'));
+}
+
+
+    public function create()
     {
-        $query = Video::query();
-
-        if ($request->filled('category') && $request->category !== 'all') {
-            $query->where('category', $request->category);
-        }
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
-            });
-        }
-
-        $videos = $query->orderBy('created_at', 'desc')->paginate(12)->appends($request->all());
-
-        $stats = [
-            'total' => Video::count(),
-            'published' => Video::where('status', 'published')->count(),
-            'draft' => Video::where('status', 'draft')->count(),
-            'total_views' => Video::sum('views'),
-        ];
-
-        $categories = ['all' => $stats['total']];
-        foreach ($this->allCategories as $cat) {
-            $categories[$cat] = Video::where('category', $cat)->count();
-        }
-
-        return view('admin.videos', compact('videos', 'stats', 'categories'));
+        $categories = $this->allCategories;
+        return view('admin.videos_create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -59,6 +73,7 @@ class AdminVideoController extends Controller
                 'description' => 'required|string',
                 'duration' => 'required|string|max:10',
                 'status' => 'required|in:published,draft',
+                'started_at' => 'required|date',
             ]);
         } else {
             $validated = $request->validate([
@@ -67,18 +82,24 @@ class AdminVideoController extends Controller
                 'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'description' => 'required|string',
                 'status' => 'required|in:published,draft',
+                'started_at' => 'required|date',
             ]);
 
-            // ✅ Simpan file gambar ke public storage
             $path = $request->file('thumbnail')->store('berita-gambar', 'public');
-
-            // ✅ Simpan path yang bisa diakses publik
             $validated['thumbnail'] = 'storage/' . $path;
             $validated['video_url'] = null;
             $validated['duration'] = null;
         }
 
         $validated['type'] = $type;
+
+        $startedAt = $validated['started_at']
+    ? Carbon::parse($validated['started_at'])
+    : now();
+
+$validated['started_at'] = $startedAt;
+$validated['is_finished'] = now()->greaterThan($startedAt);
+
 
         Video::create($validated);
 
@@ -95,13 +116,14 @@ class AdminVideoController extends Controller
             'description' => 'required|string',
             'status' => 'required|in:published,draft',
             'type' => 'required|in:video,gambar',
+            'started_at' => 'required|date',
         ];
 
         if ($type === 'video') {
             $rules['video_url'] = 'required|url';
             $rules['thumbnail'] = 'required|url';
             $rules['duration'] = 'required|string|max:10';
-        } else if ($type === 'gambar') {
+        } elseif ($type === 'gambar') {
             $rules['thumbnail'] = 'nullable|image|mimes:jpeg,png,jpg|max:2048';
         }
 
@@ -114,6 +136,14 @@ class AdminVideoController extends Controller
             $validated['duration'] = null;
         }
 
+       $startedAt = $validated['started_at']
+    ? Carbon::parse($validated['started_at'])
+    : now();
+
+$validated['started_at'] = $startedAt;
+$validated['is_finished'] = now()->greaterThan($startedAt);
+
+
         $video->update($validated);
 
         return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
@@ -124,4 +154,13 @@ class AdminVideoController extends Controller
         $video->delete();
         return redirect()->route('admin.videos.index')->with('success', 'Video berhasil dihapus.');
     }
+    public function edit($id)
+{
+    $video = Video::findOrFail($id);
+    $categories = ['profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
+        'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna',]; // atau ambil dari tabel jika dinamis
+
+    return view('admin.videos_edit', compact('video', 'categories'));
+}
+
 }

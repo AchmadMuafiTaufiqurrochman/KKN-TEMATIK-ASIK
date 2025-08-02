@@ -25,9 +25,9 @@
                         class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
                         Kesehatan ({{ $categories['kesehatan'] ?? 0 }})
                     </button>
-                    <button onclick="filterVideos('perempuan')"
+                    <button onclick="filterVideos('ekonomi')"
                         class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Perempuan ({{ $categories['perempuan'] ?? 0 }})
+                        Ekonomi ({{ $categories['ekonomi'] ?? 0 }})
                     </button>
                     <button onclick="filterVideos('pertanian')"
                         class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
@@ -88,8 +88,9 @@
                     <div class="video-item bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                         data-category="{{ $video->category }}">
                         <div class="relative group">
-                            <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
-                                class="w-full h-48 object-cover" />
+                                <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
+                                    class="w-full h-48 object-cover" />
+
                             <div
                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 @if ($video->type === 'video')
@@ -102,14 +103,26 @@
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
                                 {{ $video->duration }}
                             </div>
+                            <!-- Kategori: kiri atas -->
                             <div class="absolute top-2 left-2">
                                 <span
                                     class="px-2 py-1 rounded text-xs font-semibold 
-                            @if ($video->category === 'kesehatan') bg-red-100 text-red-800
-                            @elseif($video->category === 'perempuan') bg-purple-100 text-purple-800
-                            @else bg-green-100 text-green-800 @endif">
+                                    @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                    @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                    @else bg-green-100 text-green-800 @endif">
                                     {{ ucfirst($video->category) }}
                                 </span>
+                            </div>
+
+                            <!-- Status: kanan atas -->
+                            <div class="absolute top-2 right-2">
+                                @if ($video->is_finished)
+                                    <span
+                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                        Dimulai</span>
+                                @endif
                             </div>
                         </div>
 
@@ -117,9 +130,10 @@
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">
                                 {{ $video->title }}
                             </h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ $video->description }}
-                            </p>
+                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {!! $video->description !!}
+                            </div>
+
 
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center gap-1">
@@ -128,7 +142,9 @@
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>{{ $video->created_at->format('d M Y') }}</span>
+                                    <span>
+                                        {{ $video->started_at ? \Carbon\Carbon::parse($video->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>

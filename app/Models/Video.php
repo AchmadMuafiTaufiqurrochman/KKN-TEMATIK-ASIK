@@ -19,6 +19,13 @@ class Video extends Model
         'status',
         'views',
         'type',
+        'started_at',
+        'is_finished',
+    ];
+
+    protected $casts = [
+        'started_at' => 'datetime',
+        'is_finished' => 'boolean',
     ];
 
     public function incrementViews()
@@ -31,7 +38,7 @@ class Video extends Model
         $categories = [
             'profil' => 'Profil Desa',
             'kesehatan' => 'Kesehatan',
-            'perempuan' => 'Perempuan',
+            'ekonomi' => 'Ekonomi',
             'pertanian' => 'Pertanian',
             'pemerintahan' => 'Pemerintahan',
             'pembangunan' => 'Pembangunan',
