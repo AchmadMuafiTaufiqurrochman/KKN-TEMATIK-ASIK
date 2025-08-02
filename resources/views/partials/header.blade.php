@@ -20,11 +20,11 @@
                 <a href="{{ route('about') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('about') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Tentang Desa
                 </a>
-                <a href="{{ route('potential') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('potential') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
-                    Produk Desa
-                </a>
                 <a href="{{ route('aparat') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('aparat') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Aparatur Desa
+                </a>
+                <a href="{{ route('potential') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('potential') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
+                    Produk Desa
                 </a>
                 <a href="{{ route('documentation') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('documentation') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Berita
@@ -85,21 +85,19 @@
             <a href="{{ route('about') }}" class="block py-2 transition-colors {{ request()->routeIs('about') ? 'text-secondary' : 'hover:text-secondary' }}">
                 Tentang Desa
             </a>
-            <a href="{{ route('potential') }}" class="block py-2 transition-colors {{ request()->routeIs('potential') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Potensi
+            <a href="{{ route('aparat') }}" class="block py-2 transition-colors {{ request()->routeIs('aparat') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Aparatur Desa
             </a>
-            <a href="{{ route('video-profile') }}" class="block py-2 transition-colors {{ request()->routeIs('video-profile') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Video Profil
+            <a href="{{ route('potential') }}" class="block py-2 transition-colors {{ request()->routeIs('potential') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Produk Desa
             </a>
             <a href="{{ route('documentation') }}" class="block py-2 transition-colors {{ request()->routeIs('documentation') ? 'text-secondary' : 'hover:text-secondary' }}">
-                Dokumentasi
+                Berita
             </a>
             <a href="{{ route('map') }}" class="block py-2 transition-colors {{ request()->routeIs('map') ? 'text-secondary' : 'hover:text-secondary' }}">
                 Peta
             </a>
-            <a href="#contact" class="block py-2 transition-colors hover:text-secondary">
-                Kontak
-            </a>
+
             
             @auth
                 <div class="pt-4 border-t border-white/20 mt-4">

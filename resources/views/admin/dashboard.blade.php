@@ -28,7 +28,7 @@
                         <i data-lucide="trending-up" class="w-5 h-5 text-green-600"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ number_format($stats['total_villagers']) }}</h3>
-                    <p class="text-gray-600 text-sm mb-2">Total Warga</p>
+                    <p class="text-gray-600 text-sm mb-2">Total Aparatur</p>
                     <p class="text-green-600 text-xs font-medium">+12 bulan ini</p>
                 </div>
 
@@ -40,7 +40,7 @@
                         <i data-lucide="trending-up" class="w-5 h-5 text-green-600"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total_videos'] }}</h3>
-                    <p class="text-gray-600 text-sm mb-2">Video Dokumentasi</p>
+                    <p class="text-gray-600 text-sm mb-2">Berita</p>
                     <p class="text-green-600 text-xs font-medium">+3 bulan ini</p>
                 </div>
 
@@ -75,15 +75,15 @@
                     <div class="bg-white p-6 rounded-xl shadow-lg mb-6">
                         <h3 class="text-lg font-bold text-gray-800 mb-4">Aksi Cepat</h3>
                         <div class="space-y-3">
-                            <a href="{{ route('admin.citizens.index') }}"
+                            <a href="{{ route('admin.aparat.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
                                 <i data-lucide="users" class="w-5 h-5 text-gray-800"></i>
-                                <span class="font-medium text-gray-800">Kelola Data Warga</span>
+                                <span class="font-medium text-gray-800">Kelola Data Aparat</span>
                             </a>
                             <a href="{{ route('admin.videos.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
                                 <i data-lucide="video" class="w-5 h-5 text-gray-800"></i>
-                                <span class="font-medium text-gray-800">Kelola Video</span>
+                                <span class="font-medium text-gray-800">Kelola Berita</span>
                             </a>
                             <a href="{{ route('admin.locations.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">

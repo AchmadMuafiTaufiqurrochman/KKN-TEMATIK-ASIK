@@ -20,11 +20,11 @@
                 <a href="{{ route('about') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('about') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Tentang Desa
                 </a>
-                <a href="{{ route('potential') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('potential') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
-                    Produk Desa
-                </a>
                 <a href="{{ route('aparat') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('aparat') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Aparatur Desa
+                </a>
+                <a href="{{ route('potential') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('potential') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
+                    Produk Desa
                 </a>
                 <a href="{{ route('documentation') }}" class="hover:text-secondary transition-colors duration-200 py-2 border-b-2 {{ request()->routeIs('documentation') ? 'border-secondary text-secondary' : 'border-transparent hover:border-secondary' }}">
                     Berita
@@ -76,16 +76,28 @@
         </div>
     </div>
 
-    <!-- Mobile Menu -->
+        <!-- Mobile Menu -->
     <div id="mobile-menu" class="lg:hidden bg-primary border-t border-white/20 hidden">
         <nav class="container mx-auto px-4 py-4">
-            <a href="{{ route('home') }}" class="block py-2 transition-colors">Beranda</a>
-            <a href="{{ route('about') }}" class="block py-2 transition-colors">Tentang Desa</a>
-            <a href="{{ route('potential') }}" class="block py-2 transition-colors">Potensi</a>
-            <a href="{{ route('video-profile') }}" class="block py-2 transition-colors">Video Profil</a>
-            <a href="{{ route('documentation') }}" class="block py-2 transition-colors">Dokumentasi</a>
-            <a href="{{ route('map') }}" class="block py-2 transition-colors">Peta</a>
-            <a href="#contact" class="block py-2 transition-colors">Kontak</a>
+            <a href="{{ route('home') }}" class="block py-2 transition-colors {{ request()->routeIs('home') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Beranda
+            </a>
+            <a href="{{ route('about') }}" class="block py-2 transition-colors {{ request()->routeIs('about') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Tentang Desa
+            </a>
+            <a href="{{ route('aparat') }}" class="block py-2 transition-colors {{ request()->routeIs('aparat') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Aparatur Desa
+            </a>
+            <a href="{{ route('potential') }}" class="block py-2 transition-colors {{ request()->routeIs('potential') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Produk Desa
+            </a>
+            <a href="{{ route('documentation') }}" class="block py-2 transition-colors {{ request()->routeIs('documentation') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Berita
+            </a>
+            <a href="{{ route('map') }}" class="block py-2 transition-colors {{ request()->routeIs('map') ? 'text-secondary' : 'hover:text-secondary' }}">
+                Peta
+            </a>
+
             
             @auth
                 <div class="pt-4 border-t border-white/20 mt-4">
@@ -110,9 +122,9 @@
             @endauth
             
             <div class="flex items-center space-x-4 pt-4 border-t border-white/20 mt-4">
-                <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary transition-colors"></i>
-                <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary transition-colors"></i>
-                <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary transition-colors"></i>
+                <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
             </div>
         </nav>
     </div>

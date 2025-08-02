@@ -32,9 +32,16 @@ class Video extends Model
             'kesehatan' => 'Kesehatan',
             'perempuan' => 'Perempuan',
             'pertanian' => 'Pertanian',
+            'pemerintahan' => 'Pemerintahan',
+            'pembangunan' => 'Pembangunan',
+            'kegiatan' => 'Kegiatan',
+            'pengumuman' => 'Pengumuman',
+            'berita' => 'Berita',
+            'umkm' => 'UMKM',
+            'karangtaruna' => 'Karang Taruna',
         ];
 
-        return $categories[$this->category] ?? $this->category;
+        return $categories[$this->category] ?? ucfirst($this->category);
     }
 
     public function isPublished()
