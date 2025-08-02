@@ -306,8 +306,8 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                            <textarea name="description" rows="3"
-                                class="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <div id="quill-description" style="height: 150px;" class="bg-white quill-black-text"></div>
+                            <input type="hidden" name="description" id="description-input">
                         </div>
 
                         <div>
@@ -336,13 +336,62 @@
         </div>
     </div>
 
+    <!-- QuillJS CDN -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .quill-black-text .ql-editor {
+            color: #222 !important;
+            background: #fff;
+        }
+    </style>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
     <script>
+        let quill;
+        document.addEventListener('DOMContentLoaded', function() {
+            quill = new Quill('#quill-description', {
+                theme: 'snow',
+                placeholder: 'Tulis deskripsi...'
+            });
+
+            // Submit value Quill ke input hidden
+            document.getElementById('videoForm').addEventListener('submit', function(e) {
+                document.getElementById('description-input').value = quill.root.innerHTML;
+            });
+
+            document.getElementById('typeSelect').addEventListener('change', function() {
+                const selected = this.value;
+                const videoFields = document.getElementById('videoFields');
+                const gambarFields = document.getElementById('gambarFields');
+                if (selected === 'video') {
+                    videoFields.classList.remove('hidden');
+                    gambarFields.classList.add('hidden');
+                } else if (selected === 'gambar') {
+                    gambarFields.classList.remove('hidden');
+                    videoFields.classList.add('hidden');
+                } else {
+                    videoFields.classList.add('hidden');
+                    gambarFields.classList.add('hidden');
+                }
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('videoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoModal();
+                }
+            });
+        });
+
         function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Tambah Video Baru';
+            document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
             document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('videoForm').reset();
             document.getElementById('videoModal').classList.remove('hidden');
+            document.getElementById('videoFields').classList.add('hidden');
+            document.getElementById('gambarFields').classList.add('hidden');
+            if (window.quill) quill.setContents([]);
         }
 
         function openEditModal(id) {
@@ -355,41 +404,5 @@
         function closeVideoModal() {
             document.getElementById('videoModal').classList.add('hidden');
         }
-
-        // Close modal when clicking outside
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeVideoModal();
-            }
-        });
-
-        function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
-            document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
-            document.getElementById('methodField').innerHTML = '';
-            document.getElementById('videoForm').reset();
-            document.getElementById('videoModal').classList.remove('hidden');
-
-            // Reset type selection visibility
-            document.getElementById('videoFields').classList.add('hidden');
-            document.getElementById('gambarFields').classList.add('hidden');
-        }
-
-        document.getElementById('typeSelect').addEventListener('change', function() {
-            const selected = this.value;
-            const videoFields = document.getElementById('videoFields');
-            const gambarFields = document.getElementById('gambarFields');
-
-            if (selected === 'video') {
-                videoFields.classList.remove('hidden');
-                gambarFields.classList.add('hidden');
-            } else if (selected === 'gambar') {
-                gambarFields.classList.remove('hidden');
-                videoFields.classList.add('hidden');
-            } else {
-                videoFields.classList.add('hidden');
-                gambarFields.classList.add('hidden');
-            }
-        });
     </script>
 @endsection
