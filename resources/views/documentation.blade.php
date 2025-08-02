@@ -88,14 +88,16 @@
                     <div class="video-item bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                         data-category="{{ $video->category }}">
                         <div class="relative group">
-                            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                            <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
                                 class="w-full h-48 object-cover" />
                             <div
                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <div
-                                    class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                @if ($video->type === 'video')
                                     <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
-                                </div>
+                                @else
+                                    <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                                @endif
+
                             </div>
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
                                 {{ $video->duration }}
@@ -200,5 +202,7 @@
                 document.getElementById('dropdown-icon').classList.remove('rotate-180');
             }
         });
+
+        lucide.createIcons();
     </script>
 @endsection
