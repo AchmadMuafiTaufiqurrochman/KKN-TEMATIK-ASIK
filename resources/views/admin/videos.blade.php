@@ -91,12 +91,11 @@
             <!-- Action Section -->
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
                 <!-- Tambah Video -->
-                <button onclick="openAddModal()"
+                <a href="{{ route('admin.videos.create') }}"
                     class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2">
                     <i data-lucide="plus" class="w-5 h-5"></i>
                     Tambah Berita
-                </button>
-
+                </a>
                 <!-- Search Form -->
                 <form method="GET" action="{{ route('admin.videos.index') }}" class="flex w-full sm:w-auto">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari video..."
@@ -125,8 +124,7 @@
                 @forelse($videos as $video)
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                         <div class="relative group">
-                            <img src="{{ asset($video->thumbnail) }}" alt="Thumbnail"
-                                class="w-full h-48 object-cover" />
+                            <img src="{{ asset($video->thumbnail) }}" alt="Thumbnail" class="w-full h-48 object-cover" />
                             <div
                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div
@@ -138,6 +136,16 @@
                                     @endif
 
                                 </div>
+                            </div>
+                            <!-- Status: kanan atas -->
+                            <div class="absolute top-2 right-2">
+                                @if ($video->is_finished)
+                                    <span
+                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                        Dimulai</span>
+                                @endif
                             </div>
                             @if ($video->content_type === 'video')
                                 <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
@@ -154,7 +162,7 @@
                                         $categoryColors = [
                                             'profil' => 'bg-blue-100 text-blue-800',
                                             'kesehatan' => 'bg-red-100 text-red-800',
-                                            'perempuan' => 'bg-purple-100 text-purple-800',
+                                            'ekonomi' => 'bg-purple-100 text-purple-800',
                                             'pertanian' => 'bg-green-100 text-green-800',
                                             'pemerintahan' => 'bg-yellow-100 text-yellow-800',
                                             'pembangunan' => 'bg-indigo-100 text-indigo-800',
@@ -179,9 +187,10 @@
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">
                                 {{ $video->title }}
                             </h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ $video->description }}
-                            </p>
+                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {!! $video->description !!}
+                            </div>
+
 
                             <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                                 <div class="flex items-center gap-1">
@@ -190,16 +199,21 @@
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>{{ $video->created_at->format('d M Y') }}</span>
+                                    <span>
+                                        {{ $video->started_at ? \Carbon\Carbon::parse($video->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
+                                    </span>
+
                                 </div>
                             </div>
 
                             <div class="flex gap-2">
-                                <button onclick="openEditModal({{ $video->id }})"
+                                <a href="{{ route('admin.videos.edit', $video->id) }}"
                                     class="flex-1 bg-secondary text-primary py-2 px-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center justify-center gap-2">
                                     <i data-lucide="edit" class="w-4 h-4"></i>
                                     Edit
-                                </button>
+                                </a>
+
+
                                 <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" class="inline"
                                     onsubmit="return confirm('Yakin ingin menghapus video ini?')">
                                     @csrf
@@ -227,122 +241,63 @@
         </div>
     </div>
 
-    <!-- Add/Edit Modal -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
-                <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Berita Baru</h3>
 
-                <form id="videoForm" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div id="methodField"></div>
-
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Berita</label>
-                            <input type="text" name="title" required
-                                class="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                            <select name="category" required
-                                class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="">Pilih Kategori</option>
-                                <option value="profil">Profil Desa</option>
-                                <option value="kesehatan">Kesehatan</option>
-                                <option value="perempuan">Perempuan</option>
-                                <option value="pertanian">Pertanian</option>
-                                <option value="pemerintahan">Pemerintahan</option>
-                                <option value="pembangunan">Pembangunan</option>
-                                <option value="kegiatan">Kegiatan</option>
-                                <option value="pengumuman">Pengumuman</option>
-                                <option value="berita">Berita</option>
-                                <option value="umkm">UMKM</option>
-                                <option value="karangtaruna">Karang Taruna</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Berita</label>
-                            <select name="type" id="typeSelect" required
-                                class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="">Pilih Tipe</option>
-                                <option value="video">Video</option>
-                                <option value="gambar">Gambar</option>
-                            </select>
-                        </div>
-
-                        <!-- VIDEO FIELDS -->
-                        <div id="videoFields" class="space-y-4 hidden">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">URL Video (YouTube
-                                    Embed)</label>
-                                <input type="url" name="video_url" placeholder="https://www.youtube.com/embed/..."
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">URL Thumbnail</label>
-                                <input type="url" name="thumbnail" placeholder="https://..."
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Durasi</label>
-                                <input type="text" name="duration" placeholder="5:42"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                        </div>
-
-                        <!-- GAMBAR FIELDS -->
-                        <div id="gambarFields" class="space-y-4 hidden">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Upload Gambar</label>
-                                <input type="file" name="thumbnail" accept="image/*"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                            <textarea name="description" rows="3"
-                                class="w-full px-3 py-2 border text-gray-500 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                            <select name="status" required
-                                class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4 mt-6">
-                        <button type="submit"
-                            class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">
-                            Simpan
-                        </button>
-                        <button type="button" onclick="closeVideoModal()"
-                            class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">
-                            Batal
-                        </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
+    <!-- QuillJS CDN -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .quill-black-text .ql-editor {
+            color: #222 !important;
+            background: #fff;
+        }
+    </style>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
     <script>
+        let quill;
+        document.addEventListener('DOMContentLoaded', function() {
+            quill = new Quill('#quill-description', {
+                theme: 'snow',
+                placeholder: 'Tulis deskripsi...'
+            });
+
+            // Submit value Quill ke input hidden
+            document.getElementById('videoForm').addEventListener('submit', function(e) {
+                document.getElementById('description-input').value = quill.root.innerHTML;
+            });
+
+            document.getElementById('typeSelect').addEventListener('change', function() {
+                const selected = this.value;
+                const videoFields = document.getElementById('videoFields');
+                const gambarFields = document.getElementById('gambarFields');
+                if (selected === 'video') {
+                    videoFields.classList.remove('hidden');
+                    gambarFields.classList.add('hidden');
+                } else if (selected === 'gambar') {
+                    gambarFields.classList.remove('hidden');
+                    videoFields.classList.add('hidden');
+                } else {
+                    videoFields.classList.add('hidden');
+                    gambarFields.classList.add('hidden');
+                }
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('videoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoModal();
+                }
+            });
+        });
+
         function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Tambah Video Baru';
+            document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
             document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('videoForm').reset();
             document.getElementById('videoModal').classList.remove('hidden');
+            document.getElementById('videoFields').classList.add('hidden');
+            document.getElementById('gambarFields').classList.add('hidden');
+            if (window.quill) quill.setContents([]);
         }
 
         function openEditModal(id) {
@@ -355,41 +310,5 @@
         function closeVideoModal() {
             document.getElementById('videoModal').classList.add('hidden');
         }
-
-        // Close modal when clicking outside
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeVideoModal();
-            }
-        });
-
-        function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Tambah Berita Baru';
-            document.getElementById('videoForm').action = '{{ route('admin.videos.store') }}';
-            document.getElementById('methodField').innerHTML = '';
-            document.getElementById('videoForm').reset();
-            document.getElementById('videoModal').classList.remove('hidden');
-
-            // Reset type selection visibility
-            document.getElementById('videoFields').classList.add('hidden');
-            document.getElementById('gambarFields').classList.add('hidden');
-        }
-
-        document.getElementById('typeSelect').addEventListener('change', function() {
-            const selected = this.value;
-            const videoFields = document.getElementById('videoFields');
-            const gambarFields = document.getElementById('gambarFields');
-
-            if (selected === 'video') {
-                videoFields.classList.remove('hidden');
-                gambarFields.classList.add('hidden');
-            } else if (selected === 'gambar') {
-                gambarFields.classList.remove('hidden');
-                videoFields.classList.add('hidden');
-            } else {
-                videoFields.classList.add('hidden');
-                gambarFields.classList.add('hidden');
-            }
-        });
     </script>
 @endsection

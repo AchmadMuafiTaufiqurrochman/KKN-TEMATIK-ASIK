@@ -16,10 +16,13 @@ class DocumentationController extends Controller
         $categories = [
             'all' => $videos->count(),
             'kesehatan' => $videos->where('category', 'kesehatan')->count(),
-            'perempuan' => $videos->where('category', 'perempuan')->count(),
+            'ekonomi' => $videos->where('category', 'ekonomi')->count(),
             'pertanian' => $videos->where('category', 'pertanian')->count(),
         ];
 
         return view('documentation', compact('videos', 'categories'));
     }
+
+   
+
 }

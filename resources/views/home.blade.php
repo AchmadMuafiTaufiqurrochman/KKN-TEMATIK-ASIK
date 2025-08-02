@@ -271,7 +271,17 @@
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                                 {{ $video->duration }}
                             </div>
+                            <div class="absolute top-2 right-2">
+                                @if ($video->is_finished)
+                                    <span
+                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                        Dimulai</span>
+                                @endif
+                            </div>
                         </div>
+                        
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-2">
