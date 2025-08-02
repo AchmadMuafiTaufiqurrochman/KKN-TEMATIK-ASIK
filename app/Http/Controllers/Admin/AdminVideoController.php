@@ -15,44 +15,45 @@ class AdminVideoController extends Controller
     ];
 
     public function index(Request $request)
-{
-    $query = Video::query();
+    {
+        $query = Video::query();
 
-    // Filter berdasarkan kategori jika ada
-    if ($request->filled('category') && $request->category !== 'all') {
-        $query->where('category', $request->category);
+        // Filter berdasarkan kategori jika ada
+        if ($request->filled('category') && $request->category !== 'all') {
+            $query->where('category', $request->category);
+        }
+
+        // Filter pencarian
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        // Hitung statistik
+        $stats = [
+            'total' => Video::count(),
+            'video_count' => Video::where('type', 'video')->count(),
+            'image_count' => Video::where('type', 'gambar')->count(),
+            'published' => Video::where('status', 'published')->count(),
+            'draft' => Video::where('status', 'draft')->count(),
+            'total_views' => Video::sum('views'),
+        ];
+
+        // Bangun data kategori dengan count, termasuk 'all'
+        $categories = ['all' => Video::count()];
+        foreach ($this->allCategories as $cat) {
+            $categories[$cat] = Video::where('category', $cat)->count();
+        }
+
+        // Ambil data berita
+        $videos = $query->latest()->paginate(9);
+
+        return view('admin.videos', [
+            'videos' => $videos,
+            'stats' => $stats,
+            'categories' => $categories,
+            'allCategories' => $this->allCategories,
+        ]);
     }
-
-    // Filter pencarian
-    if ($request->filled('search')) {
-        $query->where('title', 'like', '%' . $request->search . '%');
-    }
-
-    // Hitung statistik
-    $stats = [
-        'total' => Video::count(),
-        'video_count' => Video::where('type', 'video')->count(),
-        'image_count' => Video::where('type', 'gambar')->count(),
-        'published' => Video::where('status', 'published')->count(),
-        'draft' => Video::where('status', 'draft')->count(),
-        'total_views' => Video::sum('views'),
-    ];
-
-    // Hitung berdasarkan kategori untuk filter
-    $categories = Video::select('category')
-        ->selectRaw('COUNT(*) as count')
-        ->groupBy('category')
-        ->pluck('count', 'category')
-        ->toArray();
-
-    $categories = ['all' => Video::count()] + $categories;
-
-    // Ambil data berita dengan pagination
-    $videos = $query->latest()->paginate(9);
-
-    return view('admin.videos', compact('videos', 'stats', 'categories'));
-}
-
 
     public function create()
     {
@@ -94,12 +95,11 @@ class AdminVideoController extends Controller
         $validated['type'] = $type;
 
         $startedAt = $validated['started_at']
-    ? Carbon::parse($validated['started_at'])
-    : now();
+            ? Carbon::parse($validated['started_at'])
+            : now();
 
-$validated['started_at'] = $startedAt;
-$validated['is_finished'] = now()->greaterThan($startedAt);
-
+        $validated['started_at'] = $startedAt;
+        $validated['is_finished'] = now()->greaterThan($startedAt);
 
         Video::create($validated);
 
@@ -136,13 +136,12 @@ $validated['is_finished'] = now()->greaterThan($startedAt);
             $validated['duration'] = null;
         }
 
-       $startedAt = $validated['started_at']
-    ? Carbon::parse($validated['started_at'])
-    : now();
+        $startedAt = $validated['started_at']
+            ? Carbon::parse($validated['started_at'])
+            : now();
 
-$validated['started_at'] = $startedAt;
-$validated['is_finished'] = now()->greaterThan($startedAt);
-
+        $validated['started_at'] = $startedAt;
+        $validated['is_finished'] = now()->greaterThan($startedAt);
 
         $video->update($validated);
 
@@ -154,13 +153,11 @@ $validated['is_finished'] = now()->greaterThan($startedAt);
         $video->delete();
         return redirect()->route('admin.videos.index')->with('success', 'Video berhasil dihapus.');
     }
+
     public function edit($id)
-{
-    $video = Video::findOrFail($id);
-    $categories = ['profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
-        'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna',]; // atau ambil dari tabel jika dinamis
-
-    return view('admin.videos_edit', compact('video', 'categories'));
-}
-
+    {
+        $video = Video::findOrFail($id);
+        $categories = $this->allCategories;
+        return view('admin.videos_edit', compact('video', 'categories'));
+    }
 }
