@@ -281,12 +281,12 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
                             <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                            {!! $video->description !!}
-                        </div>
+                                {!! $video->description !!}
+                            </div>
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
