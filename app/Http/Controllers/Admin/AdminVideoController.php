@@ -106,47 +106,45 @@ class AdminVideoController extends Controller
         return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
-    public function update(Request $request, Video $video)
-    {
-        $type = $request->input('type', 'video');
+   public function update(Request $request, Video $video)
+{
+    // Validasi dinamis berdasarkan tipe
+    $data = $request->validate([
+        'title' => 'required|string',
+        'description' => 'nullable|string',
+        'category' => 'required|string',
+        'type' => 'required|in:video,gambar',
+        'started_at' => 'required|date',
+        'status' => 'required|in:draft,published',
+        'video_url' => 'nullable|string',
+        'duration' => 'nullable|string',
+        'thumbnail' => $request->type === 'gambar'
+            ? 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            : 'nullable|string',
+    ]);
 
-        $rules = [
-            'title' => 'required|string|max:255',
-            'category' => 'required|in:' . implode(',', $this->allCategories),
-            'description' => 'required|string',
-            'status' => 'required|in:published,draft',
-            'type' => 'required|in:video,gambar',
-            'started_at' => 'required|date',
-        ];
-
-        if ($type === 'video') {
-            $rules['video_url'] = 'required|url';
-            $rules['thumbnail'] = 'required|url';
-            $rules['duration'] = 'required|string|max:10';
-        } elseif ($type === 'gambar') {
-            $rules['thumbnail'] = 'nullable|image|mimes:jpeg,png,jpg|max:2048';
-        }
-
-        $validated = $request->validate($rules);
-
-        if ($type === 'gambar' && $request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('berita-gambar', 'public');
-            $validated['thumbnail'] = 'storage/' . $path;
-            $validated['video_url'] = null;
-            $validated['duration'] = null;
-        }
-
-        $startedAt = $validated['started_at']
-            ? Carbon::parse($validated['started_at'])
-            : now();
-
-        $validated['started_at'] = $startedAt;
-        $validated['is_finished'] = now()->greaterThan($startedAt);
-
-        $video->update($validated);
-
-        return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
+    // Jika tipe gambar, proses upload thumbnail
+    if ($request->type === 'gambar' && $request->hasFile('thumbnail')) {
+        $path = $request->file('thumbnail')->store('berita-gambar', 'public');
+        $data['thumbnail'] = 'storage/' . $path;
+        $data['video_url'] = null;
+        $data['duration'] = null;
     }
+
+    // Jika tipe video, pastikan thumbnail string (URL)
+    if ($request->type === 'video') {
+        $data['video_url'] = $request->video_url;
+        $data['duration'] = $request->duration;
+        $data['thumbnail'] = $request->thumbnail; // URL dari input
+    }
+
+    $video->update($data);
+
+    return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
+}
+
+
+
 
     public function destroy(Video $video)
     {
