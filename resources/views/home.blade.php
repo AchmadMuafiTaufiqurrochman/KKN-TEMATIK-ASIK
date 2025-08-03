@@ -87,7 +87,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonoasik</h2>
+                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian
                         terbaik
@@ -284,9 +284,9 @@
                         
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ Str::limit($video->description, 100) }}
-                            </p>
+                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                            {!! $video->description !!}
+                        </div>
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="eye" class="w-4 h-4"></i>

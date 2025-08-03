@@ -46,7 +46,7 @@ return new class extends Migration
             $table->enum('category', [
                 'profil',
                 'kesehatan',
-                'perempuan',
+                'ekonomi',
                 'pertanian',
             ])->after('title');
         });

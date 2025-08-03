@@ -6,7 +6,7 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-primary">Aparatur Desa cuyy</h2>
+            <h2 class="text-4xl font-bold text-primary">Aparatur Desa</h2>
             <p class="text-gray-600 mt-2">Struktur organisasi pemerintahan Desa Wonokarang</p>
         </div>
         <div class="grid md:grid-cols-5 gap-8">
