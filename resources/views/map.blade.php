@@ -8,7 +8,7 @@
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-primary mb-4">Peta Interaktif Desa</h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Jelajahi lokasi-lokasi penting di Desa Wonokarang dengan peta interaktif yang menampilkan fasilitas dan area strategis
+                Jelajahi lokasi-lokasi penting di Desa Wonokarang dengan peta interaktif yang menampilkan fasilitas dan area strategis bruuh
             </p>
         </div>
 

@@ -284,9 +284,9 @@
                         
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ Str::limit($video->description, 100) }}
-                            </p>
+                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                            {!! $video->description !!}
+                        </div>
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
