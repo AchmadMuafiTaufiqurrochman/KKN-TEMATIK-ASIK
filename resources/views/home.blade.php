@@ -87,7 +87,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
+                    <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonoasik</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                         Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian
                         terbaik
