@@ -229,7 +229,7 @@
                     </div>
 
                     <div class="text-center mt-8">
-                        <a href="{{ route('video-profile') }}"
+                        <a href="{{ route('about') }}"
                             class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">
                             Tonton Video Lengkap
                             <i data-lucide="arrow-right" class="w-5 h-5"></i>

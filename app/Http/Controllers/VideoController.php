@@ -7,19 +7,21 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
-    // Halaman profil (misal khusus kategori 'profil')
     public function index()
-    {
-        $video = Video::where('category', 'profil')
-                      ->where('status', 'published')
-                      ->first();
+{
+    $video = Video::where('category', 'profil')
+                  ->where('status', 'published')
+                  ->orderByDesc('created_at')
+                  ->first();
 
-        if ($video) {
-            $video->incrementViews();
-        }
-
-        return view('video-profile', compact('video'));
+    if ($video) {
+        $video->incrementViews();
     }
+
+    return view('about', compact('video'));
+}
+
+
 
     public function detail($id, Request $request)
 {

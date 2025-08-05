@@ -127,11 +127,11 @@
                                     </div>
                                 </div>
 
-                                <button
+                                <a href="{{ $video->video_url }}" target="_blank"
                                     class="mt-4 lg:mt-0 bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center gap-2">
                                     <i data-lucide="download" class="w-5 h-5"></i>
-                                    Download Video
-                                </button>
+                                    Tonton di YouTube
+                                </a>
                             </div>
 
                             <div class="prose prose-gray max-w-none">
@@ -164,7 +164,7 @@
                 </div>
             @else
                 <div class="text-center py-12">
-                    <p class="text-gray-500">Video profil belum tersedia</p>
+                    <p class="text-gray-500 text-lg">Video profil belum tersedia saat ini. Silakan cek kembali nanti.</p>
                 </div>
             @endif
         </div>
