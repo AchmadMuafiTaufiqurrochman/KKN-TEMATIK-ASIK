@@ -79,84 +79,125 @@
 
             {{-- === PRODUK DESA === --}}
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-bold text-primary mb-4">Produk Desa</h2>
+                <h2 class="text-4xl font-bold text-primary mb-4">Katalog Produk Desa</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Inilah hasil olahan dan karya warga desa yang siap jual!
+                    Jelajahi produk unggulan hasil karya masyarakat Desa Wonokarang.
                 </p>
             </div>
 
             {{-- Filter Kategori --}}
-            <div class="flex justify-center gap-4 mb-8">
-                <button onclick="filterProductCategory('all')"
-                    class="product-filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold">
-                    Semua
-                </button>
-                <button onclick="filterProductCategory('pertanian')"
-                    class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">
-                    Pertanian
-                </button>
-                <button onclick="filterProductCategory('budidaya-bunga')"
-                    class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">
-                    Budidaya Bunga
-                </button>
+            <div class="flex justify-center flex-wrap gap-4 mb-6">
+                <button onclick="filterProductCategory('all', event)"
+                    class="product-filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold">Semua</button>
+                <button onclick="filterProductCategory('pertanian', event)"
+                    class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">Pertanian</button>
+                <button onclick="filterProductCategory('budidaya-bunga', event)"
+                    class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">Budidaya
+                    Bunga</button>
             </div>
 
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto" id="product-container">
-                @foreach ($potentials as $potential)
-                    @foreach ($potential->products as $product)
-                        <div class="bg-gray-100 rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 product-card"
-                            data-category="{{ $potential->category }}">
-                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $product->name }}</h3>
-                                <p class="text-sm text-gray-600 mb-3">{{ Str::limit($product->description, 60) }}</p>
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->whatsapp_number) }}"
-                                    target="_blank"
-                                    class="text-green-600 hover:text-green-800 text-sm font-semibold flex items-center gap-1">
-                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                    Hubungi Penjual
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                @endforeach
+            <div class="overflow-x-auto max-w-7xl mx-auto">
+                <table class="w-full table-fixed border-collapse rounded-xl shadow-lg bg-white" id="product-table">
+                    <thead>
+                        <tr class="bg-primary text-white text-left">
+                            <th class="px-4 py-3 w-[15%]">Gambar</th>
+                            <th class="px-4 py-3 w-[20%]">Nama Produk</th>
+                            <th class="px-4 py-3 w-[35%]">Deskripsi</th>
+                            <th class="px-4 py-3 w-[15%]">Kategori</th>
+                            <th class="px-4 py-3 w-[15%]">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($potentials as $potential)
+                            @foreach ($potential->products as $product)
+                                <tr class="product-row border-b hover:bg-gray-50 transition duration-300"
+                                    data-category="{{ $potential->category }}">
+                                    <td class="px-4 py-3">
+                                        <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                                            class="w-16 h-16 object-cover rounded">
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800">{{ $product->name }}</td>
+                                    <td class="px-4 py-3 text-gray-600 break-words">
+                                        {{ Str::limit($product->description, 100) }}</td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize
+                                @if ($potential->category === 'pertanian') bg-green-100 text-green-800
+                                @elseif($potential->category === 'budidaya-bunga')
+                                    bg-pink-100 text-pink-700
+                                @else
+                                    bg-gray-100 text-gray-700 @endif">
+                                            {{ $potential->category }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        @if ($product->whatsapp_number)
+                                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->whatsapp_number) }}"
+                                                target="_blank"
+                                                class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 transition duration-200">
+                                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                                Hubungi
+                                            </a>
+                                        @else
+                                            <span class="text-gray-400 text-sm italic">Tidak tersedia</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
 
-            <div id="no-product-msg" class="text-center text-gray-500 mt-8 hidden">
+
+
+            <div id="no-product-msg" class="text-center text-gray-500 mt-6 hidden">
                 Tidak ada produk dalam kategori ini.
             </div>
 
         </div>
     </section>
 
+    <style>
+        table {
+            table-layout: fixed;
+        }
 
-    </div>
+        td,
+        th {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+    </style>
 
-    <div id="no-product-msg" class="text-center text-gray-500 mt-8 hidden">
-        Tidak ada produk dalam kategori ini.
-    </div>
 
     <script>
-        function filterProductCategory(category) {
-            const cards = document.querySelectorAll('.product-card');
+        function filterProductCategory(category, event) {
+            const rows = document.querySelectorAll('.product-row');
             const buttons = document.querySelectorAll('.product-filter-btn');
             const emptyMsg = document.getElementById('no-product-msg');
 
             let visible = 0;
 
+            // Reset button styles
             buttons.forEach(btn => {
                 btn.classList.remove('bg-primary', 'text-white');
                 btn.classList.add('bg-white', 'text-primary');
             });
 
-            event.target.classList.add('bg-primary', 'text-white');
+            // Aktifkan button yang diklik (gunakan closest agar aman)
+            event.target.closest('button').classList.add('bg-primary', 'text-white');
+            event.target.closest('button').classList.remove('bg-white', 'text-primary');
 
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
+            // Filter produk
+            rows.forEach(row => {
+                const rowCategory = row.dataset.category;
+                if (category === 'all' || rowCategory === category) {
+                    row.style.display = '';
                     visible++;
                 } else {
-                    card.style.display = 'none';
+                    row.style.display = 'none';
                 }
             });
 
