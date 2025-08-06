@@ -15,7 +15,6 @@ use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
 use App\Http\Controllers\Admin\AdminProductController;
-use App\Http\Controllers\ProductCatalog;
 use App\Http\Controllers\ProductController;
 
 
@@ -34,6 +33,9 @@ Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.det
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
 Route::get('/potential', [ProductController::class, 'index'])->name('potential');
+Route::get('/product', [ProductController::class, 'index'])->name('product');
+Route::get('/produk-desa', [ProductController::class, 'index'])->name('products.index');
+
 
 
 // Authentication routes
@@ -63,7 +65,7 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
     Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
-    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy'); 
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 
 
 
