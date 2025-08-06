@@ -35,18 +35,16 @@ class VideoController extends Controller
 
     $relatedIds = $relatedQuery->pluck('id')->toArray();
 
-    // Temukan index dari video saat ini
+    
     $currentIndex = array_search($highlighted->id, $relatedIds);
 
-    // Dapatkan previous dan next ID
     $previousId = $relatedIds[$currentIndex + 1] ?? null; // video yang lebih lama
     $nextId = $relatedIds[$currentIndex - 1] ?? null;     // video yang lebih baru
 
-    // Ambil objek Video untuk prev dan next jika ada
+    
     $previousVideo = $previousId ? Video::find($previousId) : null;
     $nextVideo = $nextId ? Video::find($nextId) : null;
 
-    // Ambil video lainnya (selain current), untuk ditampilkan di bawah
     $beritas = Video::where('status', 'published')
         ->where('id', '!=', $id)
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
