@@ -23,10 +23,11 @@ use App\Http\Controllers\ProductController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
-Route::get('/video-profile', [VideoController::class, 'index'])->name('video-profile');
+
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
-Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
+
 
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
@@ -49,10 +50,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/citizens/{villager}', [VillagerController::class, 'destroy'])->name('citizens.destroy');
 
     // Videos management
-    Route::get('/videos', [AdminVideoController::class, 'index'])->name('videos.index');
-    Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
-    Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
-    Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
+   Route::get('/videos', [AdminVideoController::class, 'index'])->name('videos.index');
+Route::get('/videos/create', [AdminVideoController::class, 'create'])->name('videos.create');
+Route::get('/videos/{id}/edit', [AdminVideoController::class, 'edit'])->name('videos.edit');
+Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
+Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
+Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
+
+
     
     // Locations management
     Route::get('/locations', [AdminLocationController::class, 'index'])->name('locations.index');

@@ -8,18 +8,28 @@ class DocumentationController extends Controller
 {
     public function index()
     {
+        // Ambil semua video (kecuali kategori 'profil')
         $videos = Video::where('status', 'published')
                       ->where('category', '!=', 'profil')
                       ->orderBy('created_at', 'desc')
                       ->get();
 
-        $categories = [
-            'all' => $videos->count(),
-            'kesehatan' => $videos->where('category', 'kesehatan')->count(),
-            'perempuan' => $videos->where('category', 'perempuan')->count(),
-            'pertanian' => $videos->where('category', 'pertanian')->count(),
+        // Daftar semua kategori yang ditampilkan (termasuk dropdown lainnya)
+        $allCategoryList = [
+            'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
+            'kegiatan', 'pembangunan', 'pengumuman', 'berita',
+            'umkm', 'karangtaruna'
         ];
 
-        return view('documentation', compact('videos', 'categories'));
+        // Hitung jumlah per kategori
+        $categoriesCount = ['all' => $videos->count()];
+        foreach ($allCategoryList as $cat) {
+            $categoriesCount[$cat] = $videos->where('category', $cat)->count();
+        }
+
+        return view('documentation', [
+            'videos' => $videos,
+            'categories' => $categoriesCount
+        ]);
     }
 }

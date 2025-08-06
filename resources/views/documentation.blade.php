@@ -15,31 +15,15 @@
 
             <!-- Kategori Filter -->
             <div class="flex flex-wrap justify-center gap-4 mb-12 relative">
-                <!-- Visible Categories -->
                 <div id="visible-categories" class="flex flex-wrap justify-center gap-4">
-                    <button onclick="filterVideos('all')"
-                        class="filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Semua ({{ $categories['all'] ?? 0 }})
-                    </button>
-                    <button onclick="filterVideos('kesehatan')"
-                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Kesehatan ({{ $categories['kesehatan'] ?? 0 }})
-                    </button>
-                    <button onclick="filterVideos('perempuan')"
-                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Perempuan ({{ $categories['perempuan'] ?? 0 }})
-                    </button>
-                    <button onclick="filterVideos('pertanian')"
-                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Pertanian ({{ $categories['pertanian'] ?? 0 }})
-                    </button>
-                    <button onclick="filterVideos('pemerintahan')"
-                        class="filter-btn bg-white text-primary hover:bg-secondary hover:text-white border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                        Pemerintahan Desa ({{ $categories['pemerintahan'] ?? 0 }})
-                    </button>
+                    @foreach (['all', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan'] as $cat)
+                        <button onclick="filterVideos('{{ $cat }}')"
+                            class="filter-btn {{ $cat === 'all' ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-secondary hover:text-white' }} border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+                            {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
+                        </button>
+                    @endforeach
                 </div>
 
-                <!-- Dropdown Toggle -->
                 <div class="relative">
                     <button onclick="toggleMoreCategories()"
                         class="flex items-center gap-2 bg-gray-100 text-primary px-4 py-2 rounded-full font-semibold border border-gray-300 transition-all duration-300 hover:shadow-md">
@@ -49,47 +33,30 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-
-                    <!-- Hidden Categories Dropdown -->
                     <div id="more-categories"
                         class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
-                        <button onclick="filterVideos('kegiatan')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            Kegiatan Masyarakat ({{ $categories['kegiatan'] ?? 0 }})
-                        </button>
-                        <button onclick="filterVideos('pembangunan')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            Pembangunan ({{ $categories['pembangunan'] ?? 0 }})
-                        </button>
-                        <button onclick="filterVideos('pengumuman')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            Pengumuman ({{ $categories['pengumuman'] ?? 0 }})
-                        </button>
-                        <button onclick="filterVideos('berita')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            Berita Umum ({{ $categories['berita'] ?? 0 }})
-                        </button>
-                        <button onclick="filterVideos('umkm')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            UMKM ({{ $categories['umkm'] ?? 0 }})
-                        </button>
-                        <button onclick="filterVideos('karangtaruna')"
-                            class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                            Karang Taruna ({{ $categories['karangtaruna'] ?? 0 }})
-                        </button>
+                        @foreach (['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna'] as $cat)
+                            <button onclick="filterVideos('{{ $cat }}')"
+                                class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                                {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
 
-
             <!-- Videos Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 @foreach ($videos as $video)
-                    <div class="video-item bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-                        data-category="{{ $video->category }}">
+                    <a href="{{ route('berita.detail', $video->id) }}"
+                        onclick="sessionStorage.setItem('highlightedId', {{ $video->id }})"
+                        class="video-item block bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300"
+                        data-id="{{ $video->id }}" data-category="{{ $video->category }}">
+
                         <div class="relative group">
                             <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
                                 class="w-full h-48 object-cover" />
+
                             <div
                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 @if ($video->type === 'video')
@@ -97,44 +64,59 @@
                                 @else
                                     <i data-lucide="image" class="w-8 h-8 text-white"></i>
                                 @endif
-
                             </div>
+
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
                                 {{ $video->duration }}
                             </div>
-                            <div class="absolute top-2 left-2">
+
+                            <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
                                 <span
-                                    class="px-2 py-1 rounded text-xs font-semibold 
-                            @if ($video->category === 'kesehatan') bg-red-100 text-red-800
-                            @elseif($video->category === 'perempuan') bg-purple-100 text-purple-800
-                            @else bg-green-100 text-green-800 @endif">
+                                    class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+        @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+        @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+        @else bg-green-100 text-green-800 @endif">
                                     {{ ucfirst($video->category) }}
                                 </span>
                             </div>
+
+                            <div class="absolute top-2 right-2 max-w-[50%] sm:max-w-full text-right">
+                                @if ($video->is_finished)
+                                    <span
+                                        class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-green-100 text-green-800 rounded whitespace-nowrap">Selesai</span>
+                                @else
+                                    <span
+                                        class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-yellow-100 text-yellow-800 rounded whitespace-nowrap">Akan
+                                        Dimulai</span>
+                                @endif
+                            </div>
                         </div>
 
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">
+                        <div class="p-4">
+                            <h3 class="text-sm font-bold text-primary mb-1 line-clamp-2">
                                 {{ $video->title }}
                             </h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ $video->description }}
-                            </p>
+                            <div class="text-gray-600 text-xs mb-2 line-clamp-2">
+                                {!! $video->description !!}
+                            </div>
 
-                            <div class="flex items-center justify-between text-sm text-gray-500">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
                                 <div class="flex items-center gap-1">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    <i data-lucide="eye" class="w-3 h-3"></i>
                                     <span>{{ number_format($video->views) }} views</span>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>{{ $video->created_at->format('d M Y') }}</span>
+                                    <i data-lucide="calendar" class="w-3 h-3"></i>
+                                    <span>
+                                        {{ $video->started_at ? \Carbon\Carbon::parse($video->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
+
 
             <div id="no-videos" class="text-center py-12 hidden">
                 <p class="text-gray-500">Tidak ada video dalam kategori ini</p>
@@ -148,7 +130,6 @@
             const buttons = document.querySelectorAll('.filter-btn');
             const noVideos = document.getElementById('no-videos');
 
-            // Update button styles
             buttons.forEach(btn => {
                 btn.classList.remove('bg-primary', 'text-white');
                 btn.classList.add('bg-white', 'text-primary', 'hover:bg-secondary', 'hover:text-primary', 'border',
@@ -159,7 +140,6 @@
                 'border-gray-200');
             event.target.classList.add('bg-primary', 'text-white');
 
-            // Filter videos
             let visibleCount = 0;
             videos.forEach(video => {
                 if (category === 'all' || video.dataset.category === category) {
@@ -170,12 +150,7 @@
                 }
             });
 
-            // Show/hide no videos message
-            if (visibleCount === 0) {
-                noVideos.classList.remove('hidden');
-            } else {
-                noVideos.classList.add('hidden');
-            }
+            noVideos.classList.toggle('hidden', visibleCount !== 0);
         }
 
         function toggleMoreCategories() {
@@ -183,16 +158,10 @@
             const icon = document.getElementById('dropdown-icon');
             const isHidden = dropdown.classList.contains('hidden');
 
-            if (isHidden) {
-                dropdown.classList.remove('hidden');
-                icon.classList.add('rotate-180');
-            } else {
-                dropdown.classList.add('hidden');
-                icon.classList.remove('rotate-180');
-            }
+            dropdown.classList.toggle('hidden', !isHidden);
+            icon.classList.toggle('rotate-180', isHidden);
         }
 
-        // Optional: Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('more-categories');
             const button = event.target.closest('button[onclick="toggleMoreCategories()"]');

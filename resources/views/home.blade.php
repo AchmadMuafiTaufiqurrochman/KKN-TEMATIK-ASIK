@@ -229,7 +229,7 @@
                     </div>
 
                     <div class="text-center mt-8">
-                        <a href="{{ route('video-profile') }}"
+                        <a href="{{ route('about') }}"
                             class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">
                             Tonton Video Lengkap
                             <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -271,12 +271,22 @@
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                                 {{ $video->duration }}
                             </div>
+                            <div class="absolute top-2 right-2">
+                                @if ($video->is_finished)
+                                    <span
+                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                        Dimulai</span>
+                                @endif
+                            </div>
                         </div>
+
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {{ Str::limit($video->description, 100) }}
-                            </p>
+                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {!! $video->description !!}
+                            </div>
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center gap-1">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
