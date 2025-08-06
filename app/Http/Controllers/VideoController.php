@@ -51,7 +51,7 @@ class VideoController extends Controller
             $query->where('category', $selectedCategory);
         })
         ->latest()
-        ->paginate(12);
+        ->paginate(16);
 
     // Hitung total per kategori
     $categories = [

@@ -22,7 +22,7 @@ class DocumentationController extends Controller
         }
 
         // Paginate 12 data per halaman
-        $videos = $query->orderBy('created_at', 'desc')->paginate(12);
+        $videos = $query->orderBy('created_at', 'desc')->paginate(16);
 
         // Daftar kategori tetap
         $allCategoryList = [
