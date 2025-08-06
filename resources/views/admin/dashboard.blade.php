@@ -90,6 +90,11 @@
                                 <i data-lucide="map-pin" class="w-5 h-5 text-gray-800"></i>
                                 <span class="font-medium text-gray-800">Kelola Lokasi Peta</span>
                             </a>
+                            <a href="{{ route('admin.products.index') }}"
+                                class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                <i data-lucide="package" class="w-5 h-5 text-gray-800"></i>
+                                <span class="font-medium text-gray-800">Kelola Produk Desa</span>
+                            </a>
                         </div>
                     </div>
 
