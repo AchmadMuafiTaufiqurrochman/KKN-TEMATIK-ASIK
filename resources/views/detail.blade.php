@@ -6,7 +6,7 @@
     <section class="py-20 bg-gray-50 pt-10">
         <div class="container mx-auto px-4">
 
-            <!-- Tombol Kembali dan Navigasi Sebelumnya/Selanjutnya -->
+            <!-- Tombol Kembali dan Navigasi Sebelumnya -->
             <div class="flex justify-between items-center mb-6">
                 <a href="{{ route('documentation') }}" class="text-primary hover:text-blue-800 font-medium transition-colors">
                     ← Kembali

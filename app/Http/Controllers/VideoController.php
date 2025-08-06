@@ -63,7 +63,11 @@ class VideoController extends Controller
         'pertanian' => Video::where('status', 'published')->where('category', 'pertanian')->count(),
         'pemerintahan' => Video::where('status', 'published')->where('category', 'pemerintahan')->count(),
         'pembangunan' => Video::where('status', 'published')->where('category', 'pembangunan')->count(),
-        // Tambahkan kategori lain jika perlu
+        'kegiatan' => Video::where('status', 'published')->where('category', 'kegiatan')->count(),
+        'pengumuman' => Video::where('status', 'published')->where('category', 'pengumuman')->count(),
+        'berita' => Video::where('status', 'published')->where('category', 'berita')->count(),
+        'umkm' => Video::where('status', 'published')->where('category', 'umkm')->count(),
+        'karangtaruna' => Video::where('status', 'published')->where('category', 'karangtaruna')->count(),
     ];
 
     return view('detail', compact(
