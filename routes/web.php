@@ -23,7 +23,6 @@ use App\Http\Controllers\ProductController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
-
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');

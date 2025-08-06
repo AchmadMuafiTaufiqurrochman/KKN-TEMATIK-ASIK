@@ -8,19 +8,18 @@
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-primary mb-4">Berita</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Kumpulan berita terkini seputar kegiatan desa dalam bidang kesehatan, pemberdayaan perempuan, dan
-                    pertanian
+                    Kumpulan berita terkini seputar kegiatan desa dalam bidang kesehatan, pemberdayaan perempuan, dan pertanian
                 </p>
             </div>
 
             <!-- Kategori Filter -->
             <div class="flex flex-wrap justify-center gap-4 mb-12 relative">
-                <div id="visible-categories" class="flex flex-wrap justify-center gap-4">
+                <div class="flex flex-wrap justify-center gap-4">
                     @foreach (['all', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan'] as $cat)
-                        <button onclick="filterVideos('{{ $cat }}')"
-                            class="filter-btn {{ $cat === 'all' ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-secondary hover:text-white' }} border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
+                        <a href="{{ route('documentation', ['category' => $cat]) }}"
+                           class="filter-btn {{ $selectedCategory === $cat ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-secondary hover:text-white' }} border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
                             {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
-                        </button>
+                        </a>
                     @endforeach
                 </div>
 
@@ -29,17 +28,17 @@
                         class="flex items-center gap-2 bg-gray-100 text-primary px-4 py-2 rounded-full font-semibold border border-gray-300 transition-all duration-300 hover:shadow-md">
                         Lainnya
                         <svg id="dropdown-icon" class="w-4 h-4 transition-transform duration-300 transform" fill="none"
-                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                             stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div id="more-categories"
-                        class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
+                         class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
                         @foreach (['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna'] as $cat)
-                            <button onclick="filterVideos('{{ $cat }}')"
-                                class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
+                            <a href="{{ route('documentation', ['category' => $cat]) }}"
+                               class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
                                 {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
-                            </button>
+                            </a>
                         @endforeach
                     </div>
                 </div>
@@ -47,18 +46,16 @@
 
             <!-- Videos Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                @foreach ($videos as $video)
+                @forelse ($videos as $video)
                     <a href="{{ route('berita.detail', $video->id) }}"
-                        onclick="sessionStorage.setItem('highlightedId', {{ $video->id }})"
-                        class="video-item block bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300"
-                        data-id="{{ $video->id }}" data-category="{{ $video->category }}">
+                       onclick="sessionStorage.setItem('highlightedId', {{ $video->id }})"
+                       class="video-item block bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300">
 
                         <div class="relative group">
                             <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
-                                class="w-full h-48 object-cover" />
+                                 class="w-full h-48 object-cover" />
 
-                            <div
-                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 @if ($video->type === 'video')
                                     <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
                                 @else
@@ -71,23 +68,19 @@
                             </div>
 
                             <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
-                                <span
-                                    class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
-        @if ($video->category === 'kesehatan') bg-red-100 text-red-800
-        @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
-        @else bg-green-100 text-green-800 @endif">
+                                <span class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+                                    @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                    @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                    @else bg-green-100 text-green-800 @endif">
                                     {{ ucfirst($video->category) }}
                                 </span>
                             </div>
 
                             <div class="absolute top-2 right-2 max-w-[50%] sm:max-w-full text-right">
                                 @if ($video->is_finished)
-                                    <span
-                                        class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-green-100 text-green-800 rounded whitespace-nowrap">Selesai</span>
+                                    <span class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-green-100 text-green-800 rounded whitespace-nowrap">Selesai</span>
                                 @else
-                                    <span
-                                        class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-yellow-100 text-yellow-800 rounded whitespace-nowrap">Akan
-                                        Dimulai</span>
+                                    <span class="inline-block px-2 py-0.5 text-[10px] sm:text-xs bg-yellow-100 text-yellow-800 rounded whitespace-nowrap">Akan Dimulai</span>
                                 @endif
                             </div>
                         </div>
@@ -114,45 +107,59 @@
                             </div>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="col-span-4 text-center text-gray-500 py-12">
+                        Tidak ada video dalam kategori ini
+                    </div>
+                @endforelse
             </div>
 
+            <!-- Pagination -->
+            @if ($videos->hasPages())
+                <div class="mt-10 flex flex-col items-center justify-center gap-2 text-sm text-gray-600">
+                    <div class="flex gap-2 items-center">
+                        {{-- Previous --}}
+                        @if ($videos->onFirstPage())
+                            <span class="px-3 py-1 rounded border border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed">← Prev</span>
+                        @else
+                            <a href="{{ $videos->previousPageUrl() }}"
+                               class="px-3 py-1 rounded border border-gray-300 hover:bg-primary hover:text-white transition">
+                                ← Prev
+                            </a>
+                        @endif
 
-            <div id="no-videos" class="text-center py-12 hidden">
-                <p class="text-gray-500">Tidak ada video dalam kategori ini</p>
-            </div>
+                        {{-- Page Numbers --}}
+                        @foreach ($videos->getUrlRange(1, $videos->lastPage()) as $page => $url)
+                            @if ($page == $videos->currentPage())
+                                <span class="px-3 py-1 rounded border bg-primary text-white font-semibold">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}"
+                                   class="px-3 py-1 rounded border border-gray-300 hover:bg-primary hover:text-white transition">
+                                    {{ $page }}
+                                </a>
+                            @endif
+                        @endforeach
+
+                        {{-- Next --}}
+                        @if ($videos->hasMorePages())
+                            <a href="{{ $videos->nextPageUrl() }}"
+                               class="px-3 py-1 rounded border border-gray-300 hover:bg-primary hover:text-white transition">
+                                Next →
+                            </a>
+                        @else
+                            <span class="px-3 py-1 rounded border border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed">Next →</span>
+                        @endif
+                    </div>
+
+                    <div>
+                        Page {{ $videos->currentPage() }} of {{ $videos->lastPage() }}
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 
     <script>
-        function filterVideos(category) {
-            const videos = document.querySelectorAll('.video-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-            const noVideos = document.getElementById('no-videos');
-
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white');
-                btn.classList.add('bg-white', 'text-primary', 'hover:bg-secondary', 'hover:text-primary', 'border',
-                    'border-gray-200');
-            });
-
-            event.target.classList.remove('bg-white', 'text-primary', 'hover:bg-secondary', 'hover:text-primary', 'border',
-                'border-gray-200');
-            event.target.classList.add('bg-primary', 'text-white');
-
-            let visibleCount = 0;
-            videos.forEach(video => {
-                if (category === 'all' || video.dataset.category === category) {
-                    video.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    video.style.display = 'none';
-                }
-            });
-
-            noVideos.classList.toggle('hidden', visibleCount !== 0);
-        }
-
         function toggleMoreCategories() {
             const dropdown = document.getElementById('more-categories');
             const icon = document.getElementById('dropdown-icon');
