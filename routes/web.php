@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\ProductController;
 
 
@@ -31,6 +32,9 @@ Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.det
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
 Route::get('/potential', [ProductController::class, 'index'])->name('potential');
+Route::get('/product', [ProductController::class, 'index'])->name('product');
+Route::get('/produk-desa', [ProductController::class, 'index'])->name('products.index');
+
 
 
 // Authentication routes
@@ -56,8 +60,14 @@ Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.sto
 Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
 Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
 
+    // Product Catalog management
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 
-    
+
+
     // Locations management
     Route::get('/locations', [AdminLocationController::class, 'index'])->name('locations.index');
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
@@ -70,6 +80,4 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     Route::delete('/admin/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
 
 
-
-    
 });

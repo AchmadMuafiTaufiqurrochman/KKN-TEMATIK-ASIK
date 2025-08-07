@@ -18,7 +18,7 @@
             <!-- Navigation -->
             <nav class="flex-1 mt-4 px-4 space-y-1">
                 <a href="{{ route('admin.dashboard') }}"
-                    class="block px-4 py-2 rounded-md transition-colors duration-200 
+                    class="block px-4 py-2 rounded-md transition-colors duration-200
         {{ request()->routeIs('admin.dashboard') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
                     Dashboard
                 </a>
@@ -33,6 +33,14 @@
                 <a href="{{ route('admin.aparat.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.aparat.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
                     Kelola Aparatur
+                </a>
+                {{-- <a href="{{ route('admin.citizens.index') }}"
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.citizens.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
+                    Kelola Data Warga
+                </a> --}}
+                <a href="{{ route('admin.products.index') }}"
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.products.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
+                    Kelola Produk Desa
                 </a>
             </nav>
 

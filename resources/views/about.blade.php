@@ -56,8 +56,17 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
                         <p class="text-gray-600">
-                            Mengembangkan potensi pertanian dan budidaya bunga dengan teknologi modern
-                            untuk meningkatkan kesejahteraan masyarakat
+                            Mewujudkan keamanan dan ketertiban  di lingkungan  desa Wonokarang
+                                2.	Meningkatkan kesehatan, kebersihan desa serta mengusahakan Jaminan Kesehatan    Masyarakat  melalui program pemerintah.
+                                3.	Mewujudkan dan meningkatkan tata kelola pemerintahan Desa  yang baik, modern, efektif, eficien dan bermoral.
+                                4.	Memberdayakan semua potensi yang ada di masyarakat, yang meliputi : Pemberdayaan sumber daya manusia (SDM), Pemberdayaan sumber daya alam (SDA), dan Pemberdayaan Pertanian, Ekonomi kerakyatan dan Ekonomi Kreatif dan Jasa.
+                                5.	Optimalisasi penyelenggaraan pemerintah desa Wonokarang, yang meliputi :
+                                a.	Melaksanakan prinsip tata Pemerintahan Desa yang akuntabel, transparan, profesional, efektif dan efisien,bersih, serta bebas dari kolusi, korupsi, dan nepotisme.
+                                b.	Pelayanan kepada masyarakat yang prima, yaitu : Cepat, Tepat dan Benar
+                                c.	Pelaksanaan pembangunan yang berkesinambungan dan mengedepankan partisipasi dan gotong royong masyarakat
+                                d.	Meningkatkan sarana dan prasarana dari segi fisik, ekonomi, pendidikan, kesehatan dan kebudayaan di desa.
+                                e.	Meningkatkan kehidupan yang harmonis, toleran, saling menghormati dalam kehidupan berbudaya dan beragama di desa Wonokarang
+                                f.	Mengedepankan kejujuran dan keadilan dalam kehidupan sehari – hari baik dalam pemerintahan maupun dengan masyarakat desa.
                         </p>
                     </div>
 
@@ -67,8 +76,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
                         <p class="text-gray-600">
-                            Menjadi desa mandiri, sejahtera, dan berkelanjutan melalui pengembangan
-                            sektor pertanian dan pariwisata agro
+                           TERWUJUDNYA DESA WONOKARANG YANG MAJU, SEJAHTERA, BERPRESTASI, BERBUDAYA DAN BERAHLAQ MULIA.
                         </p>
                     </div>
 
