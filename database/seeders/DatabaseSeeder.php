@@ -9,6 +9,7 @@ use App\Models\Villager;
 use App\Models\Video;
 use App\Models\MapLocation;
 use App\Models\Potential;
+use App\Models\Aparat;
 
 class DatabaseSeeder extends Seeder
 {
@@ -78,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 'views' => 12543
             ],
             [
-                'title' => 'Program Posyandu Balita',
+                'title' => 'Program Posyandu Balixta',
                 'category' => 'kesehatan',
                 'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -88,8 +89,188 @@ class DatabaseSeeder extends Seeder
                 'views' => 1234
             ],
             [
+                'title' => 'Program Posyandu Balicta',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balhita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balifta',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balista',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balgita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balipta',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balaita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balitka',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balizta',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Baluita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balnita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balbita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Baqlita',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balicta',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balitsa',
+                'category' => 'kesehatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balitai',
+                'category' => 'karang taruna',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balitau',
+                'category' => 'kegiatan',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
+                'title' => 'Program Posyandu Balitaa',
+                'category' => 'ekonomi',
+                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
+                'description' => 'Kegiatan posyandu rutin untuk memantau kesehatan balita di desa',
+                'duration' => '5:42',
+                'status' => 'published',
+                'views' => 1234
+            ],
+            [
                 'title' => 'Pemberdayaan Perempuan Melalui UMKM',
-                'category' => 'perempuan',
+                'category' => 'ekonomi',
                 'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 'thumbnail' => 'https://images.pexels.com/photos/3771115/pexels-photo-3771115.jpeg?auto=compress&cs=tinysrgb&w=800',
                 'description' => 'Program pelatihan keterampilan untuk meningkatkan ekonomi keluarga',
@@ -148,5 +329,7 @@ class DatabaseSeeder extends Seeder
                 $location
             );
         }
+
+        
     }
 }

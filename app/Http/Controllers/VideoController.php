@@ -8,26 +8,42 @@ use Illuminate\Http\Request;
 class VideoController extends Controller
 {
     public function index()
-{
-    $video = Video::where('category', 'profil')
-                  ->where('status', 'published')
-                  ->orderByDesc('created_at')
-                  ->first();
+    {
+        $video = Video::where('category', 'profil')
+                      ->where('status', 'published')
+                      ->orderByDesc('created_at')
+                      ->first();
 
-    if ($video) {
-        $video->incrementViews();
+        if ($video) {
+            $video->incrementViews();
+        }
+
+        return view('about', compact('video'));
     }
-
-    return view('about', compact('video'));
-}
-
-
 
     public function detail($id, Request $request)
 {
     $highlighted = Video::findOrFail($id);
-
     $selectedCategory = $request->query('category');
+
+    // Ambil semua video dalam kategori (termasuk current)
+    $relatedQuery = Video::where('status', 'published')
+        ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
+            $query->where('category', $selectedCategory);
+        })
+        ->orderBy('created_at', 'desc');
+
+    $relatedIds = $relatedQuery->pluck('id')->toArray();
+
+    
+    $currentIndex = array_search($highlighted->id, $relatedIds);
+
+    $previousId = $relatedIds[$currentIndex + 1] ?? null; // video yang lebih lama
+    $nextId = $relatedIds[$currentIndex - 1] ?? null;     // video yang lebih baru
+
+    
+    $previousVideo = $previousId ? Video::find($previousId) : null;
+    $nextVideo = $nextId ? Video::find($nextId) : null;
 
     $beritas = Video::where('status', 'published')
         ->where('id', '!=', $id)
@@ -35,9 +51,9 @@ class VideoController extends Controller
             $query->where('category', $selectedCategory);
         })
         ->latest()
-        ->get();
+        ->paginate(16);
 
-    // ✅ Ambil jumlah berita per kategori
+    // Hitung total per kategori
     $categories = [
         'semua' => Video::where('status', 'published')->count(),
         'kesehatan' => Video::where('status', 'published')->where('category', 'kesehatan')->count(),
@@ -45,10 +61,21 @@ class VideoController extends Controller
         'pertanian' => Video::where('status', 'published')->where('category', 'pertanian')->count(),
         'pemerintahan' => Video::where('status', 'published')->where('category', 'pemerintahan')->count(),
         'pembangunan' => Video::where('status', 'published')->where('category', 'pembangunan')->count(),
-        // tambahkan jika ada kategori lain
+        'kegiatan' => Video::where('status', 'published')->where('category', 'kegiatan')->count(),
+        'pengumuman' => Video::where('status', 'published')->where('category', 'pengumuman')->count(),
+        'berita' => Video::where('status', 'published')->where('category', 'berita')->count(),
+        'umkm' => Video::where('status', 'published')->where('category', 'umkm')->count(),
+        'karangtaruna' => Video::where('status', 'published')->where('category', 'karangtaruna')->count(),
     ];
 
-    return view('detail', compact('highlighted', 'beritas', 'selectedCategory', 'categories'));
+    return view('detail', compact(
+        'highlighted',
+        'beritas',
+        'selectedCategory',
+        'categories',
+        'previousVideo',
+        'nextVideo'
+    ));
 }
 
 }
