@@ -330,41 +330,6 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-         $aparatur = [
-    [
-        'name' => 'Ahmad Suryana',
-        'nip' => '197905151999031001',
-        'position' => 'Kepala Desa',
-        'photo' => 'aparatur/kepala_desa.jpg',
-    ],
-    [
-        'name' => 'Sri Lestari',
-        'nip' => '198008161999032002',
-        'position' => 'Sekretaris Desa',
-        'photo' => 'aparatur/sekretaris_desa.jpg',
-    ],
-    [
-        'name' => 'Budi Santoso',
-        'nip' => '198112171999032003',
-        'position' => 'Kaur Keuangan',
-        'photo' => 'aparatur/kaur_keuangan.jpg',
-    ],
-    [
-        'name' => 'Yuni Kartika',
-        'nip' => '198203181999032004',
-        'position' => 'Kasi Pelayanan',
-        'photo' => 'aparatur/kasi_pelayanan.jpg',
-    ],
-    [
-        'name' => 'Rudi Hartono',
-        'nip' => '198304191999032005',
-        'position' => 'Kasi Pemerintahan',
-        'photo' => 'aparatur/kasi_pemerintahan.jpg',
-    ],
-];
-
-        foreach ($aparatur as $data) {
-            Aparat::create($data);
-        }
+        
     }
 }
