@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Buat akun admin (hindari duplikat)
+       
         User::firstOrCreate(
             ['email' => 'admin@wonokarang.desa.id'],
             [
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Buat data warga
+        
         $villagers = [
             ['name' => 'Ahmad Subagyo', 'nik' => '3301012345678901', 'gender' => 'L', 'birth_date' => '1975-03-15', 'job' => 'Petani', 'education' => 'SMA', 'rt' => '01', 'rw' => '01'],
             ['name' => 'Siti Rahayu', 'nik' => '3301012345678902', 'gender' => 'P', 'birth_date' => '1980-07-22', 'job' => 'Ibu Rumah Tangga', 'education' => 'SMP', 'rt' => '01', 'rw' => '01'],
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // Buat data potensi desa
+        
         Potential::firstOrCreate([
             'title' => 'Pertanian Modern',
             'category' => 'pertanian',
@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=800'
         ]);
 
-        // Buat data video
+      
         $videos = [
             [
                 'title' => 'Profil Desa Mekar Sari 2024',
@@ -287,7 +287,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // Buat data lokasi peta
+        
         $locations = [
             [
                 'name' => 'Balai Desa Mekar Sari',
@@ -329,7 +329,6 @@ class DatabaseSeeder extends Seeder
                 $location
             );
         }
-
         
     }
 }
