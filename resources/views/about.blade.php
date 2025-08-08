@@ -56,8 +56,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
                         <p class="text-gray-600">
-                            Mengembangkan potensi pertanian dan budidaya bunga dengan teknologi modern
-                            untuk meningkatkan kesejahteraan masyarakat
+                            Mewujudkan keamanan dan ketertiban  di lingkungan  desa Wonokarang
                         </p>
                     </div>
 
@@ -67,8 +66,10 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
                         <p class="text-gray-600">
-                            Menjadi desa mandiri, sejahtera, dan berkelanjutan melalui pengembangan
-                            sektor pertanian dan pariwisata agro
+                           Seiring berjalannya waktu, masyarakat desa mulai mengembangkan teknik budidaya modern dan
+                            sustainable farming
+                            yang ramah lingkungan. Kini, Desa Wonokarang dikenal sebagai salah satu desa wisata agro
+                            terbaik.
                         </p>
                     </div>
 

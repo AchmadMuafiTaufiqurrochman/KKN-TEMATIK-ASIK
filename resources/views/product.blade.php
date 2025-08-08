@@ -14,7 +14,7 @@
             </p>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-24">
+        {{-- <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-24">
             @foreach ($potentials as $potential)
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
                     <div class="relative h-64 overflow-hidden">
@@ -31,10 +31,10 @@
 
                     <div class="p-8">
                         <h3 class="text-2xl font-bold text-primary mb-4">{{ $potential->title }}</h3>
-                        <p class="text-gray-700 mb-6 leading-relaxed">{{ $potential->description }}</p>
+                        <p class="text-gray-700 mb-6 leading-relaxed">{{ $potential->description }}</p> --}}
 
                         {{-- Statistik --}}
-                        <div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg mb-6">
+                        {{-- <div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg mb-6">
                             @if ($potential->category === 'pertanian')
                                 <div class="text-center">
                                     <div class="text-lg font-bold text-primary">150 Ha</div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
 
         {{-- === PRODUK DESA === --}}
         <div class="text-center mb-10">
@@ -101,36 +101,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($potentials as $potential)
-                        @foreach ($potential->products as $product)
-                            <tr class="product-row border-b whitespace-nowrap hover:bg-gray-50 transition duration-300" data-category="{{ $potential->category }}">
-                                <td class="px-4 py-3">
-                                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded">
-                                </td>
-                                <td class="px-4 py-3 font-semibold text-gray-800">{{ $product->name }}</td>
-                                <td class="px-4 py-3 text-gray-600 break-words">{{ Str::limit($product->description, 100) }}</td>
-                                <td class="px-4 py-3">
-                                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize
-                                        @if ($potential->category === 'pertanian') bg-green-100 text-green-800
-                                        @elseif($potential->category === 'budidaya-bunga') bg-pink-100 text-pink-700
-                                        @else bg-gray-100 text-gray-700 @endif">
-                                        {{ $potential->category }}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3">
-                                    @if ($product->whatsapp_number)
-                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->whatsapp_number) }}" target="_blank"
-                                            class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 transition duration-200">
-                                            <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                            Hubungi
-                                        </a>
-                                    @else
-                                        <span class="text-gray-400 text-sm italic">Tidak tersedia</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
+                    @foreach ($products as $product)
+                        <tr class="product-row border-b whitespace-nowrap hover:bg-gray-50 transition duration-300" data-category="{{ $product->category }}">
+                            <td class="px-4 py-3">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" class="w-16 h-16 object-cover rounded">
+                            </td>
+                            <td class="px-4 py-3 font-semibold text-gray-800">{{ $product->title }}</td>
+                            <td class="px-4 py-3 text-gray-600 break-words">{{ Str::limit($product->description, 100) }}</td>
+                            <td class="px-4 py-3">
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize
+                                    @if ($product->category === 'pertanian') bg-green-100 text-green-800
+                                    @elseif($product->category === 'budidaya-bunga') bg-pink-100 text-pink-700
+                                    @else bg-gray-100 text-gray-700 @endif">
+                                    {{ $product->category }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                @if ($product->contact)
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->contact) }}" target="_blank"
+                                        class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 transition duration-200">
+                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                        Hubungi
+                                    </a>
+                                @else
+                                    <span class="text-gray-400 text-sm italic">Tidak tersedia</span>
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>
