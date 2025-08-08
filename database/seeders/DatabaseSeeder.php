@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 'views' => 12543
             ],
             [
-                'title' => 'Program Posyandu Balixta',
+                'title' => 'Program Posyandu Baliiiiiixta',
                 'category' => 'kesehatan',
                 'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 'thumbnail' => 'https://images.pexels.com/photos/6303768/pexels-photo-6303768.jpeg?auto=compress&cs=tinysrgb&w=800',
