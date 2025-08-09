@@ -9,6 +9,6 @@ class PotentialController extends Controller
     public function index()
     {
         $potentials = Potential::all();
-        return view('potential', compact('potentials'));
+        return view('product', compact('potentials'));
     }
 }

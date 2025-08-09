@@ -24,8 +24,12 @@ jobs:
           script: |
             cd /var/www/KKN-TEMATIK-ASIK
             echo "Pulling from repo"
-            git pull origin main
+            git pull origin dev
             echo "Git status"
             git status
             php artisan migrate --force
             php artisan db:seed --force
+            php artisan cache:clear
+            php artisan config:clear
+            php artisan view:clear
+            php artisan route:clear
