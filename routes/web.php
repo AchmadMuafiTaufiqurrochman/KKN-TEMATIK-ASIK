@@ -28,6 +28,11 @@ Route::get('/documentation', [DocumentationController::class, 'index'])->name('d
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
 
+Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
+Route::get('/detailpotensi/{id}', [PotentialController::class, 'detailPotensi'])->name('detailpotensi');
+Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('allpotensi');
+
+
 
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');

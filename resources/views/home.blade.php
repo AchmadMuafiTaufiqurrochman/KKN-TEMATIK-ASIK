@@ -184,7 +184,7 @@
                             <p class="text-gray-700 mb-4">
                                 {{ Str::limit($potential->description, 100) }}
                             </p>
-                            <a href="{{ route('potential') }}"
+                            <a href="{{ route('detailpotensi', $potential->id) }}"
                                 class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
                                 Lihat Detail
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -192,14 +192,6 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-
-            <div class="text-center mt-12">
-                <a href="{{ route('potential') }}"
-                    class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
-                    Lihat Semua Potensi
-                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </a>
             </div>
         </div>
     </section>
