@@ -7,72 +7,46 @@
     <div class="container mx-auto px-4">
 
         {{-- === POTENSI DESA === --}}
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-primary mb-4">Potensi Desa</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Eksplorasi potensi unggulan yang dimiliki Desa Wonokarang
-            </p>
-        </div>
+     <section class="relative py-20 bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/2165740/pexels-photo-2165740.jpeg')">
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div class="relative container mx-auto px-4 text-white">
 
-        {{-- <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-24">
-            @foreach ($potentials as $potential)
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="{{ $potential->image }}" alt="{{ $potential->title }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                        <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
-                            @if ($potential->category === 'pertanian')
-                                <i data-lucide="leaf" class="w-12 h-12 text-green-600"></i>
-                            @else
-                                <i data-lucide="flower" class="w-12 h-12 text-pink-600"></i>
-                            @endif
-                        </div>
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Potensi Desa Wonokarang</h2>
+                    <p class="text-xl max-w-3xl mx-auto text-gray-200 drop-shadow">
+                        Desa Wonokarang memiliki beragam potensi unggulan yang menjadi kebanggaan masyarakat,
+                        mulai dari hasil pertanian, kerajinan, hingga produk olahan khas bernilai tinggi.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 text-center hover:-translate-y-2 transition transform duration-300">
+                        <div class="text-5xl mb-3">🌾</div>
+                        <h3 class="font-bold text-lg mb-2 text-primary">Pertanian</h3>
+                        <p class="text-gray-700 text-sm">Hasil bumi seperti padi, jagung, dan sayuran segar dari ladang warga.</p>
                     </div>
-
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">{{ $potential->title }}</h3>
-                        <p class="text-gray-700 mb-6 leading-relaxed">{{ $potential->description }}</p> --}}
-
-                        {{-- Statistik --}}
-                        {{-- <div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg mb-6">
-                            @if ($potential->category === 'pertanian')
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">150 Ha</div>
-                                    <div class="text-sm text-gray-600">Luas Area</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">320 Petani</div>
-                                    <div class="text-sm text-gray-600">Petani</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">850 Ton/Tahun</div>
-                                    <div class="text-sm text-gray-600">Produksi</div>
-                                </div>
-                            @else
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">75 Ha</div>
-                                    <div class="text-sm text-gray-600">Luas Area</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">180 Petani</div>
-                                    <div class="text-sm text-gray-600">Petani</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-primary">2.5 Juta Batang/Tahun</div>
-                                    <div class="text-sm text-gray-600">Produksi</div>
-                                </div>
-                            @endif
-                        </div>
-
-                        <button class="w-full bg-secondary text-primary py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center justify-center gap-2 group">
-                            Lihat Detail
-                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                        </button>
+                    <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 text-center hover:-translate-y-2 transition transform duration-300">
+                        <div class="text-5xl mb-3">🌸</div>
+                        <h3 class="font-bold text-lg mb-2 text-primary">Budidaya Bunga</h3>
+                        <p class="text-gray-700 text-sm">Bunga hias berkualitas yang menjadi daya tarik pasar lokal maupun luar daerah.</p>
+                    </div>
+                    <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 text-center hover:-translate-y-2 transition transform duration-300">
+                        <div class="text-5xl mb-3">🛍️</div>
+                        <h3 class="font-bold text-lg mb-2 text-primary">UMKM & Kerajinan</h3>
+                        <p class="text-gray-700 text-sm">Kerajinan tangan unik hasil kreativitas masyarakat setempat.</p>
+                    </div>
+                    <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 text-center hover:-translate-y-2 transition transform duration-300">
+                        <div class="text-5xl mb-3">🍯</div>
+                        <h3 class="font-bold text-lg mb-2 text-primary">Produk Olahan</h3>
+                        <p class="text-gray-700 text-sm">Makanan dan minuman khas yang diolah dari bahan-bahan lokal berkualitas.</p>
                     </div>
                 </div>
-            @endforeach
-        </div> --}}
 
+
+            </div>
+        </section>
+
+        <br>
         {{-- === PRODUK DESA === --}}
         <div class="text-center mb-10">
             <h2 class="text-4xl font-bold text-primary mb-4">Katalog Produk Desa</h2>
@@ -82,33 +56,41 @@
         </div>
 
         {{-- Filter Kategori --}}
-        <div class="flex justify-center flex-wrap gap-4 mb-6">
-            <button onclick="filterProductCategory('all', event)" class="product-filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold">Semua</button>
-            <button onclick="filterProductCategory('pertanian', event)" class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">Pertanian</button>
-            <button onclick="filterProductCategory('budidaya-bunga', event)" class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">Budidaya Bunga</button>
-        </div>
+       <div class="flex justify-center flex-wrap gap-4 mb-6">
+    <button onclick="filterProductCategory('all', event)" class="product-filter-btn bg-primary text-white px-4 py-2 rounded-full font-semibold">Semua</button>
+
+    @foreach ($categories as $category)
+        <button onclick="filterProductCategory('{{ $category }}', event)" class="product-filter-btn bg-white text-primary border border-gray-300 px-4 py-2 rounded-full font-semibold hover:bg-secondary hover:text-white transition">
+            {{ ucfirst(str_replace('-', ' ', $category)) }}
+        </button>
+    @endforeach
+</div>
 
         {{-- TABEL RESPONSIF --}}
-        <div class="overflow-x-auto max-w-7xl mx-auto rounded-lg">
-            <table class="min-w-[700px] w-full border-collapse text-sm bg-white shadow-xl rounded-xl" id="product-table">
+            <div class="overflow-x-auto max-w-7xl mx-auto rounded-lg">
+            <table class="min-w-full w-full border-collapse text-sm bg-white shadow-xl rounded-xl table-fixed" id="product-table">
                 <thead>
-                    <tr class="bg-primary text-white whitespace-nowrap">
-                        <th class="px-4 py-3">Gambar</th>
-                        <th class="px-4 py-3">Nama Produk</th>
-                        <th class="px-4 py-3">Deskripsi</th>
-                        <th class="px-4 py-3">Kategori</th>
-                        <th class="px-4 py-3">Aksi</th>
+                    <tr class="bg-primary text-white text-left">
+                        <th class="w-24 px-4 py-3">Gambar</th>
+                        <th class="w-1/4 px-4 py-3">Nama Produk</th>
+                        <th class="w-2/5 px-4 py-3">Deskripsi</th>
+                        <th class="w-1/6 px-4 py-3">Kategori</th>
+                        <th class="w-32 px-4 py-3">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                        <tr class="product-row border-b whitespace-nowrap hover:bg-gray-50 transition duration-300" data-category="{{ $product->category }}">
-                            <td class="px-4 py-3">
+                        <tr class="product-row border-b hover:bg-gray-50 transition duration-300" data-category="{{ $product->category }}">
+                            <td class="px-4 py-3 align-top">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" class="w-16 h-16 object-cover rounded">
                             </td>
-                            <td class="px-4 py-3 font-semibold text-gray-800">{{ $product->title }}</td>
-                            <td class="px-4 py-3 text-gray-600 break-words">{{ Str::limit($product->description, 100) }}</td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 font-semibold text-gray-800 align-top break-words">
+                                {{ $product->title }}
+                            </td>
+                            <td class="px-4 py-3 text-gray-600 align-top break-words">
+                                {{ Str::limit($product->description, 100) }}
+                            </td>
+                            <td class="px-4 py-3 align-top">
                                 <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize
                                     @if ($product->category === 'pertanian') bg-green-100 text-green-800
                                     @elseif($product->category === 'budidaya-bunga') bg-pink-100 text-pink-700
@@ -116,7 +98,7 @@
                                     {{ $product->category }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 align-top">
                                 @if ($product->contact)
                                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->contact) }}" target="_blank"
                                         class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 transition duration-200">

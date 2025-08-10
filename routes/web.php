@@ -21,30 +21,31 @@ use App\Http\Controllers\ProductController;
 
 
 // Public routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
-Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
-Route::get('/map', [MapController::class, 'index'])->name('map');
-Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+    Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
+    Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
+    Route::get('/map', [MapController::class, 'index'])->name('map');
+    Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
 
 
 // Public
-Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
-Route::get('/potential', [ProductController::class, 'index'])->name('potential');
-Route::get('/product', [ProductController::class, 'index'])->name('product');
-Route::get('/produk-desa', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
+    Route::get('/potential', [ProductController::class, 'index'])->name('potential');
+    Route::get('/product', [ProductController::class, 'index'])->name('product');
+    Route::get('/produk-desa', [ProductController::class, 'index'])->name('products.index');
+
 
 
 
 // Authentication routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Admin routes (protected)
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     // Villagers management
     Route::get('/citizens', [VillagerController::class, 'index'])->name('citizens.index');
@@ -53,18 +54,22 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/citizens/{villager}', [VillagerController::class, 'destroy'])->name('citizens.destroy');
 
     // Videos management
-   Route::get('/videos', [AdminVideoController::class, 'index'])->name('videos.index');
-Route::get('/videos/create', [AdminVideoController::class, 'create'])->name('videos.create');
-Route::get('/videos/{id}/edit', [AdminVideoController::class, 'edit'])->name('videos.edit');
-Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
-Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
-Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
+    Route::get('/videos', [AdminVideoController::class, 'index'])->name('videos.index');
+    Route::get('/videos/create', [AdminVideoController::class, 'create'])->name('videos.create');
+    Route::get('/videos/{id}/edit', [AdminVideoController::class, 'edit'])->name('videos.edit');
+    Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
+    Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
 
     // Product Catalog management
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
     Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+    Route::resource('admin/products', AdminProductController::class)->except(['show']);
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
 
 
 

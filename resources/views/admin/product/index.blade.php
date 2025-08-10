@@ -10,7 +10,7 @@
             <p class="text-gray-600">Kelola data produk unggulan dari Desa Wonokarang</p>
         </div>
     </div>
-
+    
     <div class="container mx-auto px-4 py-8">
         @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
@@ -51,12 +51,22 @@
                         <td class="px-6 py-4 text-gray-600">{{ $product->category }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->contact }}</td>
                         <td class="px-6 py-4">
-                            <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
-                                @csrf @method('DELETE')
-                                <button class="text-red-600 hover:text-red-800 transition-colors">
-                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            <div class="flex items-center gap-2">
+                                <!-- Tombol Edit -->
+                                <button type="button"
+                                    onclick="openEditModal({{ $product->id }}, '{{ addslashes($product->title) }}', '{{ addslashes($product->description) }}', '{{ $product->category }}', '{{ $product->contact }}', '{{ $product->status }}')"
+                                    class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+                                    <i data-lucide="edit" class="w-5 h-5"></i>
                                 </button>
-                            </form>
+
+                                <!-- Tombol Hapus -->
+                                <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
+                                    @csrf @method('DELETE')
+                                    <button class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors">
+                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @empty
@@ -102,6 +112,38 @@
     </div>
 </div>
 
+<!-- Modal Edit Produk -->
+<div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 class="text-lg font-bold text-primary mb-4">Edit Produk</h3>
+
+            <form id="editProductForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="space-y-4">
+                    <input id="edit_title" name="title" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                    <textarea id="edit_description" name="description" required class="w-full border px-3 py-2 rounded-lg text-gray-700"></textarea>
+                    <select id="edit_category" name="category" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                        <option value="">Pilih Kategori</option>
+                        <option value="Pertanian">Pertanian</option>
+                        <option value="Budidaya-Bunga">Budidaya-Bunga</option>
+                    </select>
+                    <input id="edit_contact" name="contact" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                    <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
+                    <select id="edit_status" name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                        <option value="published">Publish</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                </div>
+                <div class="flex gap-4 mt-6">
+                    <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Update</button>
+                    <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
 function openAddModal() {
     document.getElementById('productModal').classList.remove('hidden');
@@ -114,5 +156,27 @@ function closeModal() {
 document.getElementById('productModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
+
+function openEditModal(id, title, description, category, contact, status) {
+    document.getElementById('edit_title').value = title;
+    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_category').value = category;
+    document.getElementById('edit_contact').value = contact;
+    document.getElementById('edit_status').value = status;
+
+    // Atur action form edit sesuai ID produk
+    document.getElementById('editProductForm').action = `/admin/products/${id}`;
+
+    document.getElementById('editProductModal').classList.remove('hidden');
+}
+
+function closeEditModal() {
+    document.getElementById('editProductModal').classList.add('hidden');
+}
+
+document.getElementById('editProductModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+});
+
 </script>
 @endsection
