@@ -15,7 +15,7 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8);
             $table->enum('type', ['balai', 'pertanian', 'bunga', 'posyandu']);
             $table->text('description');
-             $table->text('iframe');
+             $table->text('iframe')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

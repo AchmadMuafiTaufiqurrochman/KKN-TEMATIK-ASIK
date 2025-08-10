@@ -250,57 +250,51 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-                @foreach ($featuredVideos as $video)
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                        <div class="relative h-48">
-                            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
-                                class="w-full h-full object-cover" />
-                            <div
-                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <div
-                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    @if ($video->type === 'video')
-                                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
-                                    @else
-                                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                {{ $video->duration }}
-                            </div>
-                            <div class="absolute top-2 right-2">
-                                @if ($video->is_finished)
-                                    <span
-                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
-                                @else
-                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
-                                        Dimulai</span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {!! $video->description !!}
-                            </div>
-                            <div class="flex items-center justify-between text-sm text-gray-500">
-                                <div class="flex items-center gap-1">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
-                                    <span>{{ number_format($video->views) }} views</span>
-                                </div>
-                                <div class="flex items-center gap-1">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>{{ $video->created_at->format('d M Y') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+           <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+    @foreach ($featuredVideos as $video)
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+            <div class="relative h-40 md:h-48">
+                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                    class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    @if ($video->type === 'video')
+                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                    @else
+                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                    @endif
+                </div>
+                <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    {{ $video->duration }}
+                </div>
+                <div class="absolute top-2 right-2">
+                    @if ($video->is_finished)
+                        <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                    @else
+                        <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan Dimulai</span>
+                    @endif
+                </div>
             </div>
+
+            <div class="p-4 md:p-6">
+                <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
+                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {!! $video->description !!}
+                </div>
+                <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        <span>{{ number_format($video->views) }} views</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <span>{{ $video->created_at->format('d M Y') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+
 
             <div class="text-center mt-12">
                 <a href="{{ route('documentation') }}"
