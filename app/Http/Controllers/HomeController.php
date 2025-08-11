@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Villager;
 use App\Models\Potential;
 use App\Models\Video;
+use App\Models\Aparat; // <--- Tambahkan ini
 
 class HomeController extends Controller
 {
@@ -22,13 +23,14 @@ class HomeController extends Controller
             ->where('status', 'published')
             ->first();
 
-        // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
         $featuredVideos = Video::where('status', 'published')
-            ->whereNot('category', 'profil') // optional: exclude video profil
+            ->whereNot('category', 'profil')
             ->latest()
             ->take(3)
             ->get();
 
-        return view('home', compact('stats', 'potentials', 'featured_video', 'featuredVideos'));
+        $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
+
+        return view('home', compact('stats', 'potentials', 'featured_video', 'featuredVideos', 'kepalaDesa'));
     }
 }
