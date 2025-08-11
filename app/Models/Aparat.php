@@ -17,5 +17,9 @@ class Aparat extends Model
         'position',
         'gender',
         'photo',
+         'motto',
+    'misi',
+    'visi',
+    'prestasi',
     ];
 }
