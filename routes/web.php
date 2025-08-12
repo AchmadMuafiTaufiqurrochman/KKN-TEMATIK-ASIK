@@ -79,10 +79,10 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
 
-    Route::get('/admin/aparat', [AparatController::class, 'index'])->name('aparat.index');
-    Route::post('/admin/aparat', [AparatController::class, 'store'])->name('aparat.store');
-    Route::post('/admin/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
-    Route::delete('/admin/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
+    Route::get('/aparat', [AparatController::class, 'index'])->name('aparat.index');
+    Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
+    Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
     
 
 });

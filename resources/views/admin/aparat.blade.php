@@ -207,13 +207,16 @@
             document.getElementById('aparatModal').classList.remove('hidden');
         }
 
-        function openEditModal(id) {
-            document.getElementById('modalTitle').textContent = 'Edit Aparat';
-            document.getElementById('aparatForm').action = `{{ url('/admin/aparat') }}/${id}`;
-           document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PUT">';
+      function openEditModal(id) {
+    document.getElementById('modalTitle').textContent = 'Edit Aparat';
+    let url = "{{ route('admin.aparat.update', ':id') }}".replace(':id', id);
+    document.getElementById('aparatForm').action = url;
 
-            document.getElementById('aparatModal').classList.remove('hidden');
-        }
+    document.getElementById('methodField').innerHTML =
+        '<input type="hidden" name="_method" value="PUT">';
+    document.getElementById('aparatModal').classList.remove('hidden');
+}
+
 
         function closeModal() {
             document.getElementById('aparatModal').classList.add('hidden');
