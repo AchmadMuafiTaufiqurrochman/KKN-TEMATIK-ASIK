@@ -196,41 +196,63 @@
         </div>
     </section>
 
-    <!-- Video Preview -->
-    @if ($featured_video)
-        <section class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
-                    <p class="text-xl text-gray-600">
-                        Saksikan keindahan dan potensi Desa Wonokarang
-                    </p>
-                </div>
+    <section class="py-20 bg-white pt-10">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Saksikan keindahan dan potensi Desa Wonokarang melalui video profil yang menampilkan kehidupan
+                    sehari-hari masyarakat
+                </p>
+            </div>
 
-                <div class="max-w-3xl mx-auto">
-                    <div class="relative group cursor-pointer">
-                        <img src="{{ $featured_video->thumbnail }}" alt="Video Thumbnail"
-                            class="w-full h-64 lg:h-80 object-cover rounded-xl" />
-                        <div
-                            class="absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center group-hover:bg-black/50 transition-colors">
-                            <div
-                                class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-10 h-10 text-white ml-1"></i>
+            @if ($video)
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <iframe src="{{ $video->video_url }}" title="{{ $video->title }}" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="p-8">
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-primary mb-2">{{ $video->title }}</h3>
+                                    <div class="flex items-center gap-6 text-gray-600">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                                            <span>Dipublikasikan {{ $video->created_at->format('d F Y') }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
+                                            <span>{{ number_format($video->views) }} views</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="{{ route('about') }}"
+                                    class="mt-4 lg:mt-0 bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center gap-2">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                    Selengkapnya
+                                </a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="text-center mt-8">
-                        <a href="{{ route('about') }}"
-                            class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">
-                            Tonton Video Lengkap
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
-            </div>
-        </section>
-    @endif
+            @else
+                <div class="text-center py-12">
+                    <p class="text-gray-500 text-lg">
+                        Video profil belum tersedia saat ini. Silakan cek kembali nanti.
+                    </p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+
 
     <!-- Dokumentasi Unggulan -->
     <section class="py-20 bg-white">

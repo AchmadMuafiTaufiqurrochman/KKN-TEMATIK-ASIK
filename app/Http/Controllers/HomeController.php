@@ -19,9 +19,16 @@ class HomeController extends Controller
         ];
 
         $potentials = Potential::take(2)->get();
-        $featured_video = Video::where('category', 'profil')
-            ->where('status', 'published')
-            ->first();
+       
+        // Ambil video profil terbaru
+        $video = Video::where('category', 'profil')
+                      ->where('status', 'published')
+                      ->orderByDesc('created_at')
+                      ->first();
+
+        if ($video) {
+            $video->incrementViews();
+        }
 
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil')
@@ -29,8 +36,10 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+
+
         $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
 
-        return view('home', compact('stats', 'potentials', 'featured_video', 'featuredVideos', 'kepalaDesa'));
+        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video'));
     }
 }
