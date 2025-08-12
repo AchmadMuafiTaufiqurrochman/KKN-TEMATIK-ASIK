@@ -15,7 +15,7 @@
 
             <div class="grid lg:grid-cols-4 gap-8">
                 <!-- Map Area -->
-                <div class="lg:col-span-3">
+                <div class="lg:col  -span-3">
                     <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                         <div id="map" class="h-96 lg:h-[500px] relative"></div>
 
@@ -107,33 +107,7 @@
                         </div>
                     </div>
 
-                    <!-- Location List -->
-                    <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-lg font-bold text-primary mb-4">Daftar Lokasi</h3>
-                        <div class="space-y-3 max-h-60 overflow-y-auto">
-                            @foreach ($locations as $location)
-                                <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors location-item"
-                                    data-type="{{ $location->type }}">
-                                    <div
-                                        class="{{ $location->type_color }} w-6 h-6 rounded-full flex items-center justify-center text-white flex-shrink-0">
-                                        @if ($location->type === 'balai')
-                                            <i data-lucide="home" class="w-3 h-3"></i>
-                                        @elseif($location->type === 'pertanian')
-                                            <i data-lucide="leaf" class="w-3 h-3"></i>
-                                        @elseif($location->type === 'bunga')
-                                            <i data-lucide="flower" class="w-3 h-3"></i>
-                                        @else
-                                            <i data-lucide="heart" class="w-3 h-3"></i>
-                                        @endif
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-primary text-sm">{{ $location->name }}</h4>
-                                        <p class="text-gray-600 text-xs mt-1">{{ $location->description }}</p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                   
 
                     <!-- Statistics -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">

@@ -266,50 +266,62 @@
 
             <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
                 @foreach ($featuredVideos as $video)
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                        <div class="relative h-40 md:h-48">
-                            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
-                                class="w-full h-full object-cover" />
-                            <div
-                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                @if ($video->type === 'video')
-                                    <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
-                                @else
-                                    <i data-lucide="image" class="w-8 h-8 text-white"></i>
-                                @endif
+                    <a href="{{ route('berita.detail', $video->id) }}">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+                            <div class="relative h-40 md:h-48">
+                                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                                    class="w-full h-full object-cover" />
+                                <div
+                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    @if ($video->type === 'video')
+                                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                                    @else
+                                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                                    @endif
+                                </div>
+                                <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                    {{ $video->duration }}
+                                </div>
+                                <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
+                                <span class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+                                    @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                    @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                    @else bg-green-100 text-green-800 @endif">
+                                    {{ ucfirst($video->category) }}
+                                </span>
                             </div>
-                            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                {{ $video->duration }}
+                                <div class="absolute top-2 right-2">
+                                    @if ($video->is_finished)
+                                        <span
+                                            class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                    @else
+                                        <span
+                                            class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                            Dimulai</span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="absolute top-2 right-2">
-                                @if ($video->is_finished)
-                                    <span
-                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
-                                @else
-                                    <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
-                                        Dimulai</span>
-                                @endif
-                            </div>
-                        </div>
 
-                        <div class="p-4 md:p-6">
-                            <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}
-                            </h3>
-                            <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {!! $video->description !!}
-                            </div>
-                            <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
-                                <div class="flex items-center gap-1">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
-                                    <span>{{ number_format($video->views) }} views</span>
+                            <div class="p-4 md:p-6">
+                                <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">
+                                    {{ $video->title }}
+                                </h3>
+                                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                    {!! $video->description !!}
                                 </div>
-                                <div class="flex items-center gap-1">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                                    <span>{{ $video->created_at->format('d M Y') }}</span>
+                                <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
+                                    <div class="flex items-center gap-1">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                        <span>{{ number_format($video->views) }} views</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                                        <span>{{ $video->created_at->format('d M Y') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
 

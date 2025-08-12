@@ -38,10 +38,10 @@
 
             <!-- User Menu & Social Media -->
             <div class="hidden lg:flex items-center space-x-4">
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="facebook" class="w-5 h-5 social-icon"></i>
-                    <i data-lucide="instagram" class="w-5 h-5 social-icon"></i>
-                    <i data-lucide="youtube" class="w-5 h-5 social-icon"></i>
+               <div class="flex items-center space-x-2">
+                    <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                    <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                    <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
                 </div>
                 
                 @auth
