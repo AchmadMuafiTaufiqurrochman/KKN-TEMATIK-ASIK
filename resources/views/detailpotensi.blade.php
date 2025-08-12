@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- Gunakan layout utama, tanpa header di sini --}}
+@extends('layouts.app') 
 
 @section('title', $potential->title)
 
