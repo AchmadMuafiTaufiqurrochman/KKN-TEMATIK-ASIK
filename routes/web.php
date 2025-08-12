@@ -28,6 +28,11 @@ Route::get('/documentation', [DocumentationController::class, 'index'])->name('d
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
 
+Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
+Route::get('/detailpotensi/{id}', [PotentialController::class, 'detailPotensi'])->name('detailpotensi');
+Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('allpotensi');
+
+
 
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
@@ -74,10 +79,10 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
 
-    Route::get('/admin/aparat', [AparatController::class, 'index'])->name('aparat.index');
-    Route::post('/admin/aparat', [AparatController::class, 'store'])->name('aparat.store');
-    Route::post('/admin/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
-    Route::delete('/admin/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
-
+    Route::get('/aparat', [AparatController::class, 'index'])->name('aparat.index');
+    Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
+    Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
+    
 
 });
