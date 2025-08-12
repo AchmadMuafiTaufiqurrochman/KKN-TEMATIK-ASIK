@@ -15,7 +15,7 @@
 
             <div class="grid lg:grid-cols-4 gap-8">
                 <!-- Map Area -->
-                <div class="lg:col  -span-3">
+                <div class="lg:col-span-3">
                     <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                         <div id="map" class="h-96 lg:h-[500px] relative"></div>
 
