@@ -211,7 +211,7 @@
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="relative">
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="{{ $video->video_url }}" title="{{ $video->title }}" frameborder="0"
+                                <iframe src="{{ $video->embed_video_url }}" title="{{ $video->title }}" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
                             </div>
@@ -269,7 +269,7 @@
                     <a href="{{ route('berita.detail', $video->id) }}">
                         <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
                             <div class="relative h-40 md:h-48">
-                                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
+                                <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}"
                                     class="w-full h-full object-cover" />
                                 <div
                                     class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

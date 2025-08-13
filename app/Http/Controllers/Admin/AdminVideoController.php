@@ -83,10 +83,10 @@ class AdminVideoController extends Controller
         // Upload thumbnail
         if ($type === 'video' && $request->hasFile('video_thumbnail')) {
             $path = $request->file('video_thumbnail')->store('berita-gambar', 'public');
-            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['thumbnail'] = $path;
         } elseif ($type === 'gambar' && $request->hasFile('image_thumbnail')) {
             $path = $request->file('image_thumbnail')->store('berita-gambar', 'public');
-            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['thumbnail'] = $path;
             $validated['video_url'] = null;
             $validated['duration'] = null;
         }
@@ -127,10 +127,10 @@ class AdminVideoController extends Controller
         // Upload thumbnail jika ada
         if ($type === 'video' && $request->hasFile('video_thumbnail')) {
             $path = $request->file('video_thumbnail')->store('berita-gambar', 'public');
-            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['thumbnail'] = $path;
         } elseif ($type === 'gambar' && $request->hasFile('image_thumbnail')) {
             $path = $request->file('image_thumbnail')->store('berita-gambar', 'public');
-            $validated['thumbnail'] = 'storage/' . $path;
+            $validated['thumbnail'] = $path;
         }
 
         // Pastikan jika tipe gambar, video_url & duration null

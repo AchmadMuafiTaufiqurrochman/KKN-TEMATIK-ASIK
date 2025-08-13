@@ -33,6 +33,39 @@ class Video extends Model
         $this->increment('views');
     }
 
+    public function getThumbnailUrlAttribute()
+    {
+        if (!$this->thumbnail) {
+            return asset('img/placeholder.jpg');
+        }
+        
+        // Jika path sudah mengandung 'storage/', gunakan asset langsung
+        if (strpos($this->thumbnail, 'storage/') === 0) {
+            return asset($this->thumbnail);
+        }
+        
+        // Jika tidak, tambahkan 'storage/' prefix
+        return asset('storage/' . $this->thumbnail);
+    }
+
+    public function getEmbedVideoUrlAttribute()
+    {
+        $url = $this->video_url;
+        
+        if (!$url) {
+            return null;
+        }
+        
+        // Convert YouTube watch URL to embed URL
+        if (strpos($url, 'youtube.com/watch') !== false) {
+            return str_replace('watch?v=', 'embed/', $url);
+        } elseif (strpos($url, 'youtu.be/') !== false) {
+            return str_replace('youtu.be/', 'youtube.com/embed/', $url);
+        }
+        
+        return $url;
+    }
+
     public function getCategoryTextAttribute()
     {
         $categories = [
