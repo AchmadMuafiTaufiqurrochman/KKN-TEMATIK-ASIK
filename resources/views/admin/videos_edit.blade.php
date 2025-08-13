@@ -148,7 +148,25 @@
     <script>
         let quill = new Quill('#quill-description', {
             theme: 'snow',
-            placeholder: 'Tulis isi berita di sini...'
+            placeholder: 'Tulis isi berita di sini...',
+             modules: {
+                    toolbar: [
+                        [{
+                            header: [1, 2, false]
+                        }],
+                        ['bold', 'italic', 'underline'],
+                        [{
+                            'align': []
+                        }], // <- ini buat rata kiri, tengah, kanan, justify
+                        [{
+                            list: 'ordered'
+                        }, {
+                            list: 'bullet'
+                        }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
         });
 
         const form = document.getElementById('videoForm');
