@@ -40,7 +40,7 @@ class AparatController extends Controller
         'misi' => 'nullable|string',
         'prestasi' => 'nullable|string',
         'gender' => 'required|in:L,P',
-        'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:25600',
     ]);
 
     if ($request->hasFile('photo')) {
@@ -66,7 +66,7 @@ class AparatController extends Controller
     'misi' => 'nullable|string',
     'prestasi' => 'nullable|string',
     'gender' => 'required|in:L,P',
-    'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:25600',
 ]);
 
 

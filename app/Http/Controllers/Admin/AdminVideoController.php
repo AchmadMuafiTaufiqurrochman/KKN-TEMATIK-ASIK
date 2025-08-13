@@ -80,7 +80,7 @@ class AdminVideoController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'category' => 'required|in:' . implode(',', $this->allCategories),
-                'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:25600',
                 'description' => 'required|string',
                 'status' => 'required|in:published,draft',
                 'started_at' => 'required|date',
@@ -119,7 +119,7 @@ class AdminVideoController extends Controller
         'video_url' => 'nullable|string',
         'duration' => 'nullable|string',
         'thumbnail' => $request->type === 'gambar'
-            ? 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            ? 'nullable|image|mimes:jpg,jpeg,png|max:25600'
             : 'nullable|string',
     ]);
 

@@ -25,7 +25,7 @@ class AdminProductController extends Controller
             'description' => 'required',
             'category' => 'required',
             'contact' => 'required',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:25600',
             'status' => 'required',
         ]);
 
