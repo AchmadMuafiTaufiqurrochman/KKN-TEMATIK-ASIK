@@ -123,7 +123,7 @@
             </div>
 
             <div class="flex justify-end mt-6">
-                <button type="button" onclick="document.getElementById('videoForm').submit()"
+                <button type="submit"
                     class="relative z-50 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
                     Perbarui
                 </button>
@@ -223,15 +223,20 @@
         });
 
         form.addEventListener('submit', function(e) {
-            const html = quill.root.innerHTML.trim();
-
-            if (!html || html === '<p><br></p>') {
-                e.preventDefault();
-                alert("Deskripsi tidak boleh kosong!");
-                return;
+            e.preventDefault(); // Prevent form submission
+            
+            // Validasi form
+            if (validateForm()) {
+                const html = quill.root.innerHTML.trim();
+                
+                if (!html || html === '<p><br></p>') {
+                    alert("Deskripsi tidak boleh kosong!");
+                    return;
+                }
+                
+                hiddenInput.value = html;
+                this.submit(); // Submit form jika validasi berhasil
             }
-
-            hiddenInput.value = html;
         });
 
         // Set isi awal ke Quill
@@ -272,6 +277,107 @@
                 }
             }
         });
+        
+        function validateForm() {
+            let isValid = true;
+            let errorMessages = [];
+
+            // Validasi Judul
+            const title = document.querySelector('input[name="title"]').value.trim();
+            if (!title) {
+                errorMessages.push('• Judul artikel harus diisi');
+                isValid = false;
+            }
+
+            // Validasi Deskripsi
+            const quillContent = document.querySelector('.ql-editor').innerHTML.trim();
+            if (!quillContent || quillContent === '<p><br></p>') {
+                errorMessages.push('• Deskripsi berita harus diisi');
+                isValid = false;
+            }
+
+            // Validasi Kategori
+            const categorySelected = document.querySelector('input[name="category"]:checked');
+            if (!categorySelected) {
+                errorMessages.push('• Kategori harus dipilih');
+                isValid = false;
+            }
+
+            // Validasi Tipe Berita
+            const typeSelected = document.querySelector('input[name="type"]:checked');
+            if (!typeSelected) {
+                errorMessages.push('• Tipe berita harus dipilih');
+                isValid = false;
+            }
+
+            // Validasi Tanggal
+            const startedAt = document.querySelector('input[name="started_at"]').value;
+            if (!startedAt) {
+                errorMessages.push('• Tanggal harus diisi');
+                isValid = false;
+            }
+
+            // Validasi berdasarkan tipe yang dipilih
+            if (typeSelected) {
+                const selectedType = typeSelected.value;
+                
+                if (selectedType === 'video') {
+                    const videoUrl = document.querySelector('input[name="video_url"]').value.trim();
+                    const thumbnail = document.querySelector('#videoFields input[name="thumbnail"]').value.trim();
+                    const duration = document.querySelector('input[name="duration"]').value.trim();
+                    
+                    if (!videoUrl) {
+                        errorMessages.push('• URL Video harus diisi');
+                        isValid = false;
+                    }
+                    if (!thumbnail) {
+                        errorMessages.push('• Thumbnail URL harus diisi');
+                        isValid = false;
+                    }
+                    if (!duration) {
+                        errorMessages.push('• Durasi video harus diisi');
+                        isValid = false;
+                    }
+                } else if (selectedType === 'gambar') {
+                    const thumbnailFile = document.querySelector('#gambarFields input[name="thumbnail"]').files[0];
+                    
+                    // Untuk edit, file thumbnail bersifat opsional jika sudah ada gambar sebelumnya
+                    if (thumbnailFile) {
+                        // Validasi ukuran file (maksimal 25MB)
+                        const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+                        if (thumbnailFile.size > maxSize) {
+                            errorMessages.push('• Ukuran gambar maksimal 25MB');
+                            isValid = false;
+                        }
+                        
+                        // Validasi tipe file
+                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                        if (!allowedTypes.includes(thumbnailFile.type)) {
+                            errorMessages.push('• Format gambar harus JPG, JPEG, atau PNG');
+                            isValid = false;
+                        }
+                    }
+                }
+            }
+
+            // Tampilkan alert jika ada error
+            if (!isValid) {
+                alert('Data belum lengkap! Mohon periksa kembali:\n\n' + errorMessages.join('\n'));
+            }
+
+            return isValid;
+        }
+
+        function toggleFields(type) {
+            const video = document.getElementById('videoFields');
+            const gambar = document.getElementById('gambarFields');
+
+            video.classList.add('hidden');
+            gambar.classList.add('hidden');
+
+            if (type === 'video') video.classList.remove('hidden');
+            if (type === 'gambar') gambar.classList.remove('hidden');
+        }
     </script>
 
 
