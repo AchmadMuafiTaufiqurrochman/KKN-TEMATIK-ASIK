@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class VideoController extends Controller
 {
@@ -15,7 +16,16 @@ class VideoController extends Controller
                       ->first();
 
         if ($video) {
-            $video->incrementViews();
+            $sessionKey = 'viewed_video_' . $video->id;
+            $now = now();
+
+            // Ambil waktu terakhir dari session
+            $lastViewed = session($sessionKey);
+
+            if (!$lastViewed || $now->diffInMinutes(Carbon::parse($lastViewed)) >= 1) {
+                $video->increment('views');
+                session()->put($sessionKey, $now->toDateTimeString());
+            }
         }
 
         return view('about', compact('video'));
@@ -24,9 +34,12 @@ class VideoController extends Controller
     public function detail($id, Request $request)
 {
     $highlighted = Video::findOrFail($id);
+
+    // Setiap klik langsung tambah views (hapus logika session dan Carbon)
+    $highlighted->increment('views');
+
     $selectedCategory = $request->query('category');
 
-    // Ambil semua video dalam kategori (termasuk current)
     $relatedQuery = Video::where('status', 'published')
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
             $query->where('category', $selectedCategory);
@@ -34,14 +47,11 @@ class VideoController extends Controller
         ->orderBy('created_at', 'desc');
 
     $relatedIds = $relatedQuery->pluck('id')->toArray();
-
-    
     $currentIndex = array_search($highlighted->id, $relatedIds);
 
-    $previousId = $relatedIds[$currentIndex + 1] ?? null; // video yang lebih lama
-    $nextId = $relatedIds[$currentIndex - 1] ?? null;     // video yang lebih baru
+    $previousId = $relatedIds[$currentIndex + 1] ?? null;
+    $nextId = $relatedIds[$currentIndex - 1] ?? null;
 
-    
     $previousVideo = $previousId ? Video::find($previousId) : null;
     $nextVideo = $nextId ? Video::find($nextId) : null;
 
@@ -53,7 +63,6 @@ class VideoController extends Controller
         ->latest()
         ->paginate(16);
 
-    // Hitung total per kategori
     $categories = [
         'semua' => Video::where('status', 'published')->count(),
         'kesehatan' => Video::where('status', 'published')->where('category', 'kesehatan')->count(),
@@ -66,6 +75,7 @@ class VideoController extends Controller
         'berita' => Video::where('status', 'published')->where('category', 'berita')->count(),
         'umkm' => Video::where('status', 'published')->where('category', 'umkm')->count(),
         'karangtaruna' => Video::where('status', 'published')->where('category', 'karangtaruna')->count(),
+        'budidayabunga' => Video::where('status', 'published')->where('category', 'budidayabunga')->count(),
     ];
 
     return view('detail', compact(
@@ -76,6 +86,17 @@ class VideoController extends Controller
         'previousVideo',
         'nextVideo'
     ));
+}
+
+
+    public function show($id)
+{
+    $video = Video::findOrFail($id);
+
+    // Setiap klik langsung tambah views
+    $video->increment('views');
+
+    return view('videos.show', compact('video'));
 }
 
 }

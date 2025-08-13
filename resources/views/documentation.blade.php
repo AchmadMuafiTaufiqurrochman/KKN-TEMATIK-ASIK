@@ -3,6 +3,40 @@
 @section('title', 'Berita - Profil Digital Desa Wonokarang')
 
 @section('content')
+@php
+            function getEmbedCode($url)
+            {
+                $iframeClass = 'w-full h-auto max-h-[80vh] object-contain rounded-lg';
+
+                // YouTube
+                if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+                    preg_match('/(youtu\.be\/|v=)([^&]+)/', $url, $matches);
+                    $videoId = $matches[2] ?? '';
+                    return "<iframe class='{$iframeClass}' src='https://www.youtube.com/embed/{$videoId}' frameborder='0' allowfullscreen></iframe>";
+                }
+                // Instagram
+                elseif (strpos($url, 'instagram.com') !== false) {
+                    return '
+            <div class="flex justify-center">
+                <blockquote class="instagram-media" data-instgrm-permalink="' .
+                        $url .
+                        '" data-instgrm-version="14"></blockquote>
+            </div>
+            <script async src="//www.instagram.com/embed.js"></script>
+        ';
+                }
+                // TikTok
+                elseif (strpos($url, 'tiktok.com') !== false) {
+                    return "<iframe class='{$iframeClass}' src='{$url}embed' frameborder='0' allowfullscreen></iframe>";
+                }
+                // Facebook
+                elseif (strpos($url, 'facebook.com') !== false) {
+                    return "<iframe class='{$iframeClass}' src='{$url}embed' frameborder='0' allowfullscreen></iframe>";
+                }
+
+                return '<p>Video tidak dapat ditampilkan. Platform tidak dikenali.</p>';
+            }
+        @endphp
     <section class="py-20 bg-gray-50 pt-10">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -34,7 +68,7 @@
                     </button>
                     <div id="more-categories"
                          class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
-                        @foreach (['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna'] as $cat)
+                        @foreach (['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna', 'budidayabunga'] as $cat)
                             <a href="{{ route('documentation', ['category' => $cat]) }}"
                                class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
                                 {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})

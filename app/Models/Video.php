@@ -47,6 +47,7 @@ class Video extends Model
             'berita' => 'Berita',
             'umkm' => 'UMKM',
             'karangtaruna' => 'Karang Taruna',
+            'budidayabunga' => 'Budidaya Bunga',
         ];
 
         return $categories[$this->category] ?? ucfirst($this->category);
