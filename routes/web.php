@@ -76,6 +76,7 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     // Locations management
     Route::get('/locations', [AdminLocationController::class, 'index'])->name('locations.index');
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
+    Route::get('/locations/{mapLocation}/edit', [AdminLocationController::class, 'edit'])->name('locations.edit');
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
 
