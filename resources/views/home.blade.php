@@ -65,8 +65,8 @@
                 <div class="flex items-center gap-2 text-center">
                     <i data-lucide="leaf" class="w-8 h-8 text-secondary"></i>
                     <div>
-                        <div class="text-2xl font-bold">150 Ha</div>
-                        <div class="text-sm opacity-90">Lahan Pertanian</div>
+                        <div class="text-2xl font-bold">± 100,87 Ha</div>
+                        <div class="text-sm opacity-90">Luas Keseluruhan Desa</div>
                     </div>
                 </div>
 
