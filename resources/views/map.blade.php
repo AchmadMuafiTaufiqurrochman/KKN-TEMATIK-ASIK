@@ -35,20 +35,19 @@
                 <div class="space-y-6">
                     <!-- Layer Controls -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-lg font-bold text-primary mb-4">Layer Peta</h3>
+                        <h3 class="text-lg font-bold text-primary mb-4">Kategori Fasilitas</h3>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
-                                        <i data-lucide="home" class="w-4 h-4"></i>
+                                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                                        <i data-lucide="building-2" class="w-4 h-4"></i>
                                     </div>
                                     <div>
-                                        <span class="text-gray-700 font-medium">Balai Desa</span>
-                                        <div class="text-xs text-gray-500">{{ $locationTypes['balai'] }} lokasi</div>
+                                        <span class="text-gray-700 font-medium">Pelayanan Publik</span>
+                                        <div class="text-xs text-gray-500">{{ $locationTypes['pelayanan_publik'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('balai')"
+                                <button onclick="toggleLayer('pelayanan_publik')"
                                     class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
@@ -56,16 +55,15 @@
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white">
-                                        <i data-lucide="leaf" class="w-4 h-4"></i>
+                                    <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white">
+                                        <i data-lucide="graduation-cap" class="w-4 h-4"></i>
                                     </div>
                                     <div>
-                                        <span class="text-gray-700 font-medium">Pertanian</span>
-                                        <div class="text-xs text-gray-500">{{ $locationTypes['pertanian'] }} lokasi</div>
+                                        <span class="text-gray-700 font-medium">Pendidikan</span>
+                                        <div class="text-xs text-gray-500">{{ $locationTypes['pendidikan'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('pertanian')"
+                                <button onclick="toggleLayer('pendidikan')"
                                     class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
@@ -73,16 +71,15 @@
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center text-white">
-                                        <i data-lucide="flower" class="w-4 h-4"></i>
+                                    <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white">
+                                        <i data-lucide="heart-pulse" class="w-4 h-4"></i>
                                     </div>
                                     <div>
-                                        <span class="text-gray-700 font-medium">Budidaya Bunga</span>
-                                        <div class="text-xs text-gray-500">{{ $locationTypes['bunga'] }} lokasi</div>
+                                        <span class="text-gray-700 font-medium">Kesehatan</span>
+                                        <div class="text-xs text-gray-500">{{ $locationTypes['kesehatan'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('bunga')"
+                                <button onclick="toggleLayer('kesehatan')"
                                     class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
@@ -90,16 +87,31 @@
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white">
-                                        <i data-lucide="heart" class="w-4 h-4"></i>
+                                    <div class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center text-white">
+                                        <i data-lucide="store" class="w-4 h-4"></i>
                                     </div>
                                     <div>
-                                        <span class="text-gray-700 font-medium">Posyandu</span>
-                                        <div class="text-xs text-gray-500">{{ $locationTypes['posyandu'] }} lokasi</div>
+                                        <span class="text-gray-700 font-medium">Ekonomi</span>
+                                        <div class="text-xs text-gray-500">{{ $locationTypes['ekonomi'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('posyandu')"
+                                <button onclick="toggleLayer('ekonomi')"
+                                    class="text-gray-500 hover:text-primary transition-colors">
+                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white">
+                                        <i data-lucide="users" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-700 font-medium">Sosial & Budaya</span>
+                                        <div class="text-xs text-gray-500">{{ $locationTypes['sosial_budaya'] ?? 0 }} fasilitas</div>
+                                    </div>
+                                </div>
+                                <button onclick="toggleLayer('sosial_budaya')"
                                     class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
@@ -111,23 +123,31 @@
 
                     <!-- Statistics -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-lg font-bold text-primary mb-4">Statistik Lokasi</h3>
+                        <h3 class="text-lg font-bold text-primary mb-4">Statistik Fasilitas</h3>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Total Lokasi:</span>
+                                <span class="text-gray-600">Total Fasilitas:</span>
                                 <span class="font-semibold text-primary">{{ $locations->count() }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Area Pertanian:</span>
-                                <span class="font-semibold text-green-600">{{ $locationTypes['pertanian'] }}</span>
+                                <span class="text-gray-600">Pelayanan Publik:</span>
+                                <span class="font-semibold text-blue-600">{{ $locationTypes['pelayanan_publik'] ?? 0 }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Kebun Bunga:</span>
-                                <span class="font-semibold text-pink-600">{{ $locationTypes['bunga'] }}</span>
+                                <span class="text-gray-600">Pendidikan:</span>
+                                <span class="font-semibold text-green-600">{{ $locationTypes['pendidikan'] ?? 0 }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Fasilitas Kesehatan:</span>
-                                <span class="font-semibold text-red-600">{{ $locationTypes['posyandu'] }}</span>
+                                <span class="text-gray-600">Kesehatan:</span>
+                                <span class="font-semibold text-red-600">{{ $locationTypes['kesehatan'] ?? 0 }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Ekonomi:</span>
+                                <span class="font-semibold text-yellow-600">{{ $locationTypes['ekonomi'] ?? 0 }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Sosial & Budaya:</span>
+                                <span class="font-semibold text-purple-600">{{ $locationTypes['sosial_budaya'] ?? 0 }}</span>
                             </div>
                         </div>
                     </div>
@@ -139,10 +159,12 @@
 
     @push('scripts')
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var map = L.map('map').setView([ -7.7956, 110.3695 ], 13);
+    // Koordinat Desa Wonokarang yang tepat
+    var map = L.map('map').setView([-7.4129785, 112.5208843], 16);
 
     // Gunakan tile resmi Leaflet OSM
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -150,23 +172,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }).addTo(map);
 
     @foreach($locations as $location)
+        @php
+            $iconColors = [
+                'pelayanan_publik' => '#2563eb',
+                'pendidikan' => '#16a34a',
+                'kesehatan' => '#dc2626',
+                'ekonomi' => '#ca8a04',
+                'sosial_budaya' => '#9333ea'
+            ];
+            $iconHtml = [
+                'pelayanan_publik' => '<i class="fas fa-building" style="color: white; font-size: 14px;"></i>',
+                'pendidikan' => '<i class="fas fa-graduation-cap" style="color: white; font-size: 14px;"></i>',
+                'kesehatan' => '<i class="fas fa-heartbeat" style="color: white; font-size: 14px;"></i>',
+                'ekonomi' => '<i class="fas fa-store" style="color: white; font-size: 14px;"></i>',
+                'sosial_budaya' => '<i class="fas fa-users" style="color: white; font-size: 14px;"></i>'
+            ];
+            $color = $iconColors[$location->type] ?? '#6b7280';
+            $icon = $iconHtml[$location->type] ?? '<i class="fas fa-map-marker-alt" style="color: white; font-size: 14px;"></i>';
+        @endphp
+        
         var customIcon = L.divIcon({
             html: `
-                <div class="{{ $location->type_color }} w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform">
-                    @if($location->type === 'balai')
-                        <i data-lucide="home" class="w-5 h-5"></i>
-                    @elseif($location->type === 'pertanian')
-                        <i data-lucide="leaf" class="w-5 h-5"></i>
-                    @elseif($location->type === 'bunga')
-                        <i data-lucide="flower" class="w-5 h-5"></i>
-                    @else
-                        <i data-lucide="heart" class="w-5 h-5"></i>
-                    @endif
+                <div style="background-color: {{ $color }}; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid white;">
+                    {!! $icon !!}
                 </div>
             `,
-            className: "marker-wrapper",
-            iconSize: [40, 40],
-            iconAnchor: [20, 20]
+            className: "marker-wrapper {{ $location->type }}",
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
         });
 
         L.marker([{{ $location->latitude }}, {{ $location->longitude }}], { icon: customIcon })
@@ -174,7 +207,25 @@ document.addEventListener("DOMContentLoaded", function () {
             .bindPopup(`
                 <div class="bg-white p-3 rounded-lg shadow-lg border text-sm min-w-48">
                     <h4 class="font-semibold text-primary mb-1">{{ $location->name }}</h4>
-                    <p class="text-gray-600">{{ $location->description }}</p>
+                    <p class="text-gray-600 mb-2">{{ $location->description }}</p>
+                    @if($location->opening_hours)
+                        <p class="text-gray-500 text-xs mb-1">
+                            <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
+                            {{ $location->opening_hours }}
+                        </p>
+                    @endif
+                    @if($location->pic_name)
+                        <p class="text-gray-500 text-xs mb-1">
+                            <i data-lucide="user" class="w-3 h-3 inline mr-1"></i>
+                            {{ $location->pic_name }}
+                        </p>
+                    @endif
+                    @if($location->contact)
+                        <p class="text-gray-500 text-xs">
+                            <i data-lucide="phone" class="w-3 h-3 inline mr-1"></i>
+                            {{ $location->contact }}
+                        </p>
+                    @endif
                 </div>
             `);
     @endforeach
@@ -183,14 +234,32 @@ document.addEventListener("DOMContentLoaded", function () {
 @endpush
     <script>
         let visibleLayers = {
-            balai: true,
-            pertanian: true,
-            bunga: true,
-            posyandu: true
+            pelayanan_publik: true,
+            pendidikan: true,
+            kesehatan: true,
+            ekonomi: true,
+            sosial_budaya: true
         };
 
         function toggleLayer(layerId) {
             visibleLayers[layerId] = !visibleLayers[layerId];
+            
+            // Toggle marker visibility
+            const markers = document.querySelectorAll(`.marker-wrapper.${layerId}`);
+            markers.forEach(marker => {
+                marker.style.display = visibleLayers[layerId] ? 'block' : 'none';
+            });
+
+            // Toggle button icon
+            const button = event.target.closest('button');
+            const icon = button.querySelector('i[data-lucide]');
+            if (visibleLayers[layerId]) {
+                icon.setAttribute('data-lucide', 'eye');
+            } else {
+                icon.setAttribute('data-lucide', 'eye-off');
+            }
+            lucide.createIcons(); // Re-render icons
+        }
 
             // Toggle markers
             const markers = document.querySelectorAll(`.location-marker[data-type="${layerId}"]`);

@@ -116,5 +116,8 @@ class DatabaseSeeder extends Seeder
 
          
 
+        // Seed fasilitas desa (opsional)
+        // $this->call(FacilitySeeder::class);
+
     }
 }

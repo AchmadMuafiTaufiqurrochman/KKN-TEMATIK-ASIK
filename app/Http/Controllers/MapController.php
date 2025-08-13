@@ -10,12 +10,10 @@ class MapController extends Controller
     {
         $locations = MapLocation::where('status', 'active')->get();
         
-        $locationTypes = [
-            'balai' => $locations->where('type', 'balai')->count(),
-            'pertanian' => $locations->where('type', 'pertanian')->count(),
-            'bunga' => $locations->where('type', 'bunga')->count(),
-            'posyandu' => $locations->where('type', 'posyandu')->count(),
-        ];
+        // Gunakan method dari model untuk mendapatkan statistik per type
+        $locationTypes = MapLocation::where('status', 'active')->get()->groupBy('type')->map(function($group) {
+            return $group->count();
+        })->toArray();
 
         return view('map', compact('locations', 'locationTypes'));
     }
