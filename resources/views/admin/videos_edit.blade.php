@@ -100,9 +100,13 @@
                         <input type="url" name="video_url" value="{{ old('video_url', $video->video_url) }}"
                             class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
 
-                        <label class="block text-sm font-semibold text-gray-700">Thumbnail (URL)</label>
-                        <input type="url" name="thumbnail" value="{{ old('thumbnail', $video->thumbnail) }}"
+                        <label class="block text-sm font-semibold text-gray-700">Upload Thumbnail Baru (Opsional)</label>
+                        <input type="file" name="thumbnail" accept="image/*"
                             class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
+                        @if ($video->thumbnail)
+                            <p class="text-sm text-gray-600 mt-1">Thumbnail sekarang:</p>
+                            <img src="{{ asset($video->thumbnail) }}" class="w-full max-h-48 rounded shadow">
+                        @endif
 
                         <label class="block text-sm font-semibold text-gray-700">Durasi</label>
                         <input type="text" name="duration" value="{{ old('duration', $video->duration) }}"
@@ -323,16 +327,28 @@
                 
                 if (selectedType === 'video') {
                     const videoUrl = document.querySelector('input[name="video_url"]').value.trim();
-                    const thumbnail = document.querySelector('#videoFields input[name="thumbnail"]').value.trim();
+                    const thumbnailFile = document.querySelector('#videoFields input[name="thumbnail"]').files[0];
                     const duration = document.querySelector('input[name="duration"]').value.trim();
                     
                     if (!videoUrl) {
                         errorMessages.push('• URL Video harus diisi');
                         isValid = false;
                     }
-                    if (!thumbnail) {
-                        errorMessages.push('• Thumbnail URL harus diisi');
-                        isValid = false;
+                    // Untuk edit video, thumbnail file bersifat opsional jika sudah ada thumbnail sebelumnya
+                    if (thumbnailFile) {
+                        // Validasi ukuran file (maksimal 25MB)
+                        const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+                        if (thumbnailFile.size > maxSize) {
+                            errorMessages.push('• Ukuran thumbnail maksimal 25MB');
+                            isValid = false;
+                        }
+                        
+                        // Validasi tipe file
+                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                        if (!allowedTypes.includes(thumbnailFile.type)) {
+                            errorMessages.push('• Format thumbnail harus JPG, JPEG, atau PNG');
+                            isValid = false;
+                        }
                     }
                     if (!duration) {
                         errorMessages.push('• Durasi video harus diisi');

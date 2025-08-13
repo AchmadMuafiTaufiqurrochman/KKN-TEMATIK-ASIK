@@ -14,13 +14,25 @@
 
         <form action="{{ route('admin.videos.store') }}" method="POST" enctype="multipart/form-data" id="videoForm">
             @csrf
+            
+            @if ($errors->any())
+                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h4 class="text-red-800 font-semibold mb-2">Terjadi kesalahan:</h4>
+                    <ul class="text-red-700 list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
 
                 {{-- KONTEN UTAMA (Judul + Deskripsi) --}}
                 <div class="md:col-span-2 space-y-4 min-h-[620px]">
                     <div>
-                        <input type="text" name="title" placeholder="Judul artikel"
+                        <input type="text" name="title" placeholder="Judul artikel" value="{{ old('title') }}"
                             class="w-full text-3xl font-bold text-gray-800 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                             required>
                     </div>
@@ -43,7 +55,8 @@
                         <div class="space-y-1">
                             @foreach ($categories as $cat)
                                 <label class="inline-flex items-center space-x-2  text-gray-800">
-                                    <input type="radio" name="category" value="{{ $cat }}"
+                                    <input type="radio" name="category" value="{{ $cat }}" 
+                                        {{ old('category') === $cat ? 'checked' : '' }}
                                         class="text-primary focus:ring-primary  text-gray-800">
                                     <span>{{ ucfirst($cat) }}</span>
                                 </label><br>
@@ -56,13 +69,15 @@
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Tipe Berita</label>
                         <div class="space-y-1">
                             <label class="inline-flex items-center space-x-2  text-gray-800">
-                                <input type="radio" name="type" value="video" class="text-primary"
-                                    onclick="toggleFields('video')">
+                                <input type="radio" name="type" value="video" 
+                                    {{ old('type') === 'video' ? 'checked' : '' }}
+                                    class="text-primary" onclick="toggleFields('video')">
                                 <span>Video</span>
                             </label><br>
                             <label class="inline-flex items-center space-x-2  text-gray-800">
-                                <input type="radio" name="type" value="gambar" class="text-primary"
-                                    onclick="toggleFields('gambar')">
+                                <input type="radio" name="type" value="gambar" 
+                                    {{ old('type') === 'gambar' ? 'checked' : '' }}
+                                    class="text-primary" onclick="toggleFields('gambar')">
                                 <span>Gambar</span>
                             </label>
                         </div>
@@ -80,8 +95,8 @@
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
                         <select name="status"
                             class="w-full px-3 py-2 border rounded border-gray-300  text-gray-800 focus:outline-none focus:ring-primary">
-                            <option value="draft">Draft</option>
-                            <option value="published">Published</option>
+                            <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="published" {{ old('status') === 'published' ? 'selected' : '' }}>Published</option>
                         </select>
                     </div>
 
@@ -89,15 +104,19 @@
                     <div id="videoFields" class="space-y-2 hidden">
                         <label class="block text-sm font-semibold text-gray-700">URL Video (YouTube / Instagram / TikTok /
                             Facebook)</label>
-                        <input type="url" name="video_url"
+                        <input type="url" name="video_url" value="{{ old('video_url') }}"
                             class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
 
-                        <label class="block text-sm font-semibold text-gray-700">Thumbnail (URL)</label>
-                        <input type="url" name="thumbnail"
-                            class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
+                        <label class="block text-sm font-semibold text-gray-700">Upload Thumbnail</label>
+                        <input type="file" name="video_thumbnail" id="video-thumbnail" accept="image/*"
+                            class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300"
+                            onchange="previewThumbnail(this, 'video-preview')">
+                        <div id="video-preview" class="mt-2 hidden">
+                            <img class="w-full max-h-48 object-cover rounded shadow">
+                        </div>
 
                         <label class="block text-sm font-semibold text-gray-700">Durasi</label>
-                        <input type="text" name="duration" placeholder="Contoh: 3:21"
+                        <input type="text" name="duration" placeholder="Contoh: 3:21" value="{{ old('duration') }}"
                             class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
                     </div>
 
@@ -105,13 +124,18 @@
                     {{-- FIELD GAMBAR --}}
                     <div id="gambarFields" class="space-y-2 hidden">
                         <label class="block text-sm font-semibold text-gray-700">Upload Gambar</label>
-                        <input type="file" name="thumbnail" accept="image/*"
-                            class="w-full px-3 py-2 border rounded  text-gray-800 border-gray-300">
+                        <input type="file" name="image_thumbnail" id="gambar-thumbnail" accept="image/*"
+                            class="w-full px-3 py-2 border rounded text-gray-800 border-gray-300"
+                            onchange="previewThumbnail(this, 'gambar-preview')">
+                        <div id="gambar-preview" class="mt-2 hidden">
+                            <img class="w-full max-h-48 object-cover rounded shadow">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end mt-6">
+            <div class="flex justify-end mt-6 space-x-3">
+              
                 <button type="submit"
                     class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
                     Simpan
@@ -155,8 +179,10 @@
     </style>
 
     <script>
+        let quill; // Declare quill globally
+        
         document.addEventListener('DOMContentLoaded', function() {
-            const quill = new Quill('#quill-description', {
+            quill = new Quill('#quill-description', {
                 theme: 'snow',
                 placeholder: 'Tulis isi berita di sini...',
                 modules: {
@@ -179,13 +205,42 @@
                 }
             });
 
+            // Load old content jika ada
+            @if(old('description'))
+                quill.root.innerHTML = {!! json_encode(old('description')) !!};
+            @endif
+
+            // Show appropriate fields based on old input
+            @if(old('type'))
+                toggleFields('{{ old('type') }}');
+            @endif
+
             document.getElementById('videoForm').addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent form submission
                 
+                console.log('Form submission started');
+                
+                // Debug: Check form data
+                const formData = new FormData(this);
+                console.log('Form data entries:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ', pair[1]);
+                }
+                
                 // Validasi form
                 if (validateForm()) {
-                    document.getElementById('description-input').value = quill.root.innerHTML;
-                    this.submit(); // Submit form jika validasi berhasil
+                    console.log('Validation passed');
+                    
+                    // Set description dari Quill
+                    const descriptionContent = quill.root.innerHTML;
+                    document.getElementById('description-input').value = descriptionContent;
+                    console.log('Description set:', descriptionContent.substring(0, 100) + '...');
+                    
+                    // Submit form
+                    console.log('Submitting form...');
+                    this.submit();
+                } else {
+                    console.log('Validation failed');
                 }
             });
         });
@@ -235,23 +290,49 @@
                 
                 if (selectedType === 'video') {
                     const videoUrl = document.querySelector('input[name="video_url"]').value.trim();
-                    const thumbnail = document.querySelector('#videoFields input[name="thumbnail"]').value.trim();
+                    const thumbnailInput = document.getElementById('video-thumbnail');
+                    const thumbnailFile = thumbnailInput ? thumbnailInput.files[0] : null;
                     const duration = document.querySelector('input[name="duration"]').value.trim();
+                    
+                    console.log('Video validation:', {
+                        videoUrl: videoUrl,
+                        thumbnailFile: thumbnailFile,
+                        duration: duration
+                    });
                     
                     if (!videoUrl) {
                         errorMessages.push('• URL Video harus diisi');
                         isValid = false;
                     }
-                    if (!thumbnail) {
-                        errorMessages.push('• Thumbnail URL harus diisi');
+                    if (!thumbnailFile) {
+                        errorMessages.push('• Thumbnail harus diupload');
                         isValid = false;
+                    } else {
+                        // Validasi ukuran file (maksimal 25MB)
+                        const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+                        if (thumbnailFile.size > maxSize) {
+                            errorMessages.push('• Ukuran thumbnail maksimal 25MB');
+                            isValid = false;
+                        }
+                        
+                        // Validasi tipe file
+                        const allowedTypes = ['image/jpeg', 'image/png'];
+                        if (!allowedTypes.includes(thumbnailFile.type)) {
+                            errorMessages.push('• Format thumbnail harus JPG, JPEG, atau PNG');
+                            isValid = false;
+                        }
                     }
                     if (!duration) {
                         errorMessages.push('• Durasi video harus diisi');
                         isValid = false;
                     }
                 } else if (selectedType === 'gambar') {
-                    const thumbnailFile = document.querySelector('#gambarFields input[name="thumbnail"]').files[0];
+                    const thumbnailInput = document.getElementById('gambar-thumbnail');
+                    const thumbnailFile = thumbnailInput ? thumbnailInput.files[0] : null;
+                    
+                    console.log('Gambar validation:', {
+                        thumbnailFile: thumbnailFile
+                    });
                     
                     if (!thumbnailFile) {
                         errorMessages.push('• Gambar harus diupload');
@@ -265,7 +346,7 @@
                         }
                         
                         // Validasi tipe file
-                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                        const allowedTypes = ['image/jpeg', 'image/png'];
                         if (!allowedTypes.includes(thumbnailFile.type)) {
                             errorMessages.push('• Format gambar harus JPG, JPEG, atau PNG');
                             isValid = false;
@@ -291,6 +372,92 @@
 
             if (type === 'video') video.classList.remove('hidden');
             if (type === 'gambar') gambar.classList.remove('hidden');
+        }
+
+        function previewThumbnail(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const img = preview.querySelector('img');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+                
+                console.log('File selected:', input.files[0].name, 'Size:', input.files[0].size, 'Type:', input.files[0].type);
+            } else {
+                preview.classList.add('hidden');
+            }
+        }
+
+        function testFormData() {
+            console.log('=== FORM DATA TEST ===');
+            
+            try {
+                const form = document.getElementById('videoForm');
+                const formData = new FormData(form);
+                
+                console.log('All form entries:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ':', pair[1]);
+                }
+                
+                // Check specific file inputs
+                const videoThumbnail = document.getElementById('video-thumbnail');
+                const gambarThumbnail = document.getElementById('gambar-thumbnail');
+                
+                console.log('Video thumbnail element:', videoThumbnail);
+                console.log('Video thumbnail files:', videoThumbnail ? videoThumbnail.files : 'Not found');
+                console.log('Gambar thumbnail element:', gambarThumbnail);
+                console.log('Gambar thumbnail files:', gambarThumbnail ? gambarThumbnail.files : 'Not found');
+                
+                // Check which type is selected
+                const typeSelected = document.querySelector('input[name="type"]:checked');
+                console.log('Selected type:', typeSelected ? typeSelected.value : 'None');
+                
+                // Check quill content
+                if (typeof quill !== 'undefined') {
+                    console.log('Quill content:', quill.root.innerHTML.substring(0, 200) + '...');
+                } else {
+                    console.log('Quill not available');
+                }
+                
+                alert('✅ Test completed successfully! Check browser console for detailed form data');
+                
+            } catch (error) {
+                console.error('Error in testFormData:', error);
+                alert('❌ Error occurred: ' + error.message + '. Check console for details.');
+            }
+        }
+
+        function submitWithoutValidation() {
+            console.log('Direct submission started');
+            
+            try {
+                const form = document.getElementById('videoForm');
+                
+                // Set description content
+                if (typeof quill !== 'undefined') {
+                    const descriptionContent = quill.root.innerHTML;
+                    document.getElementById('description-input').value = descriptionContent;
+                    console.log('Description set for direct submit');
+                } else {
+                    console.log('Quill not available, skipping description');
+                }
+                
+                // Just submit the form without validation
+                form.removeEventListener('submit', arguments.callee);
+                console.log('Submitting form directly...');
+                form.submit();
+                
+            } catch (error) {
+                console.error('Error in submitWithoutValidation:', error);
+                alert('❌ Error occurred: ' + error.message);
+            }
         }
     </script>
 @endsection
