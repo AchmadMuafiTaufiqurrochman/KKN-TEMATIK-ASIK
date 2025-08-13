@@ -144,33 +144,83 @@
     {{-- QUILL --}}
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    {{-- Custom CSS untuk memastikan alignment ditampilkan dengan benar --}}
+    <style>
+        .ql-editor p[style*="text-align: center"] {
+            text-align: center !important;
+        }
+        .ql-editor p[style*="text-align: right"] {
+            text-align: right !important;
+        }
+        .ql-editor p[style*="text-align: left"] {
+            text-align: left !important;
+        }
+        .ql-editor p[style*="text-align: justify"] {
+            text-align: justify !important;
+        }
+        
+        /* Pastikan Quill mempertahankan alignment */
+        .ql-editor .ql-align-center {
+            text-align: center;
+        }
+        .ql-editor .ql-align-right {
+            text-align: right;
+        }
+        .ql-editor .ql-align-left {
+            text-align: left;
+        }
+        .ql-editor .ql-align-justify {
+            text-align: justify;
+        }
+    </style>
 
     <script>
+        // Fungsi untuk toggle fields berdasarkan tipe
+        function toggleFields(type) {
+            const videoFields = document.getElementById('videoFields');
+            const gambarFields = document.getElementById('gambarFields');
+            
+            if (type === 'video') {
+                videoFields.classList.remove('hidden');
+                gambarFields.classList.add('hidden');
+            } else if (type === 'gambar') {
+                videoFields.classList.add('hidden');
+                gambarFields.classList.remove('hidden');
+            }
+        }
+
         let quill = new Quill('#quill-description', {
             theme: 'snow',
             placeholder: 'Tulis isi berita di sini...',
-             modules: {
-                    toolbar: [
-                        [{
-                            header: [1, 2, false]
-                        }],
-                        ['bold', 'italic', 'underline'],
-                        [{
-                            'align': []
-                        }], // <- ini buat rata kiri, tengah, kanan, justify
-                        [{
-                            list: 'ordered'
-                        }, {
-                            list: 'bullet'
-                        }],
-                        ['link', 'image'],
-                        ['clean']
-                    ]
-                }
+            modules: {
+                toolbar: [
+                    [{
+                        header: [1, 2, false]
+                    }],
+                    ['bold', 'italic', 'underline'],
+                    [{
+                        'align': []
+                    }], // <- ini buat rata kiri, tengah, kanan, justify
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            }
         });
 
         const form = document.getElementById('videoForm');
         const hiddenInput = document.getElementById('description-input');
+
+        // Update hidden input setiap kali ada perubahan di Quill
+        quill.on('text-change', function() {
+            const html = quill.root.innerHTML;
+            hiddenInput.value = html;
+        });
 
         form.addEventListener('submit', function(e) {
             const html = quill.root.innerHTML.trim();
@@ -186,9 +236,41 @@
 
         // Set isi awal ke Quill
         document.addEventListener('DOMContentLoaded', function() {
-            const initialHTML = `{!! $video->description !!}`;
-            quill.root.innerHTML = initialHTML;
-            hiddenInput.value = initialHTML;
+            const initialHTML = {!! json_encode($video->description) !!};
+            
+            // Pastikan ada content sebelum dimuat
+            if (initialHTML && initialHTML.trim() !== '') {
+                try {
+                    // Langsung set innerHTML ke root element
+                    quill.root.innerHTML = initialHTML;
+                    
+                    // Update hidden input
+                    hiddenInput.value = initialHTML;
+                    
+                    // Trigger Quill untuk mengenali perubahan dan mempertahankan formatting
+                    quill.history.clear();
+                    
+                    // Refresh editor untuk memastikan formatting diterapkan
+                    setTimeout(() => {
+                        const currentContent = quill.root.innerHTML;
+                        if (currentContent !== initialHTML) {
+                            quill.root.innerHTML = initialHTML;
+                        }
+                        
+                        // Pastikan Quill mengenali content sebagai valid
+                        quill.update();
+                        
+                        console.log('Content loaded:', initialHTML);
+                        console.log('Current content:', quill.root.innerHTML);
+                    }, 200);
+                    
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    // Fallback method
+                    quill.clipboard.dangerouslyPasteHTML(initialHTML);
+                    hiddenInput.value = initialHTML;
+                }
+            }
         });
     </script>
 
