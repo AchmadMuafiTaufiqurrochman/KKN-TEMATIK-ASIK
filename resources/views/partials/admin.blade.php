@@ -31,7 +31,7 @@
                 </a>
                 <a href="{{ route('admin.locations.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Lokasi Peta
+                    Kelola Fasilitas Desa
                 </a>
                 <a href="{{ route('admin.aparat.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.aparat.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
@@ -89,7 +89,7 @@
                 </a>
                 <a href="{{ route('admin.locations.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
-                    Kelola Lokasi Peta
+                    Kelola Fasilitas Desa
                 </a>
                 <a href="{{ route('admin.aparat.index') }}"
                     class="block px-4 py-2 rounded-md transition {{ request()->routeIs('admin.aparat.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10' }}">
