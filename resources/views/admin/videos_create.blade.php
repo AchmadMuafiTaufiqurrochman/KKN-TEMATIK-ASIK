@@ -127,19 +127,27 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const quill = new Quill('#quill-description', {
-    theme: 'snow',
-    placeholder: 'Tulis isi berita di sini...',
-    modules: {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'align': [] }], // <- ini buat rata kiri, tengah, kanan, justify
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ['link', 'image'],
-            ['clean']
-        ]
-    }
-});
+                theme: 'snow',
+                placeholder: 'Tulis isi berita di sini...',
+                modules: {
+                    toolbar: [
+                        [{
+                            header: [1, 2, false]
+                        }],
+                        ['bold', 'italic', 'underline'],
+                        [{
+                            'align': []
+                        }], // <- ini buat rata kiri, tengah, kanan, justify
+                        [{
+                            list: 'ordered'
+                        }, {
+                            list: 'bullet'
+                        }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
 
 
             document.getElementById('videoForm').addEventListener('submit', function() {
