@@ -269,8 +269,7 @@
                     <a href="{{ route('berita.detail', $video->id) }}">
                         <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
                             <div class="relative h-40 md:h-48">
-                                <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}"
-                                    class="w-full h-full object-cover" />
+                                <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}" class="w-full h-48 object-cover" />
                                 <div
                                     class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                     @if ($video->type === 'video')

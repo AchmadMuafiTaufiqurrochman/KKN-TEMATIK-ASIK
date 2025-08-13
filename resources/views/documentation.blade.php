@@ -86,9 +86,7 @@
                        class="video-item block bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300">
 
                         <div class="relative group">
-                            <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
-                                 class="w-full h-48 object-cover" />
-
+                            <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}" class="w-full h-48 object-cover" />
                             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 @if ($video->type === 'video')
                                     <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
