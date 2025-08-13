@@ -123,6 +123,36 @@
     {{-- QUILL --}}
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    {{-- Custom CSS untuk memastikan alignment ditampilkan dengan benar --}}
+    <style>
+        .ql-editor p[style*="text-align: center"] {
+            text-align: center !important;
+        }
+        .ql-editor p[style*="text-align: right"] {
+            text-align: right !important;
+        }
+        .ql-editor p[style*="text-align: left"] {
+            text-align: left !important;
+        }
+        .ql-editor p[style*="text-align: justify"] {
+            text-align: justify !important;
+        }
+        
+        /* Pastikan Quill mempertahankan alignment */
+        .ql-editor .ql-align-center {
+            text-align: center;
+        }
+        .ql-editor .ql-align-right {
+            text-align: right;
+        }
+        .ql-editor .ql-align-left {
+            text-align: left;
+        }
+        .ql-editor .ql-align-justify {
+            text-align: justify;
+        }
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -149,9 +179,26 @@
                 }
             });
 
+            const form = document.getElementById('videoForm');
+            const hiddenInput = document.getElementById('description-input');
 
-            document.getElementById('videoForm').addEventListener('submit', function() {
-                document.getElementById('description-input').value = quill.root.innerHTML;
+            // Update hidden input setiap kali ada perubahan di Quill
+            quill.on('text-change', function() {
+                const html = quill.root.innerHTML;
+                hiddenInput.value = html;
+            });
+
+            // Validasi saat submit form
+            form.addEventListener('submit', function(e) {
+                const html = quill.root.innerHTML.trim();
+
+                if (!html || html === '<p><br></p>') {
+                    e.preventDefault();
+                    alert("Deskripsi tidak boleh kosong!");
+                    return;
+                }
+
+                hiddenInput.value = html;
             });
         });
 

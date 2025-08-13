@@ -3,7 +3,6 @@
 @section('title', $highlighted->title)
 
 @section('content')
-
     @php
         function getEmbedCode($url)
         {
