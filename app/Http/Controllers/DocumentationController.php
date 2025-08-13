@@ -28,7 +28,7 @@ class DocumentationController extends Controller
         $allCategoryList = [
             'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
             'kegiatan', 'pembangunan', 'pengumuman', 'berita',
-            'umkm', 'karangtaruna'
+            'umkm', 'karangtaruna', 'budidayabunga',
         ];
 
         // Hitung jumlah total dan per kategori

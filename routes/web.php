@@ -83,6 +83,6 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
     Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
     Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
     Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
-    
+    Route::get('/videos/{id}', [VideoController::class, 'show'])->name('videos.show');
 
 });

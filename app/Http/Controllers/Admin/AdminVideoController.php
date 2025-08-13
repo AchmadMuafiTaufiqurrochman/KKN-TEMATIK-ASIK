@@ -11,7 +11,7 @@ class AdminVideoController extends Controller
 {
     protected $allCategories = [
         'profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
-        'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna',
+        'pembangunan', 'kegiatan', 'pengumuman', 'berita', 'umkm', 'karangtaruna', 'budidayabunga'
     ];
 
     public function index(Request $request)

@@ -26,7 +26,8 @@
                     </div>
 
                     <div>
-                        <div id="quill-description" class="h-full min-h-[600px]  text-gray-800 bg-white border border-gray-300 rounded">
+                        <div id="quill-description"
+                            class="h-full min-h-[600px]  text-gray-800 bg-white border border-gray-300 rounded">
                         </div>
                         <input type="hidden" name="description" id="description-input">
                     </div>
@@ -86,16 +87,20 @@
 
                     {{-- FIELD VIDEO --}}
                     <div id="videoFields" class="space-y-2 hidden">
-                        <label class="block text-sm font-semibold text-gray-700">URL Video (Embed YouTube)</label>
-                        <input type="url" name="video_url" class="w-full px-3 py-2 border  text-gray-800 rounded border-gray-300">
+                        <label class="block text-sm font-semibold text-gray-700">URL Video (YouTube / Instagram / TikTok /
+                            Facebook)</label>
+                        <input type="url" name="video_url"
+                            class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
 
                         <label class="block text-sm font-semibold text-gray-700">Thumbnail (URL)</label>
-                        <input type="url" name="thumbnail" class="w-full px-3 py-2 border  text-gray-800 rounded border-gray-300">
+                        <input type="url" name="thumbnail"
+                            class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
 
                         <label class="block text-sm font-semibold text-gray-700">Durasi</label>
                         <input type="text" name="duration" placeholder="Contoh: 3:21"
-                            class="w-full px-3 py-2 border  text-gray-800   rounded border-gray-300">
+                            class="w-full px-3 py-2 border text-gray-800 rounded border-gray-300">
                     </div>
+
 
                     {{-- FIELD GAMBAR --}}
                     <div id="gambarFields" class="space-y-2 hidden">
