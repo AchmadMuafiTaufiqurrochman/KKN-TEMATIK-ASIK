@@ -88,7 +88,7 @@
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="relative">
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="{{ $video->video_url }}" title="{{ $video->title }}" frameBorder="0"
+                                <iframe src="{{ $video->embed_video_url }}" title="{{ $video->title }}" frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
                             </div>
