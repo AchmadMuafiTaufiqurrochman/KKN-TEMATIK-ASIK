@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Villager;
 use App\Models\Potential;
 use App\Models\Video;
-
+use App\Models\Product;
 class HomeController extends Controller
 {
     public function index()
@@ -22,6 +22,17 @@ class HomeController extends Controller
             ->where('status', 'published')
             ->first();
 
+        // Produk unggulan (3 terbaru)
+        $products = Product::where('status', 'published')
+            ->latest()
+            ->take(3)
+            ->get();
+
+
+        $featured_video = Video::where('category', 'profil')
+            ->where('status', 'published')
+            ->first();
+
         // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil') // optional: exclude video profil
@@ -29,6 +40,6 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('home', compact('stats', 'potentials', 'featured_video', 'featuredVideos'));
+        return view('home', compact('stats', 'products', 'featured_video', 'featuredVideos'));
     }
 }
