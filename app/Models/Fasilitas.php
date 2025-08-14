@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MapLocation extends Model
+class Fasilitas extends Model
 {
     use HasFactory;
+
+    protected $table = 'fasilitas';
 
     protected $fillable = [
         'name',
@@ -15,11 +17,11 @@ class MapLocation extends Model
         'longitude',
         'type',
         'description',
-        'status',
         'opening_hours',
         'pic_name',
         'contact',
         'gmaps_link',
+        'status',
     ];
 
     public function getTypeTextAttribute()
