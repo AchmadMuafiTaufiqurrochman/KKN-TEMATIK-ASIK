@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\VillagerController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
+use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -73,7 +74,15 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
 
 
 
-    // Locations management
+    // Fasilitas management (using new Fasilitas model)
+    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas.index');
+    Route::post('/fasilitas', [FasilitasController::class, 'store'])->name('fasilitas.store');
+    Route::get('/fasilitas/{fasilitas}', [FasilitasController::class, 'show'])->name('fasilitas.show');
+    Route::get('/fasilitas/{fasilitas}/edit', [FasilitasController::class, 'edit'])->name('fasilitas.edit');
+    Route::put('/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
+    Route::delete('/fasilitas/{fasilitas}', [FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
+
+    // Legacy locations management (kept for backward compatibility)
     Route::get('/locations', [AdminLocationController::class, 'index'])->name('locations.index');
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
     Route::get('/locations/{mapLocation}/edit', [AdminLocationController::class, 'edit'])->name('locations.edit');

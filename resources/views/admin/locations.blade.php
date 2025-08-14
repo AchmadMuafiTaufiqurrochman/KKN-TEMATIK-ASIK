@@ -82,7 +82,7 @@
                         <i data-lucide="grid-3x3" class="w-6 h-6 text-white"></i>
                     </div>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ count($locationTypes ?? []) }}</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ count($fasilitasTypes ?? []) }}</h3>
                 <p class="text-gray-600 text-sm">Kategori</p>
             </div>
 
@@ -127,68 +127,83 @@
                                     <th class="px-6 py-4 text-left">Jam Operasional</th>
                                     <th class="px-6 py-4 text-left">Penanggung Jawab</th>
                                     <th class="px-6 py-4 text-left">Kontak</th>
+                                    <th class="px-6 py-4 text-left">Google Maps</th>
                                     <th class="px-6 py-4 text-left">Status</th>
                                     <th class="px-6 py-4 text-left">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($locations as $index => $location)
+                                @forelse($fasilitas as $index => $fasilitasItem)
                                 <tr class="{{ $index % 2 === 0 ? 'bg-gray-50' : 'bg-white' }}">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                            <div class="{{ $location->type_color ?? 'bg-gray-600' }} w-8 h-8 rounded-full flex items-center justify-center text-white">
-                                                @if($location->type === 'pelayanan_publik')
+                                            <div class="{{ $fasilitasItem->type_color ?? 'bg-gray-600' }} w-8 h-8 rounded-full flex items-center justify-center text-white">
+                                                @if($fasilitasItem->type === 'pelayanan_publik')
                                                     <i data-lucide="building-2" class="w-4 h-4"></i>
-                                                @elseif($location->type === 'pendidikan')
+                                                @elseif($fasilitasItem->type === 'pendidikan')
                                                     <i data-lucide="graduation-cap" class="w-4 h-4"></i>
-                                                @elseif($location->type === 'kesehatan')
+                                                @elseif($fasilitasItem->type === 'kesehatan')
                                                     <i data-lucide="heart-pulse" class="w-4 h-4"></i>
-                                                @elseif($location->type === 'ekonomi')
+                                                @elseif($fasilitasItem->type === 'ekonomi')
                                                     <i data-lucide="store" class="w-4 h-4"></i>
-                                                @elseif($location->type === 'sosial_budaya')
+                                                @elseif($fasilitasItem->type === 'sosial_budaya')
                                                     <i data-lucide="users" class="w-4 h-4"></i>
                                                 @else
                                                     <i data-lucide="map-pin" class="w-4 h-4"></i>
                                                 @endif
                                             </div>
                                             <div>
-                                                <div class="font-medium text-gray-900">{{ $location->name }}</div>
-                                                <div class="text-sm text-gray-500">{{ $location->description }}</div>
+                                                <div class="font-medium text-gray-900">{{ $fasilitasItem->name }}</div>
+                                                <div class="text-sm text-gray-500">{{ $fasilitasItem->description }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <span class="px-2 py-1 rounded-full text-xs font-semibold 
-                                            @if($location->type === 'pelayanan_publik') bg-blue-100 text-blue-800
-                                            @elseif($location->type === 'pendidikan') bg-green-100 text-green-800
-                                            @elseif($location->type === 'kesehatan') bg-red-100 text-red-800
-                                            @elseif($location->type === 'ekonomi') bg-yellow-100 text-yellow-800
-                                            @elseif($location->type === 'sosial_budaya') bg-purple-100 text-purple-800
+                                            @if($fasilitasItem->type === 'pelayanan_publik') bg-blue-100 text-blue-800
+                                            @elseif($fasilitasItem->type === 'pendidikan') bg-green-100 text-green-800
+                                            @elseif($fasilitasItem->type === 'kesehatan') bg-red-100 text-red-800
+                                            @elseif($fasilitasItem->type === 'ekonomi') bg-yellow-100 text-yellow-800
+                                            @elseif($fasilitasItem->type === 'sosial_budaya') bg-purple-100 text-purple-800
                                             @else bg-gray-100 text-gray-800
                                             @endif">
-                                            {{ $location->type_text ?? ucfirst(str_replace('_', ' ', $location->type)) }}
+                                            {{ $fasilitasItem->type_text ?? ucfirst(str_replace('_', ' ', $fasilitasItem->type)) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 text-sm">
-                                        {{ $location->opening_hours ?? 'Tidak ditentukan' }}
+                                        {{ $fasilitasItem->opening_hours ?? 'Tidak ditentukan' }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 text-sm">
-                                        {{ $location->pic_name ?? '-' }}
+                                        {{ $fasilitasItem->pic_name ?? '-' }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 text-sm">
-                                        {{ $location->contact ?? '-' }}
+                                        {{ $fasilitasItem->contact ?? '-' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 text-sm">
+                                        @if($fasilitasItem->gmaps_link)
+                                            <a href="{{ $fasilitasItem->gmaps_link }}" target="_blank" 
+                                               class="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 text-xs">
+                                                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                                Lihat Maps
+                                            </a>
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $location->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                                            {{ $location->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $fasilitasItem->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                            {{ $fasilitasItem->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex gap-2">
-                                            <button onclick="openEditLocationModal({{ $location->id }})" class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <button onclick="openDetailModal({{ $fasilitasItem->id }})" class="text-green-600 hover:text-green-800 transition-colors">
+                                                <i data-lucide="info" class="w-4 h-4"></i>
+                                            </button>
+                                            <button onclick="openEditLocationModal({{ $fasilitasItem->id }})" class="text-blue-600 hover:text-blue-800 transition-colors">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
-                                            <form action="{{ route('admin.locations.destroy', $location) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus fasilitas ini?')">
+                                            <form action="{{ route('admin.fasilitas.destroy', $fasilitasItem) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus fasilitas ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-800 transition-colors">
@@ -200,7 +215,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" class="text-center py-12">
+                                    <td colspan="8" class="text-center py-12">
                                         <p class="text-gray-500">Tidak ada data fasilitas</p>
                                     </td>
                                 </tr>
@@ -310,6 +325,12 @@
                     </div>
                     
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Link Google Maps</label>
+                        <input type="url" name="gmaps_link" placeholder="https://maps.google.com/..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <p class="text-xs text-gray-500 mt-1">Link ke Google Maps untuk navigasi lebih mudah</p>
+                    </div>
+                    
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                         <select name="status" required class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="active">Aktif</option>
@@ -331,10 +352,137 @@
     </div>
 </div>
 
+<!-- Detail Location Modal -->
+<div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-primary">Detail Fasilitas</h3>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div id="detailContent" class="space-y-4">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+function openDetailModal(id) {
+    // Fetch data untuk detail
+    fetch(`/admin/fasilitas/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            const typeLabels = {
+                'pelayanan_publik': 'Pelayanan Publik & Pemerintah',
+                'pendidikan': 'Pendidikan',
+                'kesehatan': 'Kesehatan',
+                'ekonomi': 'Ekonomi',
+                'sosial_budaya': 'Sosial & Budaya'
+            };
+            
+            const typeColors = {
+                'pelayanan_publik': 'bg-blue-100 text-blue-800',
+                'pendidikan': 'bg-green-100 text-green-800',
+                'kesehatan': 'bg-red-100 text-red-800',
+                'ekonomi': 'bg-yellow-100 text-yellow-800',
+                'sosial_budaya': 'bg-purple-100 text-purple-800'
+            };
+            
+            const detailContent = `
+                <div class="bg-white p-4 rounded-lg shadow-lg border max-w-80">
+                    <div class="flex items-start gap-3 mb-3">
+                        <div style="background-color: #2563eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="fas fa-map-pin" style="color: white; font-size: 14px;"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-primary text-lg mb-1">${data.name}</h4>
+                            <span class="inline-block px-2 py-1 ${typeColors[data.type] || 'bg-gray-100 text-gray-800'} text-xs font-medium rounded-full mb-2">
+                                ${typeLabels[data.type] || data.type}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        ${data.description ? `
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-info-circle text-gray-400 mt-0.5 flex-shrink-0"></i>
+                            <p class="text-gray-700">${data.description}</p>
+                        </div>
+                        ` : ''}
+                        
+                        ${data.opening_hours ? `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-clock text-gray-400 flex-shrink-0"></i>
+                            <span class="text-gray-600">${data.opening_hours}</span>
+                        </div>
+                        ` : ''}
+                        
+                        ${data.pic_name ? `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user text-gray-400 flex-shrink-0"></i>
+                            <span class="text-gray-600">${data.pic_name}</span>
+                        </div>
+                        ` : ''}
+                        
+                        ${data.contact ? `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-phone text-gray-400 flex-shrink-0"></i>
+                            <a href="tel:${data.contact}" class="text-blue-600 hover:underline">${data.contact}</a>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${data.gmaps_link ? `
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <a href="${data.gmaps_link}" target="_blank" 
+                           class="inline-flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Google Maps
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <span class="text-gray-500">Status:</span>
+                                <span class="inline-block px-2 py-1 ${data.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'} text-xs rounded-full ml-1">
+                                    ${data.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Hari Ini:</span>
+                                <span class="inline-block px-2 py-1 ${data.is_open_today ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} text-xs rounded-full ml-1">
+                                    ${data.is_open_today ? 'Buka' : 'Tutup'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detailContent').innerHTML = detailContent;
+            document.getElementById('detailModal').classList.remove('hidden');
+            lucide.createIcons();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat memuat data fasilitas');
+        });
+}
+
+function closeDetailModal() {
+    document.getElementById('detailModal').classList.add('hidden');
+}
+
 function openAddLocationModal() {
     document.getElementById('locationModalTitle').textContent = 'Tambah Fasilitas Baru';
-    document.getElementById('locationForm').action = '{{ route("admin.locations.store") }}';
+    document.getElementById('locationForm').action = '{{ route("admin.fasilitas.store") }}';
     document.getElementById('locationMethodField').innerHTML = '';
     document.getElementById('locationForm').reset();
     document.getElementById('locationModal').classList.remove('hidden');
@@ -342,11 +490,11 @@ function openAddLocationModal() {
 
 function openEditLocationModal(id) {
     // Fetch data untuk edit
-    fetch(`/admin/locations/${id}/edit`)
+    fetch(`/admin/fasilitas/${id}/edit`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('locationModalTitle').textContent = 'Edit Fasilitas';
-            document.getElementById('locationForm').action = `/admin/locations/${id}`;
+            document.getElementById('locationForm').action = `/admin/fasilitas/${id}`;
             document.getElementById('locationMethodField').innerHTML = '@method("PUT")';
             
             // Populate form fields
@@ -358,6 +506,7 @@ function openEditLocationModal(id) {
             document.querySelector('input[name="opening_hours"]').value = data.opening_hours || '';
             document.querySelector('input[name="pic_name"]').value = data.pic_name || '';
             document.querySelector('input[name="contact"]').value = data.contact || '';
+            document.querySelector('input[name="gmaps_link"]').value = data.gmaps_link || '';
             document.querySelector('select[name="status"]').value = data.status || 'active';
             
             document.getElementById('locationModal').classList.remove('hidden');
@@ -366,7 +515,7 @@ function openEditLocationModal(id) {
             console.error('Error:', error);
             // Fallback untuk edit manual
             document.getElementById('locationModalTitle').textContent = 'Edit Fasilitas';
-            document.getElementById('locationForm').action = `/admin/locations/${id}`;
+            document.getElementById('locationForm').action = `/admin/fasilitas/${id}`;
             document.getElementById('locationMethodField').innerHTML = '@method("PUT")';
             document.getElementById('locationModal').classList.remove('hidden');
         });
@@ -400,7 +549,7 @@ document.querySelector('select[name="type"]').addEventListener('change', functio
 });
 
 // Data fasilitas untuk map
-window.facilitiesData = @json($locations ?? []);
+window.facilitiesData = @json($fasilitas ?? []);
 
 // Initialize map setelah DOM loaded
 document.addEventListener('DOMContentLoaded', function() {

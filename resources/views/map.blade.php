@@ -205,27 +205,76 @@ document.addEventListener("DOMContentLoaded", function () {
         L.marker([{{ $location->latitude }}, {{ $location->longitude }}], { icon: customIcon })
             .addTo(map)
             .bindPopup(`
-                <div class="bg-white p-3 rounded-lg shadow-lg border text-sm min-w-48">
-                    <h4 class="font-semibold text-primary mb-1">{{ $location->name }}</h4>
-                    <p class="text-gray-600 mb-2">{{ $location->description }}</p>
-                    @if($location->opening_hours)
-                        <p class="text-gray-500 text-xs mb-1">
-                            <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
-                            {{ $location->opening_hours }}
-                        </p>
+                <div class="bg-white p-4 rounded-lg shadow-lg border max-w-80">
+                    <div class="flex items-start gap-3 mb-3">
+                        <div style="background-color: {{ $color }}; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            {!! $icon !!}
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-primary text-lg mb-1">{{ $location->name }}</h4>
+                            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full mb-2">
+                                {{ $location->type_text ?? ucfirst(str_replace('_', ' ', $location->type)) }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        @if($location->description)
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-info-circle text-gray-400 mt-0.5 flex-shrink-0"></i>
+                            <p class="text-gray-700">{{ $location->description }}</p>
+                        </div>
+                        @endif
+                        
+                        @if($location->opening_hours)
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-clock text-gray-400 flex-shrink-0"></i>
+                            <span class="text-gray-600">{{ $location->opening_hours }}</span>
+                        </div>
+                        @endif
+                        
+                        @if($location->pic_name)
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user text-gray-400 flex-shrink-0"></i>
+                            <span class="text-gray-600">{{ $location->pic_name }}</span>
+                        </div>
+                        @endif
+                        
+                        @if($location->contact)
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-phone text-gray-400 flex-shrink-0"></i>
+                            <a href="tel:{{ $location->contact }}" class="text-blue-600 hover:underline">{{ $location->contact }}</a>
+                        </div>
+                        @endif
+                    </div>
+                    
+                    @if($location->gmaps_link)
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <a href="{{ $location->gmaps_link }}" target="_blank" 
+                           class="inline-flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Google Maps
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
                     @endif
-                    @if($location->pic_name)
-                        <p class="text-gray-500 text-xs mb-1">
-                            <i data-lucide="user" class="w-3 h-3 inline mr-1"></i>
-                            {{ $location->pic_name }}
-                        </p>
-                    @endif
-                    @if($location->contact)
-                        <p class="text-gray-500 text-xs">
-                            <i data-lucide="phone" class="w-3 h-3 inline mr-1"></i>
-                            {{ $location->contact }}
-                        </p>
-                    @endif
+                    
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <span class="text-gray-500">Status:</span>
+                                <span class="inline-block px-2 py-1 {{ $location->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }} text-xs rounded-full ml-1">
+                                    {{ $location->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Hari Ini:</span>
+                                <span class="inline-block px-2 py-1 {{ $location->isOpenToday() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} text-xs rounded-full ml-1">
+                                    {{ $location->isOpenToday() ? 'Buka' : 'Tutup' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `);
     @endforeach

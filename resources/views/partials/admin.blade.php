@@ -49,9 +49,9 @@
                     <i data-lucide="newspaper" class="w-5 h-5 {{ request()->routeIs('admin.videos.*') ? 'text-primary' : 'text-secondary' }}"></i>
                     <span>Kelola Berita</span>
                 </a>
-                <a href="{{ route('admin.locations.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 group {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
-                    <i data-lucide="map" class="w-5 h-5 {{ request()->routeIs('admin.locations.*') ? 'text-primary' : 'text-secondary' }}"></i>
+                <a href="{{ route('admin.fasilitas.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 group {{ request()->routeIs('admin.fasilitas.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
+                    <i data-lucide="map" class="w-5 h-5 {{ request()->routeIs('admin.fasilitas.*') ? 'text-primary' : 'text-secondary' }}"></i>
                     <span>Kelola Fasilitas Desa</span>
                 </a>
                 <a href="{{ route('admin.aparat.index') }}"
@@ -118,9 +118,9 @@
                     <i data-lucide="newspaper" class="w-5 h-5 {{ request()->routeIs('admin.videos.*') ? 'text-primary' : 'text-secondary' }}"></i>
                     <span>Kelola Berita</span>
                 </a>
-                <a href="{{ route('admin.locations.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 group {{ request()->routeIs('admin.locations.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
-                    <i data-lucide="map" class="w-5 h-5 {{ request()->routeIs('admin.locations.*') ? 'text-primary' : 'text-secondary' }}"></i>
+                <a href="{{ route('admin.fasilitas.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 group {{ request()->routeIs('admin.fasilitas.*') ? 'bg-secondary text-primary font-semibold' : 'hover:bg-white/10 text-white' }}">
+                    <i data-lucide="map" class="w-5 h-5 {{ request()->routeIs('admin.fasilitas.*') ? 'text-primary' : 'text-secondary' }}"></i>
                     <span>Kelola Fasilitas Desa</span>
                 </a>
                 <a href="{{ route('admin.aparat.index') }}"
