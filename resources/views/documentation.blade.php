@@ -44,37 +44,70 @@
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                     Kumpulan berita terkini seputar kegiatan desa diurutkan berdasarkan tanggal acara
                 </p>
+                @if($search || $selectedCategory !== 'all')
+                    <div class="mt-4 text-sm text-gray-500">
+                        @if($search && $selectedCategory !== 'all')
+                            Menampilkan hasil pencarian "{{ $search }}" dalam kategori "{{ ucfirst($selectedCategory) }}" - {{ $videos->total() }} hasil
+                        @elseif($search)
+                            Menampilkan hasil pencarian "{{ $search }}" - {{ $videos->total() }} hasil
+                        @elseif($selectedCategory !== 'all')
+                            Menampilkan kategori "{{ ucfirst($selectedCategory) }}" - {{ $videos->total() }} hasil
+                        @endif
+                    </div>
+                @endif
             </div>
 
-            <!-- Kategori Filter -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12 relative">
-                <div class="flex flex-wrap justify-center gap-4">
-                    @foreach (['all', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan'] as $cat)
-                        <a href="{{ route('documentation', ['category' => $cat]) }}"
-                           class="filter-btn {{ $selectedCategory === $cat ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-secondary hover:text-white' }} border border-gray-300 px-4 py-2 rounded-full font-semibold transition-all duration-300 hover:shadow-md">
-                            {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
+            <!-- Search and Filter Section -->
+            <div class="mb-8 space-y-4">
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('documentation') }}" class="w-full">
+                    <input type="hidden" name="category" value="{{ $selectedCategory }}">
+                    <div class="relative w-full max-w-md mx-auto lg:mx-0">
+                        <input type="text" name="search" value="{{ $search ?? '' }}" 
+                            placeholder="Cari berita..." 
+                            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm bg-white">
+                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary transition-colors">
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Category Filter -->
+                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                    @foreach(['all', 'profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan'] as $cat)
+                        <a href="{{ route('documentation', ['category' => $cat] + ($search ? ['search' => $search] : [])) }}"
+                           class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors border {{ $selectedCategory === $cat ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-primary' }}">
+                            {{ ucfirst($cat === 'all' ? 'Semua' : $cat) }} ({{ $categories[$cat] ?? 0 }})
                         </a>
                     @endforeach
-                </div>
-
-                <div class="relative">
-                    <button onclick="toggleMoreCategories()"
-                        class="flex items-center gap-2 bg-gray-100 text-primary px-4 py-2 rounded-full font-semibold border border-gray-300 transition-all duration-300 hover:shadow-md">
-                        Lainnya
-                        <svg id="dropdown-icon" class="w-4 h-4 transition-transform duration-300 transform" fill="none"
-                             stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div id="more-categories"
-                         class="absolute right-0 mt-2 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64 transition-all duration-300 ease-in-out z-20">
-                        @foreach (['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna', 'budidayabunga'] as $cat)
-                            <a href="{{ route('documentation', ['category' => $cat]) }}"
-                               class="block w-full text-left text-primary hover:bg-gray-100 px-3 py-2 rounded-md transition-all duration-200">
-                                {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
-                            </a>
-                        @endforeach
+                    
+                    <!-- Dropdown for more categories -->
+                    <div class="relative">
+                        <button onclick="toggleMoreCategories()" 
+                            class="flex items-center gap-1 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-primary transition-colors">
+                            Lainnya
+                            <svg id="dropdown-icon" class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="more-categories" class="absolute right-0 top-full mt-1 hidden bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-48 z-10">
+                            @foreach(['kegiatan', 'pembangunan', 'pengumuman', 'berita', 'umkm', 'karangtaruna', 'budidayabunga'] as $cat)
+                                <a href="{{ route('documentation', ['category' => $cat] + ($search ? ['search' => $search] : [])) }}"
+                                   class="block w-full text-left px-3 py-2 rounded text-xs sm:text-sm transition-colors {{ $selectedCategory === $cat ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                                    {{ ucfirst($cat) }} ({{ $categories[$cat] ?? 0 }})
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
+
+                    <!-- Clear Filter Button -->
+                    @if($search || $selectedCategory !== 'all')
+                        <a href="{{ route('documentation') }}"
+                           class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 transition-colors flex items-center gap-1">
+                            <i data-lucide="x" class="w-3 h-3"></i>
+                            Reset Filter
+                        </a>
+                    @endif
                 </div>
             </div>
 
@@ -140,8 +173,26 @@
                         </div>
                     </a>
                 @empty
-                    <div class="col-span-4 text-center text-gray-500 py-12">
-                        Tidak ada video dalam kategori ini
+                    <div class="col-span-4 text-center py-12">
+                        <div class="text-gray-500">
+                            <i data-lucide="search-x" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                            <h3 class="text-lg font-semibold mb-2">Tidak ada berita ditemukan</h3>
+                            <p class="text-sm">
+                                @if($search && $selectedCategory !== 'all')
+                                    Tidak ada berita dalam kategori "{{ ucfirst($selectedCategory) }}" dengan kata kunci "{{ $search }}"
+                                @elseif($search)
+                                    Tidak ada berita dengan kata kunci "{{ $search }}"
+                                @elseif($selectedCategory !== 'all')
+                                    Tidak ada berita dalam kategori "{{ ucfirst($selectedCategory) }}"
+                                @else
+                                    Belum ada berita yang tersedia
+                                @endif
+                            </p>
+                            <a href="{{ route('documentation') }}" 
+                               class="inline-block mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
+                                Lihat Semua Berita
+                            </a>
+                        </div>
                     </div>
                 @endforelse
             </div>

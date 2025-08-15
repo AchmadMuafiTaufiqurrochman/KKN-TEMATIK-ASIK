@@ -9,8 +9,9 @@ class DocumentationController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil kategori dari query string (?category=xxx)
+        // Ambil kategori dan pencarian dari query string
         $selectedCategory = $request->query('category', 'all');
+        $search = $request->query('search');
 
         // Query dasar: status published dan bukan kategori 'profil'
         $query = Video::where('status', 'published')
@@ -19,6 +20,14 @@ class DocumentationController extends Controller
         // Filter berdasarkan kategori jika bukan 'all'
         if ($selectedCategory !== 'all') {
             $query->where('category', $selectedCategory);
+        }
+
+        // Filter berdasarkan pencarian
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
 
         // Urutkan berdasarkan started_at dengan prioritas:
@@ -34,11 +43,12 @@ class DocumentationController extends Controller
                 END
             ')
             ->orderBy('started_at', 'desc')
-            ->paginate(16);
+            ->paginate(16)
+            ->appends($request->query());
 
         // Daftar kategori tetap
         $allCategoryList = [
-            'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
+            'profil', 'kesehatan', 'ekonomi', 'pertanian', 'pemerintahan',
             'kegiatan', 'pembangunan', 'pengumuman', 'berita',
             'umkm', 'karangtaruna', 'budidayabunga',
         ];
@@ -61,6 +71,7 @@ class DocumentationController extends Controller
             'videos' => $videos,
             'categories' => $categoriesCount,
             'selectedCategory' => $selectedCategory,
+            'search' => $search,
         ]);
     }
 }
