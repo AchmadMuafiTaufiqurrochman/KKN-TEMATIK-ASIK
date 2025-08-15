@@ -3,6 +3,7 @@
 @section('title', $highlighted->title)
 
 @section('content')
+
     @php
         function getEmbedCode($url)
         {
@@ -11,36 +12,54 @@
                 preg_match('/(youtu\.be\/|v=)([^&]+)/', $url, $matches);
                 $videoId = $matches[2] ?? '';
                 return "
-        <div class='flex justify-center w-full max-w-[800px] aspect-[16/9]'>
-            <iframe class='w-full h-full rounded-lg' src='https://www.youtube.com/embed/{$videoId}' frameborder='0' allowfullscreen></iframe>
-        </div>";
+    <div class='flex justify-center w-full max-w-[800px] aspect-[16/9]'>
+        <iframe class='w-full h-full rounded-lg' src='https://www.youtube.com/embed/{$videoId}' frameborder='0' allowfullscreen></iframe>
+    </div>";
             }
             // Instagram → 1:1
             elseif (strpos($url, 'instagram.com') !== false) {
                 return "
-        <div class='flex justify-center'>
-            <blockquote class='instagram-media' data-instgrm-permalink='{$url}' data-instgrm-version='14'></blockquote>
-        </div>
-        <script async src='//www.instagram.com/embed.js'></script>";
+    <div class='flex justify-center'>
+        <blockquote class='instagram-media' data-instgrm-permalink='{$url}' data-instgrm-version='14'></blockquote>
+    </div>
+    <script async src='//www.instagram.com/embed.js'></script>";
             }
-            // TikTok → sama seperti Instagram (1:1)
+            // TikTok → sama ukuran dengan Instagram
             elseif (strpos($url, 'tiktok.com') !== false) {
+                // Extract TikTok video ID
+                preg_match('/tiktok\.com\/.*\/video\/(\d+)/', $url, $matches);
+                $videoId = $matches[1] ?? '';
+
                 return "
-        <div class='flex justify-center'>
-            <iframe class='w-full h-full rounded-lg' src='{$url}embed' frameborder='0' allowfullscreen></iframe>
-        </div>";
+    <div class='flex justify-center'>
+        <blockquote class='tiktok-embed' cite='{$url}' data-video-id='{$videoId}' style='max-width: 605px;min-width: 325px;'>
+            <section>
+                <a target='_blank' title='@username' href='{$url}'>Video TikTok</a>
+            </section>
+        </blockquote>
+    </div>
+    <script async src='https://www.tiktok.com/embed.js'></script>";
             }
-            // Facebook → sama seperti Instagram (1:1)
-            elseif (strpos($url, 'facebook.com') !== false) {
+            // Facebook → sama ukuran dengan Instagram
+            elseif (strpos($url, 'facebook.com') !== false || strpos($url, 'fb.watch') !== false) {
+                // Convert fb.watch to facebook.com format if needed
+                $facebookUrl = str_replace('fb.watch/', 'facebook.com/watch/?v=', $url);
+
                 return "
-        <div class='flex justify-center'>
-            <iframe class='w-full h-full rounded-lg' src='{$url}embed' frameborder='0' allowfullscreen></iframe>
-        </div>";
+    <div class='flex justify-center'>
+        <div class='fb-video' data-href='{$facebookUrl}' data-width='500' data-show-text='false'>
+            <blockquote cite='{$facebookUrl}' class='fb-xfbml-parse-ignore'>
+                <a href='{$facebookUrl}'>Video Facebook</a>
+            </blockquote>
+        </div>
+    </div>
+    <div id='fb-root'></div>
+    <script async defer crossorigin='anonymous' src='https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v18.0'>
+    </script>";
             }
 
             return '<p>Video tidak dapat ditampilkan. Platform tidak dikenali.</p>';
         }
-
     @endphp
 
 
@@ -114,7 +133,7 @@
                         class="block bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
                         data-category="{{ $video->category }}">
                         <div class="relative group">
-                            <img src="{{ asset($video->thumbnail) }}" alt="{{ $video->title }}"
+                            <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}"
                                 class="w-full h-40 sm:h-48 object-cover">
                             <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                                 {{ $video->duration }}
@@ -145,17 +164,17 @@
                                 {{ \Illuminate\Support\Str::limit(strip_tags($video->description), 80, '...') }}
                             </p>
                             <div class="flex items-center justify-between text-xs text-gray-500">
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="eye" class="w-3 h-3"></i>
-                                <span>{{ number_format($highlighted->views) }} views</span>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="eye" class="w-3 h-3"></i>
+                                    <span>{{ number_format($highlighted->views) }} views</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="w-3 h-3"></i>
+                                    <span>
+                                        {{ $highlighted->started_at ? \Carbon\Carbon::parse($highlighted->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="calendar" class="w-3 h-3"></i>
-                                <span>
-                                    {{ $highlighted->started_at ? \Carbon\Carbon::parse($highlighted->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
-                                </span>
-                            </div>
-                        </div>
 
                         </div>
                     </a>

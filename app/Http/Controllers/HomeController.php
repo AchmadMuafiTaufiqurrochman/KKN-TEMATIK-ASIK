@@ -33,7 +33,7 @@ class HomeController extends Controller
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil')
             ->latest()
-            ->take(3)
+            ->take(4)
             ->get();
 
 
