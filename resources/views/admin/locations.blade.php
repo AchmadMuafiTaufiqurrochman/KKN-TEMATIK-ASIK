@@ -197,9 +197,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex gap-2">
-                                            <button onclick="openDetailModal({{ $fasilitasItem->id }})" class="text-green-600 hover:text-green-800 transition-colors">
-                                                <i data-lucide="info" class="w-4 h-4"></i>
-                                            </button>
+                                           
                                             <button onclick="openEditLocationModal({{ $fasilitasItem->id }})" class="text-blue-600 hover:text-blue-800 transition-colors">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
@@ -352,23 +350,7 @@
     </div>
 </div>
 
-<!-- Detail Location Modal -->
-<div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-primary">Detail Fasilitas</h3>
-                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            
-            <div id="detailContent" class="space-y-4">
-                <!-- Content will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
 function openDetailModal(id) {

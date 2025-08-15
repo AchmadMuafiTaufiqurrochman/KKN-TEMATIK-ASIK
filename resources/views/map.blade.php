@@ -9,16 +9,83 @@
                 <h2 class="text-4xl font-bold text-primary mb-4">Peta Interaktif Desa</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                     Jelajahi lokasi-lokasi penting di Desa Wonokarang dengan peta interaktif yang menampilkan fasilitas dan
-                    area strategis bruuh
+                    area strategis
                 </p>
             </div>
 
-            <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Mobile/Tablet Layout -->
+            <div class="block lg:hidden space-y-6">
+                <!-- Sidebar Controls untuk Mobile -->
+                <div class="bg-white p-4 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-bold text-primary mb-4">Kategori Fasilitas</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="building-2" class="w-3 h-3"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Publik</span>
+                            <button onclick="toggleLayer('pelayanan_publik')" class="text-gray-500 hover:text-primary">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="graduation-cap" class="w-3 h-3"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Pendidikan</span>
+                            <button onclick="toggleLayer('pendidikan')" class="text-gray-500 hover:text-primary">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="heart-pulse" class="w-3 h-3"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Kesehatan</span>
+                            <button onclick="toggleLayer('kesehatan')" class="text-gray-500 hover:text-primary">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="store" class="w-3 h-3"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Ekonomi</span>
+                            <button onclick="toggleLayer('ekonomi')" class="text-gray-500 hover:text-primary">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="users" class="w-3 h-3"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Sosial</span>
+                            <button onclick="toggleLayer('sosial_budaya')" class="text-gray-500 hover:text-primary">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Area untuk Mobile -->
+                <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                    <div id="map-mobile" class="h-80 sm:h-96 relative z-0"></div>
+                    <div class="p-4 bg-white border-t">
+                        <h4 class="font-semibold text-primary mb-2">Keterangan Peta:</h4>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p>• Klik marker untuk detail lokasi</p>
+                            <p>• Total: {{ $locations->count() }} fasilitas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Layout -->
+            <div class="hidden lg:grid lg:grid-cols-4 gap-8">
                 <!-- Map Area -->
                 <div class="lg:col-span-3">
                     <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                        <div id="map" class="h-96 lg:h-[500px] relative"></div>
-
+                        <div id="map-desktop" class="h-96 lg:h-[500px] relative z-0"></div>
                         <!-- Map Legend -->
                         <div class="p-4 bg-white border-t">
                             <h4 class="font-semibold text-primary mb-2">Keterangan Peta:</h4>
@@ -47,8 +114,7 @@
                                         <div class="text-xs text-gray-500">{{ $locationTypes['pelayanan_publik'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('pelayanan_publik')"
-                                    class="text-gray-500 hover:text-primary transition-colors">
+                                <button onclick="toggleLayer('pelayanan_publik')" class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -63,8 +129,7 @@
                                         <div class="text-xs text-gray-500">{{ $locationTypes['pendidikan'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('pendidikan')"
-                                    class="text-gray-500 hover:text-primary transition-colors">
+                                <button onclick="toggleLayer('pendidikan')" class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -79,8 +144,7 @@
                                         <div class="text-xs text-gray-500">{{ $locationTypes['kesehatan'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('kesehatan')"
-                                    class="text-gray-500 hover:text-primary transition-colors">
+                                <button onclick="toggleLayer('kesehatan')" class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -95,8 +159,7 @@
                                         <div class="text-xs text-gray-500">{{ $locationTypes['ekonomi'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('ekonomi')"
-                                    class="text-gray-500 hover:text-primary transition-colors">
+                                <button onclick="toggleLayer('ekonomi')" class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -111,15 +174,12 @@
                                         <div class="text-xs text-gray-500">{{ $locationTypes['sosial_budaya'] ?? 0 }} fasilitas</div>
                                     </div>
                                 </div>
-                                <button onclick="toggleLayer('sosial_budaya')"
-                                    class="text-gray-500 hover:text-primary transition-colors">
+                                <button onclick="toggleLayer('sosial_budaya')" class="text-gray-500 hover:text-primary transition-colors">
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-
-                   
 
                     <!-- Statistics -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -156,177 +216,225 @@
         </div>
     </section>
 
+    @push('styles')
+        <style>
+            /* Fix z-index untuk map container */
+            .leaflet-container {
+                z-index: 1 !important;
+            }
+            
+            /* Fix z-index untuk popup */
+            .leaflet-popup {
+                z-index: 1000 !important;
+            }
+            
+            /* Fix z-index untuk controls */
+            .leaflet-control-container {
+                z-index: 999 !important;
+            }
+            
+            /* Pastikan map tidak overlap dengan navbar */
+            #map-mobile,
+            #map-desktop {
+                position: relative;
+                z-index: 1;
+            }
+            
+            /* Responsive touch untuk mobile */
+            @media (max-width: 1023px) {
+                .leaflet-container {
+                    touch-action: pan-x pan-y;
+                }
+            }
+            
+            /* Fix untuk marker wrapper */
+            .marker-wrapper {
+                z-index: 100 !important;
+            }
+        </style>
+    @endpush
 
     @push('scripts')
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Koordinat Desa Wonokarang yang tepat
-    var map = L.map('map').setView([-7.4129785, 112.5208843], 16);
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Fungsi untuk membuat map
+                function createMap(containerId) {
+                    // Koordinat Desa Wonokarang yang tepat
+                    var map = L.map(containerId, {
+                        zoomControl: true,
+                        scrollWheelZoom: true,
+                        touchZoom: true,
+                        doubleClickZoom: true,
+                        boxZoom: true,
+                        keyboard: true,
+                        dragging: true
+                    }).setView([-7.4129785, 112.5208843], 16);
 
-    // Gunakan tile resmi Leaflet OSM
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+                    // Gunakan tile resmi Leaflet OSM
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors',
+                        maxZoom: 19
+                    }).addTo(map);
 
-    @foreach($locations as $location)
-        @php
-            $iconColors = [
-                'pelayanan_publik' => '#2563eb',
-                'pendidikan' => '#16a34a',
-                'kesehatan' => '#dc2626',
-                'ekonomi' => '#ca8a04',
-                'sosial_budaya' => '#9333ea'
-            ];
-            $iconHtml = [
-                'pelayanan_publik' => '<i class="fas fa-building" style="color: white; font-size: 14px;"></i>',
-                'pendidikan' => '<i class="fas fa-graduation-cap" style="color: white; font-size: 14px;"></i>',
-                'kesehatan' => '<i class="fas fa-heartbeat" style="color: white; font-size: 14px;"></i>',
-                'ekonomi' => '<i class="fas fa-store" style="color: white; font-size: 14px;"></i>',
-                'sosial_budaya' => '<i class="fas fa-users" style="color: white; font-size: 14px;"></i>'
-            ];
-            $color = $iconColors[$location->type] ?? '#6b7280';
-            $icon = $iconHtml[$location->type] ?? '<i class="fas fa-map-marker-alt" style="color: white; font-size: 14px;"></i>';
-        @endphp
-        
-        var customIcon = L.divIcon({
-            html: `
-                <div style="background-color: {{ $color }}; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid white;">
-                    {!! $icon !!}
-                </div>
-            `,
-            className: "marker-wrapper {{ $location->type }}",
-            iconSize: [32, 32],
-            iconAnchor: [16, 16]
-        });
+                    return map;
+                }
 
-        L.marker([{{ $location->latitude }}, {{ $location->longitude }}], { icon: customIcon })
-            .addTo(map)
-            .bindPopup(`
-                <div class="bg-white p-4 rounded-lg shadow-lg border max-w-80">
-                    <div class="flex items-start gap-3 mb-3">
-                        <div style="background-color: {{ $color }}; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            {!! $icon !!}
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-primary text-lg mb-1">{{ $location->name }}</h4>
-                            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full mb-2">
-                                {{ $location->type_text ?? ucfirst(str_replace('_', ' ', $location->type)) }}
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2 text-sm">
-                        @if($location->description)
-                        <div class="flex items-start gap-2">
-                            <i class="fas fa-info-circle text-gray-400 mt-0.5 flex-shrink-0"></i>
-                            <p class="text-gray-700">{{ $location->description }}</p>
-                        </div>
-                        @endif
-                        
-                        @if($location->opening_hours)
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-clock text-gray-400 flex-shrink-0"></i>
-                            <span class="text-gray-600">{{ $location->opening_hours }}</span>
-                        </div>
-                        @endif
-                        
-                        @if($location->pic_name)
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-user text-gray-400 flex-shrink-0"></i>
-                            <span class="text-gray-600">{{ $location->pic_name }}</span>
-                        </div>
-                        @endif
-                        
-                        @if($location->contact)
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-phone text-gray-400 flex-shrink-0"></i>
-                            <a href="tel:{{ $location->contact }}" class="text-blue-600 hover:underline">{{ $location->contact }}</a>
-                        </div>
-                        @endif
-                    </div>
-                    
-                    @if($location->gmaps_link)
-                    <div class="mt-3 pt-3 border-t border-gray-100">
-                        <a href="{{ $location->gmaps_link }}" target="_blank" 
-                           class="inline-flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Google Maps
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    @endif
-                    
-                    <div class="mt-3 pt-3 border-t border-gray-100">
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div>
-                                <span class="text-gray-500">Status:</span>
-                                <span class="inline-block px-2 py-1 {{ $location->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }} text-xs rounded-full ml-1">
-                                    {{ $location->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
-                                </span>
+                // Buat map untuk desktop dan mobile
+                var mapDesktop = null;
+                var mapMobile = null;
+
+                if (window.innerWidth >= 1024) {
+                    mapDesktop = createMap('map-desktop');
+                } else {
+                    mapMobile = createMap('map-mobile');
+                }
+
+                // Fungsi untuk menambah markers
+                function addMarkersToMap(map) {
+                    @foreach ($locations as $location)
+                        @php
+                            $iconColors = [
+                                'pelayanan_publik' => '#2563eb',
+                                'pendidikan' => '#16a34a',
+                                'kesehatan' => '#dc2626',
+                                'ekonomi' => '#ca8a04',
+                                'sosial_budaya' => '#9333ea',
+                            ];
+                            $iconHtml = [
+                                'pelayanan_publik' => '<i class="fas fa-building" style="color: white; font-size: 12px;"></i>',
+                                'pendidikan' => '<i class="fas fa-graduation-cap" style="color: white; font-size: 12px;"></i>',
+                                'kesehatan' => '<i class="fas fa-heartbeat" style="color: white; font-size: 12px;"></i>',
+                                'ekonomi' => '<i class="fas fa-store" style="color: white; font-size: 12px;"></i>',
+                                'sosial_budaya' => '<i class="fas fa-users" style="color: white; font-size: 12px;"></i>',
+                            ];
+                            $color = $iconColors[$location->type] ?? '#6b7280';
+                            $icon = $iconHtml[$location->type] ?? '<i class="fas fa-map-marker-alt" style="color: white; font-size: 12px;"></i>';
+                        @endphp
+
+                        var customIcon = L.divIcon({
+                            html: `
+                                <div style="background-color: {{ $color }}; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 2px solid white;">
+                                    {!! $icon !!}
+                                </div>
+                            `,
+                            className: "marker-wrapper {{ $location->type }}",
+                            iconSize: [28, 28],
+                            iconAnchor: [14, 14]
+                        });
+
+                        var marker = L.marker([{{ $location->latitude }}, {{ $location->longitude }}], {
+                            icon: customIcon
+                        }).addTo(map);
+
+                        marker.bindPopup(`
+                            <div style="font-family: Arial; font-size: 13px; max-width: 250px;">
+                                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                    <div style="background-color: {{ $color }}; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                                        {!! $icon !!}
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 14px; color: #1e293b;">{{ e($location->name) }}</strong><br>
+                                        <small style="color: #475569;">{{ $location->type_text ?? ucfirst(str_replace('_', ' ', $location->type)) }}</small>
+                                    </div>
+                                </div>
+
+                                @if ($location->description)
+                                    <p style="margin: 6px 0; color: #334155; font-size: 12px;">{{ e($location->description) }}</p>
+                                @endif
+
+                                @if ($location->opening_hours)
+                                    <p style="margin: 4px 0; display: flex; align-items: center; color: #475569; font-size: 12px;">
+                                        <i class="fas fa-clock" style="margin-right: 6px; color: #6b7280; font-size: 10px;"></i>
+                                        {{ e($location->opening_hours) }}
+                                    </p>
+                                @endif
+
+                                @if ($location->pic_name)
+                                    <p style="margin: 4px 0; display: flex; align-items: center; color: #475569; font-size: 12px;">
+                                        <i class="fas fa-user" style="margin-right: 6px; color: #6b7280; font-size: 10px;"></i>
+                                        {{ e($location->pic_name) }}
+                                    </p>
+                                @endif
+
+                                @if ($location->contact)
+                                    <p style="margin: 4px 0; display: flex; align-items: center; color: #475569; font-size: 12px;">
+                                        <i class="fas fa-phone" style="margin-right: 6px; color: #6b7280; font-size: 10px;"></i>
+                                        <a href="tel:{{ e($location->contact) }}" style="color: #2563eb; text-decoration: none;">{{ e($location->contact) }}</a>
+                                    </p>
+                                @endif
+
+                                <p style="margin-top: 6px;">
+                                    <span style="display:inline-block; padding:2px 6px; border-radius: 4px; font-size: 10px; 
+                                        {{ $location->status === 'active' ? 'background:#dcfce7; color:#166534;' : 'background:#f1f5f9; color:#475569;' }}">
+                                        {{ $location->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                    </span>
+                                </p>
+
+                                @if ($location->gmaps_link)
+                                    <p style="margin-top: 6px;">
+                                        <a href="{{ e($location->gmaps_link) }}" target="_blank" style="color: #2563eb; text-decoration: none; display: inline-flex; align-items: center; font-size: 11px;">
+                                            <i class="fas fa-map-pin" style="margin-right: 4px; font-size: 10px;"></i> Lihat di Google Maps
+                                        </a>
+                                    </p>
+                                @endif
                             </div>
-                            <div>
-                                <span class="text-gray-500">Hari Ini:</span>
-                                <span class="inline-block px-2 py-1 {{ $location->isOpenToday() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} text-xs rounded-full ml-1">
-                                    {{ $location->isOpenToday() ? 'Buka' : 'Tutup' }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `);
-    @endforeach
-});
-</script>
-@endpush
-    <script>
-        let visibleLayers = {
-            pelayanan_publik: true,
-            pendidikan: true,
-            kesehatan: true,
-            ekonomi: true,
-            sosial_budaya: true
-        };
+                        `);
+                    @endforeach
+                }
 
-        function toggleLayer(layerId) {
-            visibleLayers[layerId] = !visibleLayers[layerId];
-            
-            // Toggle marker visibility
-            const markers = document.querySelectorAll(`.marker-wrapper.${layerId}`);
-            markers.forEach(marker => {
-                marker.style.display = visibleLayers[layerId] ? 'block' : 'none';
+                // Tambah markers ke map yang aktif
+                if (mapDesktop) {
+                    addMarkersToMap(mapDesktop);
+                }
+                if (mapMobile) {
+                    addMarkersToMap(mapMobile);
+                }
+
+                // Handle resize window
+                window.addEventListener('resize', function() {
+                    if (mapDesktop) {
+                        setTimeout(() => mapDesktop.invalidateSize(), 100);
+                    }
+                    if (mapMobile) {
+                        setTimeout(() => mapMobile.invalidateSize(), 100);
+                    }
+                });
             });
 
-            // Toggle button icon
-            const button = event.target.closest('button');
-            const icon = button.querySelector('i[data-lucide]');
-            if (visibleLayers[layerId]) {
-                icon.setAttribute('data-lucide', 'eye');
-            } else {
-                icon.setAttribute('data-lucide', 'eye-off');
+            // Global variables untuk layer toggle
+            let visibleLayers = {
+                pelayanan_publik: true,
+                pendidikan: true,
+                kesehatan: true,
+                ekonomi: true,
+                sosial_budaya: true
+            };
+
+            function toggleLayer(layerId) {
+                visibleLayers[layerId] = !visibleLayers[layerId];
+
+                // Toggle marker visibility
+                const markers = document.querySelectorAll(`.marker-wrapper.${layerId}`);
+                markers.forEach(marker => {
+                    const parent = marker.closest('.leaflet-marker-pane > div');
+                    if (parent) {
+                        parent.style.display = visibleLayers[layerId] ? 'block' : 'none';
+                    }
+                });
+
+                // Toggle button icon untuk semua button dengan layer yang sama
+                const buttons = document.querySelectorAll(`button[onclick*="${layerId}"]`);
+                buttons.forEach(button => {
+                    const icon = button.querySelector('i[data-lucide]');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', visibleLayers[layerId] ? 'eye' : 'eye-off');
+                        lucide.createIcons(); // Re-render icons
+                    }
+                });
             }
-            lucide.createIcons(); // Re-render icons
-        }
-
-            // Toggle markers
-            const markers = document.querySelectorAll(`.location-marker[data-type="${layerId}"]`);
-            const items = document.querySelectorAll(`.location-item[data-type="${layerId}"]`);
-
-            markers.forEach(marker => {
-                marker.style.display = visibleLayers[layerId] ? 'block' : 'none';
-            });
-
-            items.forEach(item => {
-                item.style.display = visibleLayers[layerId] ? 'flex' : 'none';
-            });
-
-            // Update button icon
-            const button = event.target.closest('button');
-            const icon = button.querySelector('i');
-            icon.setAttribute('data-lucide', visibleLayers[layerId] ? 'eye' : 'eye-off');
-            lucide.createIcons();
-        }
-    </script>
+        </script>
+    @endpush
 @endsection
