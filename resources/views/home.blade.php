@@ -260,7 +260,7 @@
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-primary mb-4">Berita Terbaru</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Berita terkini dan informasi penting seputar Desa Wonokarang.
+                    Berita dan kegiatan terkini berdasarkan jadwal acara di Desa Wonokarang.
                 </p>
             </div>
 

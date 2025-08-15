@@ -44,7 +44,14 @@ class VideoController extends Controller
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
             $query->where('category', $selectedCategory);
         })
-        ->orderBy('created_at', 'desc');
+        ->orderByRaw('
+            CASE 
+                WHEN started_at IS NULL THEN 3
+                WHEN started_at <= NOW() THEN 1 
+                ELSE 2 
+            END
+        ')
+        ->orderBy('started_at', 'desc');
 
     $relatedIds = $relatedQuery->pluck('id')->toArray();
     $currentIndex = array_search($highlighted->id, $relatedIds);
@@ -60,7 +67,14 @@ class VideoController extends Controller
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
             $query->where('category', $selectedCategory);
         })
-        ->latest()
+        ->orderByRaw('
+            CASE 
+                WHEN started_at IS NULL THEN 3
+                WHEN started_at <= NOW() THEN 1 
+                ELSE 2 
+            END
+        ')
+        ->orderBy('started_at', 'desc')
         ->paginate(16);
 
     $categories = [

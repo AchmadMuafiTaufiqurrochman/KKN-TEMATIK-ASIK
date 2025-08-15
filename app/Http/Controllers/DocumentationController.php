@@ -21,8 +21,20 @@ class DocumentationController extends Controller
             $query->where('category', $selectedCategory);
         }
 
-        // Paginate 12 data per halaman
-        $videos = $query->orderBy('created_at', 'desc')->paginate(16);
+        // Urutkan berdasarkan started_at dengan prioritas:
+        // 1. Yang sudah dimulai (started_at <= now()) diurutkan terbaru dulu
+        // 2. Yang belum dimulai (started_at > now()) diurutkan terdekat dulu
+        // 3. Yang tidak ada tanggal di paling bawah
+        $videos = $query
+            ->orderByRaw('
+                CASE 
+                    WHEN started_at IS NULL THEN 3
+                    WHEN started_at <= NOW() THEN 1 
+                    ELSE 2 
+                END
+            ')
+            ->orderBy('started_at', 'desc')
+            ->paginate(16);
 
         // Daftar kategori tetap
         $allCategoryList = [

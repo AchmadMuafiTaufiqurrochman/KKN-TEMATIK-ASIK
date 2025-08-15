@@ -40,7 +40,20 @@ class AdminVideoController extends Controller
             $categories[$cat] = Video::where('category', $cat)->count();
         }
 
-        $videos = $query->latest()->paginate(9);
+        // Urutkan berdasarkan started_at dengan prioritas:
+        // 1. Yang sudah dimulai (started_at <= now()) diurutkan terbaru dulu
+        // 2. Yang belum dimulai (started_at > now()) diurutkan terdekat dulu
+        // 3. Yang tidak ada tanggal di paling bawah
+        $videos = $query
+            ->orderByRaw('
+                CASE 
+                    WHEN started_at IS NULL THEN 3
+                    WHEN started_at <= NOW() THEN 1 
+                    ELSE 2 
+                END
+            ')
+            ->orderBy('started_at', 'desc')
+            ->paginate(9);
 
         return view('admin.videos', [
             'videos' => $videos,
