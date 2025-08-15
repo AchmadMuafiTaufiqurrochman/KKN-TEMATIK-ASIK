@@ -79,8 +79,14 @@
                                 {!! getEmbedCode($highlighted->video_url) !!}
                             </div>
                         @else
-                            <img src="{{ asset($highlighted->thumbnail) }}" alt="{{ $highlighted->title }}"
-                                class="rounded-lg w-full">
+                            @if (Str::startsWith($highlighted->thumbnail, ['http://', 'https://']))
+                                <img src="{{ $highlighted->thumbnail }}" alt="{{ $highlighted->title }}"
+                                    class="rounded-lg w-full">
+                            @else
+                                <img src="{{ asset('storage/' . $highlighted->thumbnail) }}" alt="{{ $highlighted->title }}"
+                                    class="rounded-lg w-full">
+                            @endif
+
                         @endif
                     </div>
                     <div class="lg:w-1/2">
