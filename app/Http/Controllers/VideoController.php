@@ -38,7 +38,8 @@ class VideoController extends Controller
     // Setiap klik langsung tambah views (hapus logika session dan Carbon)
     $highlighted->increment('views');
 
-    $selectedCategory = $request->query('category');
+    $selectedCategory = $request->query('category', 'semua');
+    $search = $request->query('search');
 
     $relatedQuery = Video::where('status', 'published')
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
@@ -62,10 +63,16 @@ class VideoController extends Controller
     $previousVideo = $previousId ? Video::find($previousId) : null;
     $nextVideo = $nextId ? Video::find($nextId) : null;
 
-    $beritas = Video::where('status', 'published')
+    $beritasQuery = Video::where('status', 'published')
         ->where('id', '!=', $id)
         ->when($selectedCategory && $selectedCategory !== 'semua', function ($query) use ($selectedCategory) {
             $query->where('category', $selectedCategory);
+        })
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
         })
         ->orderByRaw('
             CASE 
@@ -74,11 +81,13 @@ class VideoController extends Controller
                 ELSE 2 
             END
         ')
-        ->orderBy('started_at', 'desc')
-        ->paginate(16);
+        ->orderBy('started_at', 'desc');
+
+    $beritas = $beritasQuery->paginate(16)->appends($request->query());
 
     $categories = [
         'semua' => Video::where('status', 'published')->count(),
+        'profil' => Video::where('status', 'published')->where('category', 'profil')->count(),
         'kesehatan' => Video::where('status', 'published')->where('category', 'kesehatan')->count(),
         'ekonomi' => Video::where('status', 'published')->where('category', 'ekonomi')->count(),
         'pertanian' => Video::where('status', 'published')->where('category', 'pertanian')->count(),
@@ -98,7 +107,8 @@ class VideoController extends Controller
         'selectedCategory',
         'categories',
         'previousVideo',
-        'nextVideo'
+        'nextVideo',
+        'search'
     ));
 }
 
