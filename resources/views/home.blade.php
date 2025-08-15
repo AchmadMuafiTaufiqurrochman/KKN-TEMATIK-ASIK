@@ -258,18 +258,20 @@
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
+                <h2 class="text-4xl font-bold text-primary mb-4">Berita Terbaru</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                     Berita terkini dan informasi penting seputar Desa Wonokarang.
                 </p>
             </div>
 
+
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 @foreach ($featuredVideos as $video)
-                    <a href="{{ route('berita.detail', $video->id) }}">
-                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                            <div class="relative group">
-                                <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}" class="w-full h-48 object-cover" />
+                    <a href="{{ route('berita.detail', $video->id) }}" class="block h-full">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group h-full flex flex-col">
+                            <div class="relative group flex-shrink-0">
+                                <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}"
+                                    class="w-full h-48 object-cover" />
                                 <div
                                     class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                     @if ($video->type === 'video')
@@ -282,13 +284,14 @@
                                     {{ $video->duration }}
                                 </div>
                                 <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
-                                <span class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
-                                    @if ($video->category === 'kesehatan') bg-red-100 text-red-800
-                                    @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
-                                    @else bg-green-100 text-green-800 @endif">
-                                    {{ ucfirst($video->category) }}
-                                </span>
-                            </div>
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+                                        @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                        @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                        @else bg-green-100 text-green-800 @endif">
+                                        {{ ucfirst($video->category) }}
+                                    </span>
+                                </div>
                                 <div class="absolute top-2 right-2">
                                     @if ($video->is_finished)
                                         <span
@@ -301,14 +304,16 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 md:p-6">
-                                <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">
+                            <div class="p-4 md:p-6 flex flex-col flex-grow">
+                                <h3
+                                    class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]">
                                     {{ $video->title }}
                                 </h3>
-                                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                    {!! $video->description !!}
+                                <div class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                                    {!! Str::limit(strip_tags($video->description), 120) !!}
                                 </div>
-                                <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
+                                <div
+                                    class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500 mt-auto">
                                     <div class="flex items-center gap-1">
                                         <i data-lucide="eye" class="w-4 h-4"></i>
                                         <span>{{ number_format($video->views) }} views</span>
@@ -323,6 +328,7 @@
                     </a>
                 @endforeach
             </div>
+
 
 
             <div class="text-center mt-12">
