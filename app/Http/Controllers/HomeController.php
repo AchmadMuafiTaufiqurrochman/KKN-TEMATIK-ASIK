@@ -20,19 +20,34 @@ class HomeController extends Controller
 
         $potentials = Potential::take(2)->get();
        
-        // Ambil video profil terbaru
+        // Ambil video profil terbaru berdasarkan started_at
         $video = Video::where('category', 'profil')
                       ->where('status', 'published')
-                      ->orderByDesc('created_at')
+                      ->orderByRaw('
+                          CASE 
+                              WHEN started_at IS NULL THEN 3
+                              WHEN started_at <= NOW() THEN 1 
+                              ELSE 2 
+                          END
+                      ')
+                      ->orderBy('started_at', 'desc')
                       ->first();
 
         if ($video) {
             $video->incrementViews();
         }
 
+        // Featured videos berdasarkan started_at
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil')
-            ->latest()
+            ->orderByRaw('
+                CASE 
+                    WHEN started_at IS NULL THEN 3
+                    WHEN started_at <= NOW() THEN 1 
+                    ELSE 2 
+                END
+            ')
+            ->orderBy('started_at', 'desc')
             ->take(4)
             ->get();
 

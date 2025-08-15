@@ -46,7 +46,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <h1 class="text-2xl font-bold text-primary">Manajemen Berita</h1>
-                            <p class="text-gray-600">Kelola berita dokumentasi dan profil desa</p>
+                            <p class="text-gray-600">Kelola berita dokumentasi dan profil desa (diurutkan berdasarkan tanggal acara)</p>
                         </div>
 
                     </div>
