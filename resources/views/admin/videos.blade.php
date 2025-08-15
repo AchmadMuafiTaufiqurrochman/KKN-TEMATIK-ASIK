@@ -156,120 +156,146 @@
                 </div>
 
                 <!-- Videos Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @forelse($videos as $video)
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                            <div class="relative group">
-                               <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}" class="w-full h-48 object-cover" />
-                                <div
-                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <div
-                                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                        @if ($video->type === 'video')
-                                            <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
-                                        @else
-                                            <i data-lucide="image" class="w-8 h-8 text-white"></i>
-                                        @endif
-
-                                    </div>
-                                </div>
-                                <!-- Status: kanan atas -->
-                                <div class="absolute top-2 right-2">
-                                    @if ($video->is_finished)
-                                        <span
-                                            class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
-                                    @else
-                                        <span
-                                            class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
-                                            Dimulai</span>
-                                    @endif
-                                </div>
-                                @if ($video->content_type === 'video')
-                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
-                                        {{ $video->duration }}
-                                    </div>
-                                    <div class="absolute top-2 left-2">
-                                        <span
-                                            class="px-2 py-1 rounded text-xs font-semibold {{ $video->status === 'published' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800' }}">
-                                            {{ $video->status === 'published' ? 'Published' : 'Draft' }}
-                                        </span>
-                                    </div>
-                                    <div class="absolute top-2 right-2 ">
-                                        @php
-                                            $categoryColors = [
-                                                'profil' => 'bg-blue-100 text-blue-800',
-                                                'kesehatan' => 'bg-red-100 text-red-800',
-                                                'ekonomi' => 'bg-purple-100 text-purple-800',
-                                                'pertanian' => 'bg-green-100 text-green-800',
-                                                'pemerintahan' => 'bg-yellow-100 text-yellow-800',
-                                                'pembangunan' => 'bg-indigo-100 text-indigo-800',
-                                                'kegiatan' => 'bg-pink-100 text-pink-800',
-                                                'pengumuman' => 'bg-teal-100 text-teal-800',
-                                                'berita' => 'bg-cyan-100 text-cyan-800',
-                                                'umkm' => 'bg-lime-100 text-lime-800',
-                                                'karangtaruna' => 'bg-orange-100 text-orange-800',
-                                                'budidayabunga' => 'bg-pink-100 text-pink-800',
-                                            ];
-                                        @endphp
-
-                                        <span
-                                            class="px-2 py-1 rounded text-xs font-semibold {{ $categoryColors[$video->category] ?? 'bg-gray-100 text-gray-800' }}">
-                                            {{ $video->category_text }}
-                                        </span>
-
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="p-6">
-                                <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">
-                                    {{ $video->title }}
-                                </h3>
-                                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                    {!! $video->description !!}
-                                </div>
-
-
-                                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                                    <div class="flex items-center gap-1">
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-                                        <span>{{ number_format($video->views) }} views</span>
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <i data-lucide="calendar" class="w-4 h-4"></i>
-                                        <span>
-                                            {{ $video->started_at ? \Carbon\Carbon::parse($video->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
-                                        </span>
-
-                                    </div>
-                                </div>
-
-                                <div class="flex gap-2">
-                                    <a href="{{ route('admin.videos.edit', $video->id) }}"
-                                        class="flex-1 bg-secondary text-primary py-2 px-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center justify-center gap-2">
-                                        <i data-lucide="edit" class="w-4 h-4"></i>
-                                        Edit
-                                    </a>
-
-
-                                    <form action="{{ route('admin.videos.destroy', $video) }}" method="POST"
-                                        class="inline" onsubmit="return confirm('Yakin ingin menghapus video ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full text-center py-12">
-                            <p class="text-gray-500">Tidak ada berita dalam kategori ini</p>
-                        </div>
-                    @endforelse
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    @forelse($videos as $video)
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="relative group">
+               <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}" class="w-full h-48 object-cover" />
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    @if ($video->type === 'video')
+                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                    @else
+                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                    @endif
                 </div>
+
+                <!-- Status Published/Draft - kiri atas -->
+                <div class="absolute top-2 left-2">
+                    @if ($video->status === 'published')
+                        <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded font-semibold">
+                            <i data-lucide="check-circle" class="w-3 h-3 inline mr-1"></i>
+                            Published
+                        </span>
+                    @else
+                        <span class="inline-block px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded font-semibold">
+                            <i data-lucide="edit" class="w-3 h-3 inline mr-1"></i>
+                            Draft
+                        </span>
+                    @endif
+                </div>
+
+                <!-- Category - kanan atas -->
+                <div class="absolute top-2 right-2">
+                    @php
+                        $categoryColors = [
+                            'profil' => 'bg-blue-100 text-blue-800',
+                            'kesehatan' => 'bg-red-100 text-red-800',
+                            'ekonomi' => 'bg-purple-100 text-purple-800',
+                            'pertanian' => 'bg-green-100 text-green-800',
+                            'pemerintahan' => 'bg-yellow-100 text-yellow-800',
+                            'pembangunan' => 'bg-indigo-100 text-indigo-800',
+                            'kegiatan' => 'bg-pink-100 text-pink-800',
+                            'pengumuman' => 'bg-teal-100 text-teal-800',
+                            'berita' => 'bg-cyan-100 text-cyan-800',
+                            'umkm' => 'bg-lime-100 text-lime-800',
+                            'karangtaruna' => 'bg-orange-100 text-orange-800',
+                            'budidayabunga' => 'bg-pink-100 text-pink-800',
+                        ];
+                    @endphp
+                    <span class="px-2 py-1 rounded text-xs font-semibold {{ $categoryColors[$video->category] ?? 'bg-gray-100 text-gray-800' }}">
+                        {{ $video->category_text }}
+                    </span>
+                </div>
+
+                <!-- Duration untuk video - kanan bawah -->
+                @if ($video->type === 'video' && $video->duration)
+                    <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                        {{ $video->duration }}
+                    </div>
+                @endif
+
+                <!-- Status Finished/Will Start - kiri bawah -->
+                @if(isset($video->is_finished))
+                    <div class="absolute bottom-2 left-2">
+                        @if ($video->is_finished)
+                            <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                                <i data-lucide="check" class="w-3 h-3 inline mr-1"></i>
+                                Selesai
+                            </span>
+                        @else
+                            <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">
+                                <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
+                                Akan Dimulai
+                            </span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-primary mb-2 line-clamp-2">
+                    {{ $video->title }}
+                </h3>
+                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {!! $video->description !!}
+                </div>
+
+                <!-- Status info dalam card -->
+                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="flex items-center gap-1">
+                            @if ($video->status === 'published')
+                                <i data-lucide="globe" class="w-3 h-3 text-green-600"></i>
+                                <span class="text-green-600 font-medium">Dipublikasi</span>
+                            @else
+                                <i data-lucide="file-text" class="w-3 h-3 text-orange-600"></i>
+                                <span class="text-orange-600 font-medium">Draft</span>
+                            @endif
+                        </span>
+                        <span class="text-gray-400">•</span>
+                        <span class="capitalize">{{ $video->type }}</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        <span>{{ number_format($video->views) }} views</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <span>
+                            {{ $video->started_at ? \Carbon\Carbon::parse($video->started_at)->translatedFormat('d M Y') : 'Belum ada tanggal' }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="{{ route('admin.videos.edit', $video->id) }}"
+                        class="flex-1 bg-secondary text-primary py-2 px-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="edit" class="w-4 h-4"></i>
+                        Edit
+                    </a>
+
+                    <form action="{{ route('admin.videos.destroy', $video) }}" method="POST"
+                        class="inline" onsubmit="return confirm('Yakin ingin menghapus video ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="col-span-full text-center py-12">
+            <p class="text-gray-500">Tidak ada berita dalam kategori ini</p>
+        </div>
+    @endforelse
+</div>
 
                 @if ($videos->hasPages())
                     <div class="mt-8">
