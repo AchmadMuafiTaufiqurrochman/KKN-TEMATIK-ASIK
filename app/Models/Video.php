@@ -20,12 +20,12 @@ class Video extends Model
         'views',
         'type',
         'started_at',
-        'is_finished',
+        // is_finished dihapus karena sekarang dihitung secara dinamis
     ];
 
     protected $casts = [
         'started_at' => 'datetime',
-        'is_finished' => 'boolean',
+        // is_finished dihapus karena sekarang dihitung secara dinamis
     ];
 
     public function incrementViews()
@@ -89,5 +89,17 @@ class Video extends Model
     public function isPublished()
     {
         return $this->status === 'published';
+    }
+
+    // Accessor untuk menghitung is_finished secara dinamis
+    public function getIsFinishedAttribute()
+    {
+        // Jika tidak ada tanggal mulai, dianggap belum selesai
+        if (!$this->started_at) {
+            return false;
+        }
+        
+        // Bandingkan tanggal sekarang dengan tanggal mulai acara
+        return now()->greaterThan($this->started_at);
     }
 }

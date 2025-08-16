@@ -106,7 +106,7 @@ class AdminVideoController extends Controller
 
         $validated['type'] = $type;
         $validated['started_at'] = Carbon::parse($validated['started_at']);
-        $validated['is_finished'] = now()->greaterThan($validated['started_at']);
+        // Hapus is_finished karena sekarang dihitung secara dinamis
 
         Video::create($validated);
 
@@ -154,7 +154,7 @@ class AdminVideoController extends Controller
 
         $validated['type'] = $type;
         $validated['started_at'] = Carbon::parse($validated['started_at']);
-        $validated['is_finished'] = now()->greaterThan($validated['started_at']);
+        // Hapus is_finished karena sekarang dihitung secara dinamis
 
         $video->update($validated);
 

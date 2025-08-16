@@ -273,21 +273,19 @@
                                 @endif
 
                                 <!-- Status Finished/Will Start - kiri bawah -->
-                                @if(isset($video->is_finished))
-                                    <div class="absolute bottom-2 left-2">
-                                        @if ($video->is_finished)
-                                            <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
-                                                <i data-lucide="check" class="w-3 h-3 inline mr-1"></i>
-                                                <span class="hidden sm:inline">Selesai</span>
-                                            </span>
-                                        @else
-                                            <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">
-                                                <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
-                                                <span class="hidden sm:inline">Akan Dimulai</span>
-                                            </span>
-                                        @endif
-                                    </div>
-                                @endif
+                                <div class="absolute bottom-2 left-2">
+                                    @if ($video->is_finished)
+                                        <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                                            <i data-lucide="check" class="w-3 h-3 inline mr-1"></i>
+                                            <span class="hidden sm:inline">Selesai</span>
+                                        </span>
+                                    @else
+                                        <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">
+                                            <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
+                                            <span class="hidden sm:inline">Akan Dimulai</span>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
 
             <div class="p-4 sm:p-6">
