@@ -125,49 +125,88 @@
                 </div>
 
                 <!-- Action Section -->
-                <div class="flex flex-col gap-4 mb-6">
-                    <!-- Tambah Video Button -->
-                    <a href="{{ route('admin.videos.create') }}"
-                        class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2 justify-center w-full sm:w-auto">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                        Tambah Berita
-                    </a>
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6 mb-6">
+                    <!-- Tambah Berita Button -->
+                    <div class="order-1 lg:order-1">
+                        <a href="{{ route('admin.videos.create') }}"
+                            class="inline-flex items-center gap-2 bg-primary text-white px-4 lg:px-6 py-2.5 lg:py-3 rounded-lg font-semibold hover:bg-blue-800 transition-all duration-200 shadow-sm hover:shadow-md w-full sm:w-auto justify-center lg:justify-start">
+                            <i data-lucide="plus" class="w-4 h-4 lg:w-5 lg:h-5"></i>
+                            <span class="text-sm lg:text-base">Tambah Berita</span>
+                        </a>
+                    </div>
                     
                     <!-- Search Form -->
-                    <form method="GET" action="{{ route('admin.videos.index') }}" class="flex flex-col sm:flex-row gap-3">
-                        <div class="flex-1">
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..."
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
-                        </div>
-                        <div class="flex gap-2">
-                            <select name="category" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm flex-1 sm:flex-none">
-                                <option value="">Semua Kategori</option>
-                                @foreach($categories as $key => $count)
-                                    @if($key !== 'all')
-                                        <option value="{{ $key }}" {{ request('category') === $key ? 'selected' : '' }}>
-                                            {{ ucfirst($key === 'profil' ? 'Profil Desa' : $key) }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2">
-                                <i data-lucide="search" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Cari</span>
-                            </button>
-                        </div>
-                    </form>
+                    <div class="order-2 lg:order-2 flex-1 lg:max-w-lg">
+                        <form method="GET" action="{{ route('admin.videos.index') }}" class="flex flex-col sm:flex-row gap-2 lg:gap-3">
+                            <div class="flex-1">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                                    </div>
+                                    <input type="text" name="search" value="{{ request('search') }}" 
+                                        placeholder="Cari berita..."
+                                        class="w-full pl-10 pr-4 py-2.5 lg:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm lg:text-base bg-white hover:bg-gray-50 transition-colors">
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button type="submit" 
+                                    class="px-4 lg:px-6 py-2.5 lg:py-3 bg-primary text-white rounded-lg hover:bg-blue-800 transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-2 min-w-[80px] lg:min-w-[100px] justify-center">
+                                    <i data-lucide="search" class="w-4 h-4"></i>
+                                    <span class="hidden sm:inline text-sm lg:text-base">Cari</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
+                <!-- Clear Filter Button -->
+                @if(request('search') || (request('category') && request('category') !== 'all'))
+                    <div class="mb-4">
+                        <a href="{{ route('admin.videos.index') }}" 
+                            class="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                            <i data-lucide="x" class="w-3 h-3"></i>
+                            Hapus Filter
+                        </a>
+                    </div>
+                @endif
 
                 <!-- Category Filter -->
-                <div class="flex flex-wrap gap-2 sm:gap-4 mb-8">
-                    @foreach ($categories as $key => $count)
-                        <a href="{{ route('admin.videos.index', ['category' => $key]) }}"
-                            class="px-3 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-semibold transition-colors {{ request('category', 'all') === $key ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-secondary hover:text-primary border border-gray-200' }}">
-                            {{ ucfirst($key === 'all' ? 'Semua' : ($key === 'profil' ? 'Profil Desa' : $key)) }}
-                            ({{ $count }})
-                        </a>
-                    @endforeach
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6 mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <i data-lucide="filter" class="w-4 h-4 text-primary"></i>
+                        </div>
+                        <h3 class="text-base lg:text-lg font-semibold text-gray-900">Filter Kategori</h3>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2 lg:gap-3">
+                        @foreach ($categories as $key => $count)
+                            @php
+                                $isActive = request('category', 'all') === $key;
+                                $categoryName = $key === 'all' ? 'Semua' : ($key === 'profil' ? 'Profil Desa' : ucfirst($key));
+                            @endphp
+                            <a href="{{ route('admin.videos.index', ['category' => $key]) }}"
+                                class="inline-flex items-center gap-2 px-3 lg:px-4 py-2 lg:py-2.5 rounded-lg text-xs lg:text-sm font-medium transition-all duration-200 hover:shadow-sm
+                                {{ $isActive 
+                                    ? 'bg-primary text-white shadow-sm' 
+                                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200 hover:border-gray-300' }}">
+                                <span>{{ $categoryName }}</span>
+                                <span class="inline-flex items-center justify-center w-5 h-5 text-xs rounded-full 
+                                    {{ $isActive ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600' }}">
+                                    {{ $count }}
+                                </span>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <!-- Mobile: Show active filter info -->
+                    @if(request('category') && request('category') !== 'all')
+                        <div class="mt-3 pt-3 border-t border-gray-100 lg:hidden">
+                            <div class="text-xs text-gray-500">
+                                Filter aktif: <span class="font-medium text-primary">{{ ucfirst(request('category') === 'profil' ? 'Profil Desa' : request('category')) }}</span>
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Videos Grid -->
