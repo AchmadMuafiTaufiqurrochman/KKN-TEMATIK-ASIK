@@ -19,7 +19,7 @@
                 <div class="bg-white p-4 rounded-xl shadow-lg">
                     <h3 class="text-lg font-bold text-primary mb-4">Kategori Fasilitas</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="pelayanan_publik">
                             <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white">
                                 <i data-lucide="building-2" class="w-3 h-3"></i>
                             </div>
@@ -28,7 +28,7 @@
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="pendidikan">
                             <div class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-white">
                                 <i data-lucide="graduation-cap" class="w-3 h-3"></i>
                             </div>
@@ -37,7 +37,7 @@
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="kesehatan">
                             <div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-white">
                                 <i data-lucide="heart-pulse" class="w-3 h-3"></i>
                             </div>
@@ -46,7 +46,7 @@
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="ekonomi">
                             <div class="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center text-white">
                                 <i data-lucide="store" class="w-3 h-3"></i>
                             </div>
@@ -55,7 +55,7 @@
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="sosial_budaya">
                             <div class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white">
                                 <i data-lucide="users" class="w-3 h-3"></i>
                             </div>
@@ -104,7 +104,7 @@
                     <div class="bg-white p-6 rounded-xl shadow-lg">
                         <h3 class="text-lg font-bold text-primary mb-4">Kategori Fasilitas</h3>
                         <div class="space-y-3">
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="pelayanan_publik">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
                                         <i data-lucide="building-2" class="w-4 h-4"></i>
@@ -119,7 +119,7 @@
                                 </button>
                             </div>
 
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="pendidikan">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white">
                                         <i data-lucide="graduation-cap" class="w-4 h-4"></i>
@@ -134,7 +134,7 @@
                                 </button>
                             </div>
 
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="kesehatan">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white">
                                         <i data-lucide="heart-pulse" class="w-4 h-4"></i>
@@ -149,7 +149,7 @@
                                 </button>
                             </div>
 
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="ekonomi">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center text-white">
                                         <i data-lucide="store" class="w-4 h-4"></i>
@@ -164,7 +164,7 @@
                                 </button>
                             </div>
 
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="sosial_budaya">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white">
                                         <i data-lucide="users" class="w-4 h-4"></i>
@@ -251,6 +251,26 @@
             .marker-wrapper {
                 z-index: 100 !important;
             }
+            
+            /* Visual feedback untuk kategori yang disembunyikan */
+            [data-layer].opacity-50 {
+                opacity: 0.5;
+                transition: opacity 0.3s ease;
+            }
+            
+            /* Hover effect untuk toggle buttons */
+            button[onclick*="toggleLayer"] {
+                transition: all 0.2s ease;
+            }
+            
+            button[onclick*="toggleLayer"]:hover {
+                transform: scale(1.1);
+            }
+            
+            /* Animasi untuk icon mata */
+            i[data-lucide="eye"], i[data-lucide="eye-off"] {
+                transition: all 0.2s ease;
+            }
         </style>
     @endpush
 
@@ -328,6 +348,18 @@
                         var marker = L.marker([{{ $location->latitude }}, {{ $location->longitude }}], {
                             icon: customIcon
                         }).addTo(map);
+
+                        // Store reference untuk toggle functionality
+                        marker._layerType = '{{ $location->type }}';
+                        
+                        // Store marker reference in global object untuk easier access
+                        if (!window.mapMarkers) {
+                            window.mapMarkers = {};
+                        }
+                        if (!window.mapMarkers['{{ $location->type }}']) {
+                            window.mapMarkers['{{ $location->type }}'] = [];
+                        }
+                        window.mapMarkers['{{ $location->type }}'].push(marker);
 
                         marker.bindPopup(`
                             <div style="font-family: Arial; font-size: 13px; max-width: 250px;">
@@ -414,24 +446,75 @@
             };
 
             function toggleLayer(layerId) {
+                // Toggle visibility state
                 visibleLayers[layerId] = !visibleLayers[layerId];
+                
+                console.log(`Toggling layer ${layerId} to ${visibleLayers[layerId] ? 'visible' : 'hidden'}`);
 
-                // Toggle marker visibility
+                // Method 1: Toggle menggunakan marker references yang disimpan
+                if (window.mapMarkers && window.mapMarkers[layerId]) {
+                    window.mapMarkers[layerId].forEach(marker => {
+                        if (visibleLayers[layerId]) {
+                            marker.setOpacity(1);
+                            if (marker._icon) {
+                                marker._icon.style.display = 'block';
+                                marker._icon.style.visibility = 'visible';
+                            }
+                        } else {
+                            marker.setOpacity(0);
+                            if (marker._icon) {
+                                marker._icon.style.display = 'none';
+                                marker._icon.style.visibility = 'hidden';
+                            }
+                        }
+                    });
+                }
+
+                // Method 2: Toggle menggunakan DOM selector (fallback)
                 const markers = document.querySelectorAll(`.marker-wrapper.${layerId}`);
+                console.log(`Found ${markers.length} markers for layer ${layerId}`);
+                
                 markers.forEach(marker => {
-                    const parent = marker.closest('.leaflet-marker-pane > div');
-                    if (parent) {
-                        parent.style.display = visibleLayers[layerId] ? 'block' : 'none';
+                    // Find the closest leaflet marker container
+                    const leafletMarker = marker.closest('.leaflet-marker-icon') || marker.parentElement;
+                    if (leafletMarker) {
+                        leafletMarker.style.display = visibleLayers[layerId] ? 'block' : 'none';
+                        leafletMarker.style.visibility = visibleLayers[layerId] ? 'visible' : 'hidden';
+                        leafletMarker.style.opacity = visibleLayers[layerId] ? '1' : '0';
                     }
                 });
 
-                // Toggle button icon untuk semua button dengan layer yang sama
+                // Update all toggle buttons for this layer
                 const buttons = document.querySelectorAll(`button[onclick*="${layerId}"]`);
                 buttons.forEach(button => {
                     const icon = button.querySelector('i[data-lucide]');
                     if (icon) {
+                        // Update icon
                         icon.setAttribute('data-lucide', visibleLayers[layerId] ? 'eye' : 'eye-off');
-                        lucide.createIcons(); // Re-render icons
+                        
+                        // Update button appearance
+                        if (visibleLayers[layerId]) {
+                            button.classList.remove('text-gray-400');
+                            button.classList.add('text-gray-500', 'hover:text-primary');
+                        } else {
+                            button.classList.remove('text-gray-500', 'hover:text-primary');
+                            button.classList.add('text-gray-400');
+                        }
+                        
+                        // Re-render lucide icons
+                        if (typeof lucide !== 'undefined') {
+                            lucide.createIcons();
+                        }
+                    }
+                });
+
+                // Update category row appearance
+                const categoryRows = document.querySelectorAll(`[data-layer="${layerId}"]`);
+                categoryRows.forEach(row => {
+                    if (visibleLayers[layerId]) {
+                        row.classList.remove('opacity-50');
+                    } else {
+                        row.classList.add('opacity-50');
                     }
                 });
             }
