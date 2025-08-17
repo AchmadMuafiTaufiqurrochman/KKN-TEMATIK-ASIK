@@ -4,6 +4,13 @@
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
+        @if (session('success'))
+            <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+                <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
+                <span class="text-green-700">{{ session('success') }}</span>
+            </div>
+        @endif
+
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-primary">Tambah Berita Baru</h1>
             <a href="{{ route('admin.videos.index') }}"
