@@ -110,7 +110,10 @@ class AdminVideoController extends Controller
 
         Video::create($validated);
 
-        return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil ditambahkan.');
+        // Pesan notifikasi berdasarkan tipe
+        $message = $type === 'video' ? 'Berita video berhasil di upload!' : 'Berita gambar berhasil di upload!';
+        
+        return redirect()->route('admin.videos.index')->with('success', $message);
     }
 
     public function update(Request $request, Video $video)
@@ -158,7 +161,10 @@ class AdminVideoController extends Controller
 
         $video->update($validated);
 
-        return redirect()->route('admin.videos.index')->with('success', 'Berita berhasil diperbarui.');
+        // Pesan notifikasi berdasarkan tipe
+        $message = $type === 'video' ? 'Berita video berhasil di upload!' : 'Berita gambar berhasil di upload!';
+
+        return redirect()->route('admin.videos.index')->with('success', $message);
     }
 
     public function destroy(Video $video)
