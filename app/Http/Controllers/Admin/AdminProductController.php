@@ -37,6 +37,30 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Produk berhasil disimpan.');
     }
 
+    public function update(Request $request, Product $product)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'category' => 'required|string',
+        'contact' => 'required|string',
+        'status' => 'required|in:published,draft',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    if ($request->hasFile('image')) {
+        if ($product->image) {
+            Storage::delete('public/' . $product->image);
+        }
+        $validated['image'] = $request->file('image')->store('products', 'public');
+    }
+
+    $product->update($validated);
+
+    return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
+}
+
+
     public function destroy(Product $product)
     {
         if ($product->image) {

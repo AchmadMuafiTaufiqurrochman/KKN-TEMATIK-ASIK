@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Villager;
 use App\Models\Potential;
 use App\Models\Video;
+
 use App\Models\Aparat; // <--- Tambahkan ini
+
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -38,6 +41,20 @@ class HomeController extends Controller
         }
 
         // Featured videos berdasarkan started_at
+
+        // Produk unggulan (3 terbaru)
+        $products = Product::where('status', 'published')
+            ->latest()
+            ->take(3)
+            ->get();
+
+
+        $featured_video = Video::where('category', 'profil')
+            ->where('status', 'published')
+            ->first();
+
+        // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
+
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil')
             ->orderByRaw('
@@ -56,5 +73,7 @@ class HomeController extends Controller
         $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
 
         return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video'));
+
+        return view('home', compact('stats', 'products', 'featured_video', 'featuredVideos'));
     }
 }
