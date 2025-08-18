@@ -29,24 +29,28 @@ class AparatController extends Controller
         return view('admin.aparat', compact('aparat', 'stats'));
     }
 
-    // SIMPAN DATA BARU
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'nip' => 'required',
-            'position' => 'required',
-            'gender' => 'required|in:L,P',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+{
+    $data = $request->validate([
+        'name' => 'required',
+        'nip' => 'required',
+        'position' => 'required',
+        'motto' => 'nullable|string',
+        'visi' => 'nullable|string',
+        'misi' => 'nullable|string',
+        'prestasi' => 'nullable|string',
+        'gender' => 'required|in:L,P',
+        'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:25600',
+    ]);
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('aparat', 'public');
-        }
-
-        Aparat::create($data);
-        return back()->with('success', 'Data berhasil ditambahkan');
+    if ($request->hasFile('photo')) {
+        $data['photo'] = $request->file('photo')->store('aparat', 'public');
     }
+
+    Aparat::create($data);
+    return back()->with('success', 'Data berhasil ditambahkan');
+}
+
 
     // UPDATE DATA
     public function update(Request $request, $id)
@@ -54,12 +58,17 @@ class AparatController extends Controller
         $aparat = Aparat::findOrFail($id);
 
         $data = $request->validate([
-            'name' => 'required',
-            'nip' => 'required',
-            'position' => 'required',
-            'gender' => 'required|in:L,P',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    'name' => 'required',
+    'nip' => 'required',
+    'position' => 'required',
+    'motto' => 'nullable|string',
+    'visi' => 'nullable|string',
+    'misi' => 'nullable|string',
+    'prestasi' => 'nullable|string',
+    'gender' => 'required|in:L,P',
+    'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:25600',
+]);
+
 
         if ($request->hasFile('photo')) {
             if ($aparat->photo) {
@@ -70,6 +79,7 @@ class AparatController extends Controller
 
         $aparat->update($data);
         return back()->with('success', 'Data berhasil diupdate');
+        
     }
 
     // HAPUS DATA
@@ -82,4 +92,6 @@ class AparatController extends Controller
         $aparat->delete();
         return back()->with('success', 'Data berhasil dihapus');
     }
+
+    
 }

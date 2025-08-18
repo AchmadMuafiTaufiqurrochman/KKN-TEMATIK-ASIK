@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\VillagerController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\Admin\AdminLocationController;
+use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -27,6 +28,11 @@ use App\Http\Controllers\ProductController;
     Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
     Route::get('/map', [MapController::class, 'index'])->name('map');
     Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
+
+Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
+Route::get('/detailpotensi/{id}', [PotentialController::class, 'detailPotensi'])->name('detailpotensi');
+Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('allpotensi');
+
 
 
 // Public
@@ -73,16 +79,25 @@ use App\Http\Controllers\ProductController;
 
 
 
-    // Locations management
+    // Fasilitas management (using new Fasilitas model)
+    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas.index');
+    Route::post('/fasilitas', [FasilitasController::class, 'store'])->name('fasilitas.store');
+    Route::get('/fasilitas/{fasilitas}', [FasilitasController::class, 'show'])->name('fasilitas.show');
+    Route::get('/fasilitas/{fasilitas}/edit', [FasilitasController::class, 'edit'])->name('fasilitas.edit');
+    Route::put('/fasilitas/{fasilitas}', [FasilitasController::class, 'update'])->name('fasilitas.update');
+    Route::delete('/fasilitas/{fasilitas}', [FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
+
+    // Legacy locations management (kept for backward compatibility)
     Route::get('/locations', [AdminLocationController::class, 'index'])->name('locations.index');
     Route::post('/locations', [AdminLocationController::class, 'store'])->name('locations.store');
+    Route::get('/locations/{mapLocation}/edit', [AdminLocationController::class, 'edit'])->name('locations.edit');
     Route::put('/locations/{mapLocation}', [AdminLocationController::class, 'update'])->name('locations.update');
     Route::delete('/locations/{mapLocation}', [AdminLocationController::class, 'destroy'])->name('locations.destroy');
 
-    Route::get('/admin/aparat', [AparatController::class, 'index'])->name('aparat.index');
-    Route::post('/admin/aparat', [AparatController::class, 'store'])->name('aparat.store');
-    Route::post('/admin/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
-    Route::delete('/admin/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
-
+    Route::get('/aparat', [AparatController::class, 'index'])->name('aparat.index');
+    Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
+    Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
+    Route::get('/videos/{id}', [VideoController::class, 'show'])->name('videos.show');
 
 });

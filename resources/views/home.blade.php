@@ -95,14 +95,13 @@
                 </div>
 
                 <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
-
                     <div class="flex flex-col items-center">
                         <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-secondary">
-                            <img src="https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=500"
-                                alt="Kepala Desa" class="w-full h-full object-cover" />
+                            <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
+                                class="w-full h-full object-cover" />
                         </div>
-                        <h4 class="text-xl font-bold text-primary mb-2">Bapak Sutrisno</h4>
-                        <p class="text-gray-600">Kepala Desa Wonokarang</p>
+                        <h4 class="text-xl font-bold text-primary mb-2">{{ $kepalaDesa->name }}</h4>
+                        <p class="text-gray-600">{{ $kepalaDesa->position }}</p>
                     </div>
 
                     <div>
@@ -127,7 +126,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
                         <p class="text-gray-600">
-                            Mengembangkan potensi pertanian dan budidaya bunga dengan teknologi modern
+                            {{ $kepalaDesa->misi ?? 'Misi belum diisi' }}
                         </p>
                     </div>
 
@@ -137,7 +136,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
                         <p class="text-gray-600">
-                            Menjadi desa mandiri, sejahtera, dan berkelanjutan melalui pengembangan sektor pertanian
+                            {{ $kepalaDesa->visi ?? 'Visi belum diisi' }}
                         </p>
                     </div>
 
@@ -147,11 +146,12 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
                         <p class="text-gray-600">
-                            Meraih berbagai penghargaan tingkat kabupaten dan provinsi untuk inovasi pertanian
+                            {{ $kepalaDesa->prestasi ?? 'Prestasi belum diisi' }}
                         </p>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -183,6 +183,9 @@
                             <p class="text-gray-700 mb-4">
                                 {{ Str::limit($product->description, 80) }}
                             </p>
+
+                            <a href="{{ route('detailpotensi', $potential->id) }}"
+
                             <a href="{{ route('product') }}"
                                 class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
                                 Lihat Detail
@@ -192,6 +195,7 @@
                     </div>
                 @endforeach
             </div>
+
 
             <div class="text-center mt-12">
                 <a href="{{ route('product') }}"
@@ -203,96 +207,139 @@
         </div>
     </section>
 
-    <!-- Video Preview -->
-    @if ($featured_video)
-        <section class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
-                    <p class="text-xl text-gray-600">
-                        Saksikan keindahan dan potensi Desa Wonokarang
-                    </p>
-                </div>
+    <section class="py-20 bg-white pt-10">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Video Profil Desa</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Saksikan keindahan dan potensi Desa Wonokarang melalui video profil yang menampilkan kehidupan
+                    sehari-hari masyarakat
+                </p>
+            </div>
 
-                <div class="max-w-3xl mx-auto">
-                    <div class="relative group cursor-pointer">
-                        <img src="{{ $featured_video->thumbnail }}" alt="Video Thumbnail"
-                            class="w-full h-64 lg:h-80 object-cover rounded-xl" />
-                        <div
-                            class="absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center group-hover:bg-black/50 transition-colors">
-                            <div
-                                class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-10 h-10 text-white ml-1"></i>
+            @if ($video)
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <iframe src="{{ $video->embed_video_url }}" title="{{ $video->title }}" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="p-8">
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-primary mb-2">{{ $video->title }}</h3>
+                                    <div class="flex items-center gap-6 text-gray-600">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                                            <span>Dipublikasikan {{ $video->created_at->format('d F Y') }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
+                                            <span>{{ number_format($video->views) }} views</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="{{ route('about') }}"
+                                    class="mt-4 lg:mt-0 bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center gap-2">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                    Selengkapnya
+                                </a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="text-center mt-8">
-                        <a href="{{ route('about') }}"
-                            class="bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">
-                            Tonton Video Lengkap
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
-            </div>
-        </section>
-    @endif
+            @else
+                <div class="text-center py-12">
+                    <p class="text-gray-500 text-lg">
+                        Video profil belum tersedia saat ini. Silakan cek kembali nanti.
+                    </p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+
 
     <!-- Dokumentasi Unggulan -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
+                <h2 class="text-4xl font-bold text-primary mb-4">Berita Terbaru</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Berita terkini dan informasi penting seputar Desa Wonokarang.
+                    Berita dan kegiatan terkini berdasarkan jadwal acara di Desa Wonokarang.
                 </p>
             </div>
 
-           <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
-    @foreach ($featuredVideos as $video)
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-            <div class="relative h-40 md:h-48">
-                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
-                    class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    @if ($video->type === 'video')
-                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
-                    @else
-                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
-                    @endif
-                </div>
-                <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {{ $video->duration }}
-                </div>
-                <div class="absolute top-2 right-2">
-                    @if ($video->is_finished)
-                        <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
-                    @else
-                        <span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan Dimulai</span>
-                    @endif
-                </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                @foreach ($featuredVideos as $video)
+                    <a href="{{ route('berita.detail', $video->id) }}" class="block h-full">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group h-full flex flex-col">
+                            <div class="relative group flex-shrink-0">
+                                <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}"
+                                    class="w-full h-48 object-cover" />
+                                <div
+                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    @if ($video->type === 'video')
+                                        <i data-lucide="play" class="w-8 h-8 text-white ml-1"></i>
+                                    @else
+                                        <i data-lucide="image" class="w-8 h-8 text-white"></i>
+                                    @endif
+                                </div>
+                                <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                    {{ $video->duration }}
+                                </div>
+                                <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+                                        @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                        @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                        @else bg-green-100 text-green-800 @endif">
+                                        {{ ucfirst($video->category) }}
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2">
+                                    @if ($video->is_finished)
+                                        <span
+                                            class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Selesai</span>
+                                    @else
+                                        <span
+                                            class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Akan
+                                            Dimulai</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="p-4 md:p-6 flex flex-col flex-grow">
+                                <h3
+                                    class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]">
+                                    {{ $video->title }}
+                                </h3>
+                                <div class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                                    {!! Str::limit(strip_tags($video->description), 120) !!}
+                                </div>
+                                <div
+                                    class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500 mt-auto">
+                                    <div class="flex items-center gap-1">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                        <span>{{ number_format($video->views) }} views</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                                        <span>{{ $video->created_at->format('d M Y') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
 
-            <div class="p-4 md:p-6">
-                <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">{{ $video->title }}</h3>
-                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {!! $video->description !!}
-                </div>
-                <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
-                    <div class="flex items-center gap-1">
-                        <i data-lucide="eye" class="w-4 h-4"></i>
-                        <span>{{ number_format($video->views) }} views</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <i data-lucide="calendar" class="w-4 h-4"></i>
-                        <span>{{ $video->created_at->format('d M Y') }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-</div>
 
 
             <div class="text-center mt-12">

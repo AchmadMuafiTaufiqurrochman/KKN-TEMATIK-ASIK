@@ -28,7 +28,6 @@ jobs:
             echo "Git status"
             git status
             php artisan migrate --force
-            php artisan db:seed --force
             php artisan cache:clear
             php artisan config:clear
             php artisan view:clear

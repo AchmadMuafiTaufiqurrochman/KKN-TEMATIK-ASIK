@@ -86,7 +86,7 @@
         <div class="bg-white rounded-lg max-w-md w-full p-6">
             <h3 class="text-lg font-bold text-primary mb-4">Tambah Produk</h3>
 
-            <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
+            <form id="productForm" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-4">
                     <input name="title" placeholder="Nama Produk" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
@@ -157,6 +157,80 @@ document.getElementById('productModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
 
+// Validasi Form Product
+document.getElementById('productForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form submission
+    
+    // Validasi form
+    if (validateProductForm()) {
+        this.submit(); // Submit form jika validasi berhasil
+    }
+});
+
+function validateProductForm() {
+    let isValid = true;
+    let errorMessages = [];
+
+    // Validasi Nama Produk
+    const title = document.querySelector('input[name="title"]').value.trim();
+    if (!title) {
+        errorMessages.push('• Nama produk harus diisi');
+        isValid = false;
+    }
+
+    // Validasi Deskripsi
+    const description = document.querySelector('textarea[name="description"]').value.trim();
+    if (!description) {
+        errorMessages.push('• Deskripsi produk harus diisi');
+        isValid = false;
+    }
+
+    // Validasi Kategori
+    const category = document.querySelector('select[name="category"]').value;
+    if (!category) {
+        errorMessages.push('• Kategori harus dipilih');
+        isValid = false;
+    }
+
+    // Validasi Kontak
+    const contact = document.querySelector('input[name="contact"]').value.trim();
+    if (!contact) {
+        errorMessages.push('• Kontak harus diisi');
+        isValid = false;
+    }
+
+    // Validasi Status
+    const status = document.querySelector('select[name="status"]').value;
+    if (!status) {
+        errorMessages.push('• Status harus dipilih');
+        isValid = false;
+    }
+
+    // Validasi gambar (jika ada)
+    const imageFile = document.querySelector('input[name="image"]').files[0];
+    if (imageFile) {
+        // Validasi ukuran file (maksimal 25MB)
+        const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+        if (imageFile.size > maxSize) {
+            errorMessages.push('• Ukuran gambar maksimal 25MB');
+            isValid = false;
+        }
+        
+        // Validasi tipe file
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowedTypes.includes(imageFile.type)) {
+            errorMessages.push('• Format gambar harus JPG, JPEG, atau PNG');
+            isValid = false;
+        }
+    }
+
+    // Tampilkan alert jika ada error
+    if (!isValid) {
+        alert('Data belum lengkap! Mohon periksa kembali:\n\n' + errorMessages.join('\n'));
+    }
+
+    return isValid;
+}
 function openEditModal(id, title, description, category, contact, status) {
     document.getElementById('edit_title').value = title;
     document.getElementById('edit_description').value = description;
@@ -177,6 +251,7 @@ function closeEditModal() {
 document.getElementById('editProductModal').addEventListener('click', function(e) {
     if (e.target === this) closeEditModal();
 });
+
 
 </script>
 @endsection

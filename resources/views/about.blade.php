@@ -15,75 +15,59 @@
                 </div>
 
                 <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
-                    <div>
-                        <h3 class="text-2xl font-bold text-primary mb-6">Sejarah dan Perkembangan</h3>
-                        <p class="text-gray-700 mb-6 leading-relaxed">
-                            Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan
-                            baru.
-                            Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat pertanian
-                            dan budidaya bunga.
-                        </p>
-                        <p class="text-gray-700 mb-6 leading-relaxed">
-                            Seiring berjalannya waktu, masyarakat desa mulai mengembangkan teknik budidaya modern dan
-                            sustainable farming
-                            yang ramah lingkungan. Kini, Desa Wonokarang dikenal sebagai salah satu desa wisata agro
-                            terbaik.
-                        </p>
+                    @if ($kepalaDesa)
+                        {{-- Profil Kepala Desa --}}
+                        <div>
+                            <h3 class="text-2xl font-bold text-primary mb-6">Sejarah dan Perkembangan</h3>
+                            <p class="text-gray-700 mb-6 leading-relaxed">
+                                Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun
+                                kehidupan baru.
+                                Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat
+                                pertanian dan budidaya bunga.
+                            </p>
+                            <p class="text-gray-700 mb-6 leading-relaxed">
+                                Seiring berjalannya waktu, masyarakat desa mulai mengembangkan teknik budidaya modern dan
+                                sustainable farming
+                                yang ramah lingkungan. Kini, Desa Wonokarang dikenal sebagai salah satu desa wisata agro
+                                terbaik.
+                            </p>
 
-                        <div class="bg-secondary p-6 rounded-lg">
-                            <blockquote class="text-primary font-semibold text-lg italic">
-                                "Dengan semangat gotong royong dan inovasi, kami terus berkarya untuk kemajuan desa dan
-                                kesejahteraan masyarakat."
-                            </blockquote>
-                            <cite class="text-primary font-medium mt-2 block">- Kepala Desa Wonokarang</cite>
+                            <div class="bg-secondary p-6 rounded-lg">
+                                <blockquote class="text-primary font-semibold text-lg italic">
+                                    "{{ $kepalaDesa->motto }}"
+                                </blockquote>
+                                <cite class="text-primary font-medium mt-2 block">- {{ $kepalaDesa->name }}</cite>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="flex flex-col items-center">
-                        <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-secondary">
-                            <img src="https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=500"
-                                alt="Kepala Desa" class="w-full h-full object-cover" />
+                        <div class="flex flex-col items-center">
+                            <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-secondary">
+                                <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
+                                    class="w-full h-full object-cover" />
+                            </div>
+                            <h4 class="text-xl font-bold text-primary mb-2">{{ $kepalaDesa->name }}</h4>
+                            <p class="text-gray-600">{{ $kepalaDesa->position }}</p>
                         </div>
-                        <h4 class="text-xl font-bold text-primary mb-2">Bapak Sutrisno</h4>
-                        <p class="text-gray-600">Kepala Desa Wonokarang</p>
-                    </div>
+                    @endif
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="target" class="w-8 h-8 text-white"></i>
+                @if ($kepalaDesa)
+                    <div class="grid md:grid-cols-3 gap-8 mt-8">
+                        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
+                            <p class="text-gray-600">{{ $kepalaDesa->misi }}</p>
                         </div>
-                        <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
-                        <p class="text-gray-600">
-                            Mewujudkan keamanan dan ketertiban  di lingkungan  desa Wonokarang
-                        </p>
+                        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
+                            <p class="text-gray-600">{{ $kepalaDesa->visi }}</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
+                            <p class="text-gray-600">{{ $kepalaDesa->prestasi }}</p>
+                        </div>
                     </div>
+                @endif
 
-                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="eye" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
-                        <p class="text-gray-600">
-                           Seiring berjalannya waktu, masyarakat desa mulai mengembangkan teknik budidaya modern dan
-                            sustainable farming
-                            yang ramah lingkungan. Kini, Desa Wonokarang dikenal sebagai salah satu desa wisata agro
-                            terbaik.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="award" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
-                        <p class="text-gray-600">
-                            Meraih berbagai penghargaan tingkat kabupaten dan provinsi untuk
-                            inovasi pertanian dan pemberdayaan masyarakat
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -104,7 +88,7 @@
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="relative">
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="{{ $video->video_url }}" title="{{ $video->title }}" frameBorder="0"
+                                <iframe src="{{ $video->embed_video_url }}" title="{{ $video->title }}" frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
                             </div>
