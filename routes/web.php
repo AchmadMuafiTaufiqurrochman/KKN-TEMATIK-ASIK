@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\AparatController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WebsiteDocsController;
 
 
 
@@ -28,6 +29,9 @@ Route::get('/potential', [PotentialController::class, 'index'])->name('potential
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
+
+// Special route for website documentation
+Route::get('/qwertyu25', [WebsiteDocsController::class, 'index'])->name('website.docs');
 
 Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
 Route::get('/detailpotensi/{id}', [PotentialController::class, 'detailPotensi'])->name('detailpotensi');
