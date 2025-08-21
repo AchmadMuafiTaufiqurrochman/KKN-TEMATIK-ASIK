@@ -155,6 +155,47 @@
         </div>
     </section>
 
+     <!-- Potential Preview -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Potensi Unggulan</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Dua sektor unggulan yang menjadi kebanggaan dan sumber kemakmuran masyarakat
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                @foreach ($potentials as $potential)
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative h-48">
+                            <img src="{{ $potential->image }}" alt="{{ $potential->title }}"
+                                class="w-full h-full object-cover" />
+                            <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
+                                @if ($potential->category === 'pertanian')
+                                    <i data-lucide="leaf" class="w-8 h-8 text-green-600"></i>
+                                @else
+                                    <i data-lucide="flower" class="w-8 h-8 text-pink-600"></i>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary mb-3">{{ $potential->title }}</h3>
+                            <p class="text-gray-700 mb-4">
+                                {{ Str::limit($potential->description, 100) }}
+                            </p>
+                            <a href="{{ route('detailpotensi', $potential->id) }}"
+                                class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
+                                Lihat Detail
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
    <!-- Highlight Produk Desa -->
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4">
@@ -183,8 +224,6 @@
                             <p class="text-gray-700 mb-4">
                                 {{ Str::limit($product->description, 80) }}
                             </p>
-
-                            <a href="{{ route('detailpotensi', $potential->id) }}"
 
                             <a href="{{ route('product') }}"
                                 class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">

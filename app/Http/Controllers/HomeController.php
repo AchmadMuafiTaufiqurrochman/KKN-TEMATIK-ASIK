@@ -72,7 +72,7 @@ class HomeController extends Controller
 
         $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
 
-        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video'));
+        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video', 'products'));
 
         return view('home', compact('stats', 'products', 'featured_video', 'featuredVideos'));
     }
