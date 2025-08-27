@@ -204,6 +204,14 @@
             document.getElementById('aparatForm').action = '{{ route('admin.aparat.store') }}';
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('aparatForm').reset();
+            
+            // Reset dan sembunyikan field Kepala Desa
+            document.getElementById('kepalaDesaFields').classList.add('hidden');
+            document.querySelector('textarea[name="motto"]').value = '';
+            document.querySelector('textarea[name="visi"]').value = '';
+            document.querySelector('textarea[name="misi"]').value = '';
+            document.querySelector('textarea[name="prestasi"]').value = '';
+            
             document.getElementById('aparatModal').classList.remove('hidden');
         }
 
@@ -214,12 +222,61 @@
 
     document.getElementById('methodField').innerHTML =
         '<input type="hidden" name="_method" value="PUT">';
-    document.getElementById('aparatModal').classList.remove('hidden');
+    
+    // Fetch data untuk edit
+    fetch(`/admin/aparat/${id}/edit`)
+        .then(response => response.json())
+        .then(data => {
+            // Populate form fields dengan data awal
+            document.querySelector('input[name="name"]').value = data.name || '';
+            document.querySelector('input[name="nip"]').value = data.nip || '';
+            document.querySelector('select[name="position"]').value = data.position || '';
+            document.querySelector('select[name="gender"]').value = data.gender || '';
+            
+            // Populate field tambahan Kepala Desa jika ada
+            if (data.position === 'Kepala Desa') {
+                document.getElementById('kepalaDesaFields').classList.remove('hidden');
+                
+                // Set value dan auto resize untuk textarea
+                const mottoField = document.querySelector('textarea[name="motto"]');
+                const visiField = document.querySelector('textarea[name="visi"]');
+                const misiField = document.querySelector('textarea[name="misi"]');
+                const prestasiField = document.querySelector('textarea[name="prestasi"]');
+                
+                mottoField.value = data.motto || '';
+                visiField.value = data.visi || '';
+                misiField.value = data.misi || '';
+                prestasiField.value = data.prestasi || '';
+                
+                // Auto resize textarea setelah value diset
+                [mottoField, visiField, misiField, prestasiField].forEach(field => {
+                    field.style.height = '';
+                    field.style.height = field.scrollHeight + 'px';
+                });
+            } else {
+                document.getElementById('kepalaDesaFields').classList.add('hidden');
+            }
+            
+            // Buka modal setelah data terisi
+            document.getElementById('aparatModal').classList.remove('hidden');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengambil data');
+        });
 }
 
 
         function closeModal() {
             document.getElementById('aparatModal').classList.add('hidden');
+            // Reset form dan sembunyikan field Kepala Desa saat menutup modal
+            document.getElementById('aparatForm').reset();
+            document.getElementById('kepalaDesaFields').classList.add('hidden');
+            
+            // Reset tinggi textarea
+            document.querySelectorAll('textarea').forEach(textarea => {
+                textarea.style.height = '';
+            });
         }
 
         document.getElementById('aparatModal').addEventListener('click', function(e) {

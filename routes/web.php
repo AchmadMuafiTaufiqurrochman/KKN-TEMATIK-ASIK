@@ -100,6 +100,7 @@ Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name
 
     Route::get('/aparat', [AparatController::class, 'index'])->name('aparat.index');
     Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::get('/aparat/{id}/edit', [AparatController::class, 'edit'])->name('aparat.edit');
     Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
     Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
     Route::get('/videos/{id}', [VideoController::class, 'show'])->name('videos.show');
