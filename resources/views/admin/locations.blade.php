@@ -82,7 +82,7 @@
                         <i data-lucide="grid-3x3" class="w-6 h-6 text-white"></i>
                     </div>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ count($fasilitasTypes ?? []) }}</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">4</h3>
                 <p class="text-gray-600 text-sm">Kategori</p>
             </div>
 
@@ -103,7 +103,7 @@
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
                     <div class="p-4 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-primary">Preview Peta Fasilitas</h3>
-                        <p class="text-sm text-gray-600">Klik pada marker untuk melihat detail fasilitas. Klik pada peta kosong untuk menambah fasilitas baru di lokasi tersebut.</p>
+                        <p class="text-sm text-gray-600">Klik pada peta untuk mendapatkan koordinat dan menambah fasilitas baru di lokasi tersebut. Klik marker untuk melihat detail fasilitas.</p>
                     </div>
                     <div id="adminMap" class="h-96 relative"></div>
                 </div>
@@ -146,8 +146,6 @@
                                                     <i data-lucide="heart-pulse" class="w-4 h-4"></i>
                                                 @elseif($fasilitasItem->type === 'ekonomi')
                                                     <i data-lucide="store" class="w-4 h-4"></i>
-                                                @elseif($fasilitasItem->type === 'sosial_budaya')
-                                                    <i data-lucide="users" class="w-4 h-4"></i>
                                                 @else
                                                     <i data-lucide="map-pin" class="w-4 h-4"></i>
                                                 @endif
@@ -164,7 +162,6 @@
                                             @elseif($fasilitasItem->type === 'pendidikan') bg-green-100 text-green-800
                                             @elseif($fasilitasItem->type === 'kesehatan') bg-red-100 text-red-800
                                             @elseif($fasilitasItem->type === 'ekonomi') bg-yellow-100 text-yellow-800
-                                            @elseif($fasilitasItem->type === 'sosial_budaya') bg-purple-100 text-purple-800
                                             @else bg-gray-100 text-gray-800
                                             @endif">
                                             {{ $fasilitasItem->type_text ?? ucfirst(str_replace('_', ' ', $fasilitasItem->type)) }}
@@ -239,14 +236,12 @@
                                         'pendidikan' => 'bg-green-600',
                                         'kesehatan' => 'bg-red-600',
                                         'ekonomi' => 'bg-yellow-600',
-                                        'sosial_budaya' => 'bg-purple-600',
                                     ];
                                     $typeLabels = [
                                         'pelayanan_publik' => 'Pelayanan Publik',
                                         'pendidikan' => 'Pendidikan',
                                         'kesehatan' => 'Kesehatan',
                                         'ekonomi' => 'Ekonomi',
-                                        'sosial_budaya' => 'Sosial & Budaya',
                                     ];
                                 @endphp
                                 <div class="w-3 h-3 {{ $colors[$type] ?? 'bg-gray-600' }} rounded-full"></div>
@@ -280,11 +275,11 @@
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude <span class="text-xs text-gray-500">(Klik peta untuk mengisi otomatis)</span></label>
                             <input type="number" name="latitude" step="0.00000001" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude <span class="text-xs text-gray-500">(Klik peta untuk mengisi otomatis)</span></label>
                             <input type="number" name="longitude" step="0.00000001" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                     </div>
@@ -297,7 +292,6 @@
                             <option value="pendidikan">Pendidikan</option>
                             <option value="kesehatan">Kesehatan</option>
                             <option value="ekonomi">Ekonomi</option>
-                            <option value="sosial_budaya">Sosial & Budaya</option>
                         </select>
                     </div>
                     
@@ -362,16 +356,14 @@ function openDetailModal(id) {
                 'pelayanan_publik': 'Pelayanan Publik & Pemerintah',
                 'pendidikan': 'Pendidikan',
                 'kesehatan': 'Kesehatan',
-                'ekonomi': 'Ekonomi',
-                'sosial_budaya': 'Sosial & Budaya'
+                'ekonomi': 'Ekonomi'
             };
             
             const typeColors = {
                 'pelayanan_publik': 'bg-blue-100 text-blue-800',
                 'pendidikan': 'bg-green-100 text-green-800',
                 'kesehatan': 'bg-red-100 text-red-800',
-                'ekonomi': 'bg-yellow-100 text-yellow-800',
-                'sosial_budaya': 'bg-purple-100 text-purple-800'
+                'ekonomi': 'bg-yellow-100 text-yellow-800'
             };
             
             const detailContent = `
@@ -470,6 +462,27 @@ function openAddLocationModal() {
     document.getElementById('locationModal').classList.remove('hidden');
 }
 
+function openAddLocationModalWithCoordinates(lat, lng) {
+    console.log('Opening modal with coordinates:', lat, lng);
+    
+    // Buka modal dulu
+    openAddLocationModal();
+    
+    // Set koordinat setelah modal terbuka
+    setTimeout(() => {
+        const latInput = document.querySelector('input[name="latitude"]');
+        const lngInput = document.querySelector('input[name="longitude"]');
+        
+        if (latInput && lngInput) {
+            latInput.value = lat.toFixed(8);
+            lngInput.value = lng.toFixed(8);
+            console.log('Coordinates set in form:', latInput.value, lngInput.value);
+        } else {
+            console.error('Could not find coordinate input fields');
+        }
+    }, 100);
+}
+
 function openEditLocationModal(id) {
     // Fetch data untuk edit
     fetch(`/admin/fasilitas/${id}/edit`)
@@ -521,8 +534,7 @@ document.querySelector('select[name="type"]').addEventListener('change', functio
         'pelayanan_publik': 'Senin-Jumat 07:30-16:00',
         'pendidikan': 'Senin-Sabtu 07:00-14:00',
         'kesehatan': 'Senin-Sabtu 08:00-15:00',
-        'ekonomi': 'Setiap hari 06:00-18:00',
-        'sosial_budaya': 'Senin-Minggu 08:00-17:00'
+        'ekonomi': 'Setiap hari 06:00-18:00'
     };
     
     if (defaultHours[this.value] && !openingHoursInput.value) {

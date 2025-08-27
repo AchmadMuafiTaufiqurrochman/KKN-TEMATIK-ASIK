@@ -58,7 +58,7 @@
 
                 <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bgF-orange-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
                             <i data-lucide="eye" class="w-6 h-6 text-white"></i>
                         </div>
                         <i data-lucide="trending-up" class="w-5 h-5 text-green-600"></i>
@@ -121,28 +121,30 @@
 
                 <!-- Charts -->
                 <div class="lg:col-span-2 space-y-6">
-                    <!-- Gender Distribution -->
+                    <!-- Product Distribution -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-lg font-bold text-primary mb-6">Distribusi Jenis Kelamin</h3>
+                        <h3 class="text-lg font-bold text-primary mb-6">Distribusi Produk</h3>
                         <div class="flex items-center justify-center mb-6">
                             <div class="relative w-48 h-48">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="40" stroke="#E0E0E0" stroke-width="8"
                                         fill="none" />
-                                    <circle cx="50" cy="50" r="40" stroke="#3B82F6" stroke-width="8"
-                                        fill="none"
-                                        stroke-dasharray="{{ ($stats['male_villagers'] / $stats['total_villagers']) * 251.2 }} 251.2"
-                                        stroke-linecap="round" />
-                                    <circle cx="50" cy="50" r="40" stroke="#EC4899" stroke-width="8"
-                                        fill="none"
-                                        stroke-dasharray="{{ ($stats['female_villagers'] / $stats['total_villagers']) * 251.2 }} 251.2"
-                                        stroke-dashoffset="-{{ ($stats['male_villagers'] / $stats['total_villagers']) * 251.2 }}"
-                                        stroke-linecap="round" />
+                                    @if($stats['total_products'] > 0)
+                                        <circle cx="50" cy="50" r="40" stroke="#3B82F6" stroke-width="8"
+                                            fill="none"
+                                            stroke-dasharray="{{ ($stats['pertanian_products'] / $stats['total_products']) * 251.2 }} 251.2"
+                                            stroke-linecap="round" />
+                                        <circle cx="50" cy="50" r="40" stroke="#EC4899" stroke-width="8"
+                                            fill="none"
+                                            stroke-dasharray="{{ ($stats['perkebunan_products'] / $stats['total_products']) * 251.2 }} 251.2"
+                                            stroke-dashoffset="-{{ ($stats['pertanian_products'] / $stats['total_products']) * 251.2 }}"
+                                            stroke-linecap="round" />
+                                    @endif
                                 </svg>
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="text-center">
                                         <div class="text-2xl font-bold text-primary">
-                                            {{ number_format($stats['total_villagers']) }}</div>
+                                            {{ number_format($stats['total_products']) }}</div>
                                         <div class="text-sm text-gray-600">Total</div>
                                     </div>
                                 </div>
@@ -151,20 +153,20 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="text-center">
                                 <div class="w-4 h-4 bg-blue-600 rounded-full mx-auto mb-2"></div>
-                                <div class="text-lg font-bold text-gray-900">{{ number_format($stats['male_villagers']) }}
+                                <div class="text-lg font-bold text-gray-900">{{ number_format($stats['pertanian_products']) }}
                                 </div>
-                                <div class="text-sm text-gray-600">Laki-laki</div>
+                                <div class="text-sm text-gray-600">Pertanian</div>
                                 <div class="text-xs text-gray-500">
-                                    {{ number_format(($stats['male_villagers'] / $stats['total_villagers']) * 100, 1) }}%
+                                    {{ $stats['total_products'] > 0 ? number_format(($stats['pertanian_products'] / $stats['total_products']) * 100, 1) : 0 }}%
                                 </div>
                             </div>
                             <div class="text-center">
                                 <div class="w-4 h-4 bg-pink-600 rounded-full mx-auto mb-2"></div>
                                 <div class="text-lg font-bold text-gray-900">
-                                    {{ number_format($stats['female_villagers']) }}</div>
-                                <div class="text-sm text-gray-600">Perempuan</div>
+                                    {{ number_format($stats['perkebunan_products']) }}</div>
+                                <div class="text-sm text-gray-600">Perkebunan</div>
                                 <div class="text-xs text-gray-500">
-                                    {{ number_format(($stats['female_villagers'] / $stats['total_villagers']) * 100, 1) }}%
+                                    {{ $stats['total_products'] > 0 ? number_format(($stats['perkebunan_products'] / $stats['total_products']) * 100, 1) : 0 }}%
                                 </div>
                             </div>
                         </div>

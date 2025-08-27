@@ -31,7 +31,6 @@ class Fasilitas extends Model
             'pendidikan' => 'Pendidikan',
             'kesehatan' => 'Kesehatan',
             'ekonomi' => 'Ekonomi',
-            'sosial_budaya' => 'Sosial & Budaya',
         ];
 
         return $types[$this->type] ?? ucfirst(str_replace('_', ' ', $this->type));
@@ -44,7 +43,6 @@ class Fasilitas extends Model
             'pendidikan' => 'bg-green-600',
             'kesehatan' => 'bg-red-600',
             'ekonomi' => 'bg-yellow-600',
-            'sosial_budaya' => 'bg-purple-600',
         ];
 
         return $colors[$this->type] ?? 'bg-gray-600';
@@ -88,7 +86,10 @@ class Fasilitas extends Model
 
     public static function getTypesWithCounts()
     {
+        $allowedTypes = ['pelayanan_publik', 'pendidikan', 'kesehatan', 'ekonomi'];
+        
         return self::selectRaw('type, COUNT(*) as count')
+                   ->whereIn('type', $allowedTypes)
                    ->groupBy('type')
                    ->pluck('count', 'type')
                    ->toArray();
