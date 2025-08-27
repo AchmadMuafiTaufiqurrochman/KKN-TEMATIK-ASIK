@@ -17,21 +17,90 @@ class AdminFacilityMap {
 
         // Add click handler for adding new facilities
         this.map.on('click', (e) => {
-            if (confirm('Tambah fasilitas baru di lokasi ini?')) {
-                this.setCoordinatesInForm(e.latlng.lat, e.latlng.lng);
-                if (typeof window.openAddLocationModal === 'function') {
-                    window.openAddLocationModal();
-                }
+            // Hindari memicu event jika mengklik marker
+            if (e.originalEvent.target.closest('.leaflet-marker-icon')) {
+                return;
+            }
+            
+            console.log('Map clicked at:', e.latlng.lat, e.latlng.lng);
+            
+            // Gunakan fungsi khusus untuk buka modal dengan koordinat
+            if (typeof window.openAddLocationModalWithCoordinates === 'function') {
+                window.openAddLocationModalWithCoordinates(e.latlng.lat, e.latlng.lng);
+                // Tampilkan notifikasi
+                this.showCoordinateNotification(e.latlng.lat, e.latlng.lng);
+            } else if (typeof window.openAddLocationModal === 'function') {
+                // Fallback ke fungsi normal
+                window.openAddLocationModal();
+                setTimeout(() => {
+                    this.setCoordinatesInForm(e.latlng.lat, e.latlng.lng);
+                }, 200);
             }
         });
     }
 
     setCoordinatesInForm(lat, lng) {
+        console.log('Setting coordinates:', lat, lng);
+        
         const latInput = document.querySelector('input[name="latitude"]');
         const lngInput = document.querySelector('input[name="longitude"]');
         
-        if (latInput) latInput.value = lat.toFixed(8);
-        if (lngInput) lngInput.value = lng.toFixed(8);
+        console.log('Found latitude input:', latInput);
+        console.log('Found longitude input:', lngInput);
+        
+        if (latInput) {
+            latInput.value = lat.toFixed(8);
+            console.log('Set latitude value:', latInput.value);
+        }
+        if (lngInput) {
+            lngInput.value = lng.toFixed(8);
+            console.log('Set longitude value:', lngInput.value);
+        }
+        
+        // Tambahkan notifikasi visual
+        this.showCoordinateNotification(lat, lng);
+    }
+
+    showCoordinateNotification(lat, lng) {
+        // Hapus notifikasi sebelumnya jika ada
+        const existingNotif = document.querySelector('.coordinate-notification');
+        if (existingNotif) {
+            existingNotif.remove();
+        }
+
+        // Buat notifikasi baru
+        const notification = document.createElement('div');
+        notification.className = 'coordinate-notification fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+        notification.innerHTML = `
+            <div class="flex items-start gap-3">
+                <i class="fas fa-map-pin mt-0.5"></i>
+                <div>
+                    <div class="font-semibold mb-1">Koordinat Tersimpan!</div>
+                    <div class="text-sm opacity-90">
+                        Lat: ${lat.toFixed(6)}<br>
+                        Lng: ${lng.toFixed(6)}
+                    </div>
+                    <div class="text-xs opacity-75 mt-1">Form akan terbuka otomatis</div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Tambahkan animasi slide in
+        notification.style.transform = 'translateX(100%)';
+        notification.style.transition = 'transform 0.3s ease-out';
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 10);
+        
+        // Hapus notifikasi setelah 4 detik dengan animasi
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 4000);
     }
 
     getIconHtml(type) {
@@ -39,8 +108,7 @@ class AdminFacilityMap {
             'pelayanan_publik': '<i class="fas fa-building" style="color: white; font-size: 14px;"></i>',
             'pendidikan': '<i class="fas fa-graduation-cap" style="color: white; font-size: 14px;"></i>',
             'kesehatan': '<i class="fas fa-heartbeat" style="color: white; font-size: 14px;"></i>',
-            'ekonomi': '<i class="fas fa-store" style="color: white; font-size: 14px;"></i>',
-            'sosial_budaya': '<i class="fas fa-users" style="color: white; font-size: 14px;"></i>'
+            'ekonomi': '<i class="fas fa-store" style="color: white; font-size: 14px;"></i>'
         };
         return icons[type] || '<i class="fas fa-map-marker-alt" style="color: white; font-size: 14px;"></i>';
     }
@@ -50,8 +118,7 @@ class AdminFacilityMap {
             'pelayanan_publik': '#2563eb',
             'pendidikan': '#16a34a',
             'kesehatan': '#dc2626',
-            'ekonomi': '#ca8a04',
-            'sosial_budaya': '#9333ea'
+            'ekonomi': '#ca8a04'
         };
         return colors[type] || '#6b7280';
     }
