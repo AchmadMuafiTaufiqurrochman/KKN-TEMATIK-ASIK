@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Villager;
 use App\Models\Potential;
 use App\Models\Video;
+
 use App\Models\Aparat; // <--- Tambahkan ini
+
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -20,26 +23,57 @@ class HomeController extends Controller
 
         $potentials = Potential::take(2)->get();
        
-        // Ambil video profil terbaru
+        // Ambil video profil terbaru berdasarkan started_at
         $video = Video::where('category', 'profil')
                       ->where('status', 'published')
-                      ->orderByDesc('created_at')
+                      ->orderByRaw('
+                          CASE 
+                              WHEN started_at IS NULL THEN 3
+                              WHEN started_at <= NOW() THEN 1 
+                              ELSE 2 
+                          END
+                      ')
+                      ->orderBy('started_at', 'desc')
                       ->first();
 
         if ($video) {
             $video->incrementViews();
         }
 
-        $featuredVideos = Video::where('status', 'published')
-            ->whereNot('category', 'profil')
+        // Featured videos berdasarkan started_at
+
+        // Produk unggulan (3 terbaru)
+        $products = Product::where('status', 'published')
             ->latest()
             ->take(3)
+            ->get();
+
+
+        $featured_video = Video::where('category', 'profil')
+            ->where('status', 'published')
+            ->first();
+
+        // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
+
+        $featuredVideos = Video::where('status', 'published')
+            ->whereNot('category', 'profil')
+            ->orderByRaw('
+                CASE 
+                    WHEN started_at IS NULL THEN 3
+                    WHEN started_at <= NOW() THEN 1 
+                    ELSE 2 
+                END
+            ')
+            ->orderBy('started_at', 'desc')
+            ->take(4)
             ->get();
 
 
 
         $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
 
-        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video'));
+        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video', 'products'));
+
+        return view('home', compact('stats', 'products', 'featured_video', 'featuredVideos'));
     }
 }

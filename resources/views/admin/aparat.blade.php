@@ -234,5 +234,98 @@
                 extraFields.classList.add('hidden');
             }
         });
+
+        // Validasi Form
+        document.getElementById('aparatForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Validasi form
+            if (validateAparatForm()) {
+                this.submit(); // Submit form jika validasi berhasil
+            }
+        });
+
+        function validateAparatForm() {
+            let isValid = true;
+            let errorMessages = [];
+
+            // Validasi Nama
+            const name = document.querySelector('input[name="name"]').value.trim();
+            if (!name) {
+                errorMessages.push('• Nama lengkap harus diisi');
+                isValid = false;
+            }
+
+            // Validasi NIP
+            const nip = document.querySelector('input[name="nip"]').value.trim();
+            if (!nip) {
+                errorMessages.push('• NIP harus diisi');
+                isValid = false;
+            }
+
+            // Validasi Jabatan
+            const position = document.querySelector('select[name="position"]').value;
+            if (!position) {
+                errorMessages.push('• Jabatan harus dipilih');
+                isValid = false;
+            }
+
+            // Validasi Jenis Kelamin
+            const gender = document.querySelector('select[name="gender"]').value;
+            if (!gender) {
+                errorMessages.push('• Jenis kelamin harus dipilih');
+                isValid = false;
+            }
+
+            // Validasi khusus untuk Kepala Desa
+            if (position === 'Kepala Desa') {
+                const motto = document.querySelector('textarea[name="motto"]').value.trim();
+                const visi = document.querySelector('textarea[name="visi"]').value.trim();
+                const misi = document.querySelector('textarea[name="misi"]').value.trim();
+                const prestasi = document.querySelector('textarea[name="prestasi"]').value.trim();
+
+                if (!motto) {
+                    errorMessages.push('• Motto harus diisi untuk Kepala Desa');
+                    isValid = false;
+                }
+                if (!visi) {
+                    errorMessages.push('• Visi harus diisi untuk Kepala Desa');
+                    isValid = false;
+                }
+                if (!misi) {
+                    errorMessages.push('• Misi harus diisi untuk Kepala Desa');
+                    isValid = false;
+                }
+                if (!prestasi) {
+                    errorMessages.push('• Prestasi harus diisi untuk Kepala Desa');
+                    isValid = false;
+                }
+            }
+
+            // Validasi foto (jika ada)
+            const photoFile = document.querySelector('input[name="photo"]').files[0];
+            if (photoFile) {
+                // Validasi ukuran file (maksimal 25MB)
+                const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+                if (photoFile.size > maxSize) {
+                    errorMessages.push('• Ukuran foto maksimal 25MB');
+                    isValid = false;
+                }
+                
+                // Validasi tipe file
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(photoFile.type)) {
+                    errorMessages.push('• Format foto harus JPG, JPEG, atau PNG');
+                    isValid = false;
+                }
+            }
+
+            // Tampilkan alert jika ada error
+            if (!isValid) {
+                alert('Data belum lengkap! Mohon periksa kembali:\n\n' + errorMessages.join('\n'));
+            }
+
+            return isValid;
+        }
     </script>
 @endsection

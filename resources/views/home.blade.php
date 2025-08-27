@@ -65,8 +65,8 @@
                 <div class="flex items-center gap-2 text-center">
                     <i data-lucide="leaf" class="w-8 h-8 text-secondary"></i>
                     <div>
-                        <div class="text-2xl font-bold">150 Ha</div>
-                        <div class="text-sm opacity-90">Lahan Pertanian</div>
+                        <div class="text-2xl font-bold">± 100,87 Ha</div>
+                        <div class="text-sm opacity-90">Luas Keseluruhan Desa</div>
                     </div>
                 </div>
 
@@ -155,7 +155,7 @@
         </div>
     </section>
 
-    <!-- Potential Preview -->
+     <!-- Potential Preview -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -196,6 +196,56 @@
         </div>
     </section>
 
+   <!-- Highlight Produk Desa -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Produk Unggulan Desa</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Beberapa produk pilihan hasil karya masyarakat Desa Wonokarang.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                @foreach ($products->take(3) as $product)
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+                        <div class="relative h-48">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                            <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold capitalize
+                                @if ($product->category === 'pertanian') text-green-700 bg-green-100/80
+                                @elseif($product->category === 'budidaya-bunga') text-pink-700 bg-pink-100/80
+                                @else text-gray-700 bg-gray-100/80 @endif">
+                                {{ str_replace('-', ' ', $product->category) }}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-primary mb-2">{{ $product->title }}</h3>
+                            <p class="text-gray-700 mb-4">
+                                {{ Str::limit($product->description, 80) }}
+                            </p>
+
+                            <a href="{{ route('product') }}"
+                                class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
+                                Lihat Detail
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+
+            <div class="text-center mt-12">
+                <a href="{{ route('product') }}"
+                    class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
+                    Lihat Semua Produk
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section class="py-20 bg-white pt-10">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -211,7 +261,7 @@
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="relative">
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="{{ $video->video_url }}" title="{{ $video->title }}" frameborder="0"
+                                <iframe src="{{ $video->embed_video_url }}" title="{{ $video->title }}" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen class="w-full h-96 lg:h-[500px] rounded-t-2xl"></iframe>
                             </div>
@@ -258,19 +308,20 @@
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-primary mb-4">Berita Unggulan</h2>
+                <h2 class="text-4xl font-bold text-primary mb-4">Berita Terbaru</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Berita terkini dan informasi penting seputar Desa Wonokarang.
+                    Berita dan kegiatan terkini berdasarkan jadwal acara di Desa Wonokarang.
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 @foreach ($featuredVideos as $video)
-                    <a href="{{ route('berita.detail', $video->id) }}">
-                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                            <div class="relative h-40 md:h-48">
-                                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}"
-                                    class="w-full h-full object-cover" />
+                    <a href="{{ route('berita.detail', $video->id) }}" class="block h-full">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden group h-full flex flex-col">
+                            <div class="relative group flex-shrink-0">
+                                <img src="{{ asset('storage/' . $video->thumbnail) }}" alt="{{ $video->title }}"
+                                    class="w-full h-48 object-cover" />
                                 <div
                                     class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                     @if ($video->type === 'video')
@@ -283,13 +334,14 @@
                                     {{ $video->duration }}
                                 </div>
                                 <div class="absolute top-2 left-2 max-w-[50%] sm:max-w-full">
-                                <span class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
-                                    @if ($video->category === 'kesehatan') bg-red-100 text-red-800
-                                    @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
-                                    @else bg-green-100 text-green-800 @endif">
-                                    {{ ucfirst($video->category) }}
-                                </span>
-                            </div>
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap
+                                        @if ($video->category === 'kesehatan') bg-red-100 text-red-800
+                                        @elseif($video->category === 'ekonomi') bg-purple-100 text-purple-800
+                                        @else bg-green-100 text-green-800 @endif">
+                                        {{ ucfirst($video->category) }}
+                                    </span>
+                                </div>
                                 <div class="absolute top-2 right-2">
                                     @if ($video->is_finished)
                                         <span
@@ -302,14 +354,16 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 md:p-6">
-                                <h3 class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2">
+                            <div class="p-4 md:p-6 flex flex-col flex-grow">
+                                <h3
+                                    class="text-base md:text-lg font-bold text-primary mb-2 line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]">
                                     {{ $video->title }}
                                 </h3>
-                                <div class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                    {!! $video->description !!}
+                                <div class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                                    {!! Str::limit(strip_tags($video->description), 120) !!}
                                 </div>
-                                <div class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500">
+                                <div
+                                    class="flex flex-col gap-1 sm:flex-row sm:justify-between text-sm text-gray-500 mt-auto">
                                     <div class="flex items-center gap-1">
                                         <i data-lucide="eye" class="w-4 h-4"></i>
                                         <span>{{ number_format($video->views) }} views</span>
@@ -324,6 +378,7 @@
                     </a>
                 @endforeach
             </div>
+
 
 
             <div class="text-center mt-12">

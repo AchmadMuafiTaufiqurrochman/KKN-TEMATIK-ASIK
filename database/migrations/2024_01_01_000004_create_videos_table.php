@@ -23,6 +23,7 @@ return new class extends Migration
                 'berita',
                 'umkm',
                 'karangtaruna',
+                'budidayabunga',
             ]);
             $table->enum('type', ['video', 'gambar']);
             $table->string('video_url')->nullable();

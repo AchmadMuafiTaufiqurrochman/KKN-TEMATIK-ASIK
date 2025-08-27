@@ -7,11 +7,15 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        // Ambil semua produk yang sudah publish
-        $products = Product::where('status', 'published')->latest()->get();
+    // ProductController
+public function index()
+{
+    $products = Product::where('status', 'published')->latest()->get();
+    $categories = Product::where('status', 'published')
+        ->select('category')
+        ->distinct()
+        ->pluck('category');
 
-        return view('product', compact('products'));
-    }
+    return view('product', compact('products', 'categories'));
+}
 }

@@ -106,11 +106,11 @@
                 </div>
             </form>
 
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+            {{-- <div class="mt-6 p-4 bg-gray-50 rounded-lg">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Demo Credentials:</h4>
                 <p class="text-sm text-gray-600">Email: admin@wonokarang.desa.id</p>
                 <p class="text-sm text-gray-600">Password: admin123</p>
-            </div>
+            </div> --}}
         </div>
 
         <div class="text-center">

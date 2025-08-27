@@ -16,14 +16,13 @@ class AdminLocationController extends Controller
             'total' => MapLocation::count(),
             'active' => MapLocation::where('status', 'active')->count(),
             'inactive' => MapLocation::where('status', 'inactive')->count(),
+            'open_today' => MapLocation::where('status', 'active')->get()->filter(function($location) {
+                return $location->isOpenToday();
+            })->count(),
         ];
 
-        $locationTypes = [
-            'balai' => MapLocation::where('type', 'balai')->count(),
-            'pertanian' => MapLocation::where('type', 'pertanian')->count(),
-            'bunga' => MapLocation::where('type', 'bunga')->count(),
-            'posyandu' => MapLocation::where('type', 'posyandu')->count(),
-        ];
+        // Gunakan method dari model untuk mendapatkan statistik per type
+        $locationTypes = MapLocation::getTypesWithCounts();
 
         return view('admin.locations', compact('locations', 'stats', 'locationTypes'));
     }
@@ -34,14 +33,17 @@ class AdminLocationController extends Controller
             'name' => 'required|string|max:255',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
-            'type' => 'required|in:balai,pertanian,bunga,posyandu',
+            'type' => 'required|in:pelayanan_publik,pendidikan,kesehatan,ekonomi,sosial_budaya',
             'description' => 'required|string',
+            'opening_hours' => 'nullable|string|max:255',
+            'pic_name' => 'nullable|string|max:255',
+            'contact' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
         ]);
 
         MapLocation::create($validated);
 
-        return redirect()->route('admin.locations.index')->with('success', 'Lokasi berhasil ditambahkan.');
+        return redirect()->route('admin.locations.index')->with('success', 'Fasilitas berhasil ditambahkan.');
     }
 
     public function update(Request $request, MapLocation $mapLocation)
@@ -50,19 +52,27 @@ class AdminLocationController extends Controller
             'name' => 'required|string|max:255',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
-            'type' => 'required|in:balai,pertanian,bunga,posyandu',
+            'type' => 'required|in:pelayanan_publik,pendidikan,kesehatan,ekonomi,sosial_budaya',
             'description' => 'required|string',
+            'opening_hours' => 'nullable|string|max:255',
+            'pic_name' => 'nullable|string|max:255',
+            'contact' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
         ]);
 
         $mapLocation->update($validated);
 
-        return redirect()->route('admin.locations.index')->with('success', 'Lokasi berhasil diperbarui.');
+        return redirect()->route('admin.locations.index')->with('success', 'Fasilitas berhasil diperbarui.');
     }
 
     public function destroy(MapLocation $mapLocation)
     {
         $mapLocation->delete();
-        return redirect()->route('admin.locations.index')->with('success', 'Lokasi berhasil dihapus.');
+        return redirect()->route('admin.locations.index')->with('success', 'Fasilitas berhasil dihapus.');
+    }
+
+    public function edit(MapLocation $mapLocation)
+    {
+        return response()->json($mapLocation);
     }
 }

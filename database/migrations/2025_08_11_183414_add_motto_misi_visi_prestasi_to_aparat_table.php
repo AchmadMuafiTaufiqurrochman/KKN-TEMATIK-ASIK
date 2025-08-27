@@ -12,10 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('aparat', function (Blueprint $table) {
-            $table->text('motto')->nullable()->after('photo');
-            $table->text('misi')->nullable()->after('motto');
-            $table->text('visi')->nullable()->after('misi');
-            $table->text('prestasi')->nullable()->after('visi');
+            // Check if columns don't already exist before adding them
+            if (!Schema::hasColumn('aparat', 'motto')) {
+                $table->text('motto')->nullable()->after('photo');
+            }
+            if (!Schema::hasColumn('aparat', 'misi')) {
+                $table->text('misi')->nullable()->after('motto');
+            }
+            if (!Schema::hasColumn('aparat', 'visi')) {
+                $table->text('visi')->nullable()->after('misi');
+            }
+            if (!Schema::hasColumn('aparat', 'prestasi')) {
+                $table->text('prestasi')->nullable()->after('visi');
+            }
         });
     }
 
@@ -25,7 +34,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('aparat', function (Blueprint $table) {
-            $table->dropColumn(['motto', 'misi', 'visi', 'prestasi']);
+            // Only drop columns if they exist and were added by this migration
+            // Since these columns already exist in the original table creation,
+            // we should not drop them in this migration's rollback
+            // $table->dropColumn(['motto', 'misi', 'visi', 'prestasi']);
         });
     }
 };
