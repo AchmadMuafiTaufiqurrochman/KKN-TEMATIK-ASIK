@@ -89,7 +89,7 @@
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian
+                        Desa yang berdiri sejak tahun 1924, kini menjadi salah satu sentra budidaya bunga dan pertanian
                         terbaik
                     </p>
                 </div>
@@ -107,10 +107,7 @@
 
                     <div>
                         <p class="text-gray-700 mb-6 leading-relaxed">
-                            Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan
-                            baru.
-                            Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat pertanian
-                            dan budidaya bunga.
+                          Desa Wonokarang yang berada di Kecamatan Balongbendo, Kabupaten Sidoarjo, telah melalui perjalanan panjang sejak awal berdirinya. Pada masa lalu, pemimpin desa dikenal dengan sebutan Kalebhun dan Tenggi, sebelum akhirnya sesuai regulasi terbaru berganti menjadi Kepala Desa. Hingga saat ini, sudah enam Kepala Desa yang pernah memimpin dan turut membawa perubahan bagi kemajuan masyarakat Wonokarang.
                         </p>
                         <a href="{{ route('about') }}"
                             class="bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">

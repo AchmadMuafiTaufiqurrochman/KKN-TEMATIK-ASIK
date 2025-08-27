@@ -9,7 +9,7 @@
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian terbaik di wilayah ini
+                    Desa yang berdiri sejak tahun 1924, kini menjadi salah satu sentra budidaya bunga dan pertanian terbaik di wilayah ini
                 </p>
             </div>
 
@@ -17,14 +17,14 @@
                 <div>
                     <h3 class="text-2xl font-bold text-primary mb-6">Sejarah dan Perkembangan</h3>
                     <p class="text-gray-700 mb-6 leading-relaxed">
-                        Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan baru. 
-                        Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat pertanian dan budidaya bunga.
+                       Desa Wonokarang yang berada di Kecamatan Balongbendo, Kabupaten Sidoarjo, telah melalui perjalanan panjang sejak awal berdirinya. Pada masa lalu, pemimpin desa dikenal dengan sebutan Kalebhun dan Tenggi, sebelum akhirnya sesuai regulasi terbaru berganti menjadi Kepala Desa. Hingga saat ini, sudah enam Kepala Desa yang pernah memimpin dan turut membawa perubahan bagi kemajuan masyarakat Wonokarang.
                     </p>
                     <p class="text-gray-700 mb-6 leading-relaxed">
-                        Seiring berjalannya waktu, masyarakat desa mulai mengembangkan teknik budidaya modern dan sustainable farming 
-                        yang ramah lingkungan. Kini, Desa Wonokarang dikenal sebagai salah satu desa wisata agro terbaik.
+                       Dengan luas wilayah ±100,87 hektar, Desa Wonokarang terbagi menjadi tiga dusun, yakni Dusun Karangwungu, Dusun Wonokoyo, dan Dusun Wonokayun. Letaknya yang strategis, sekitar 28 km dari pusat Kabupaten Sidoarjo, menjadikan desa ini berkembang pesat dalam bidang pertanian, UMKM, dan industri rumah tangga. Kehidupan sosial masyarakatnya pun sangat religius, mayoritas beragama Islam, serta tetap menjaga budaya dan tradisi lokal yang diwariskan secara turun-temurun.
                     </p>
-                    
+                      <p class="text-gray-700 mb-6 leading-relaxed">
+                       Sejak adanya program Dana Desa pada tahun 2015, pembangunan infrastruktur di Wonokarang semakin pesat, mulai dari jalan desa, sarana umum, hingga fasilitas kesehatan dan pendidikan. Dengan dukungan gotong royong masyarakat serta kearifan lokal yang masih terjaga, Desa Wonokarang kini terus berkembang menjadi desa yang mandiri, religius, dan berdaya saing, sekaligus tetap mempertahankan jati dirinya sebagai desa yang kaya akan budaya dan nilai kebersamaan.
+                    </p>
                     <div class="bg-secondary p-6 rounded-lg">
                         <blockquote class="text-primary font-semibold text-lg italic">
                             "Dengan semangat gotong royong dan inovasi, kami terus berkarya untuk kemajuan desa dan kesejahteraan masyarakat."
