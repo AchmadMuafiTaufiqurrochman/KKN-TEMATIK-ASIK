@@ -82,6 +82,13 @@ class AparatController extends Controller
         
     }
 
+    // EDIT DATA - Return JSON untuk AJAX
+    public function edit($id)
+    {
+        $aparat = Aparat::findOrFail($id);
+        return response()->json($aparat);
+    }
+
     // HAPUS DATA
     public function destroy($id)
     {

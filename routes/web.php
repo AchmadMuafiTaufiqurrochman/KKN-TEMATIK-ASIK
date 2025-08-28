@@ -53,6 +53,11 @@ Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Session keep-alive route
+Route::middleware('auth')->post('/session/keep-alive', function () {
+    return response()->json(['status' => 'success', 'message' => 'Session refreshed']);
+})->name('session.keepalive');
+
 
 // Admin routes (protected)
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -100,6 +105,7 @@ Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('
 
     Route::get('/aparat', [AparatController::class, 'index'])->name('aparat.index');
     Route::post('/aparat', [AparatController::class, 'store'])->name('aparat.store');
+    Route::get('/aparat/{id}/edit', [AparatController::class, 'edit'])->name('aparat.edit');
     Route::put('/aparat/{id}', [AparatController::class, 'update'])->name('aparat.update');
     Route::delete('/aparat/{id}', [AparatController::class, 'destroy'])->name('aparat.destroy');
     Route::get('/videos/{id}', [VideoController::class, 'show'])->name('videos.show');

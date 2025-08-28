@@ -55,15 +55,6 @@
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <div class="flex items-center gap-2 transition-opacity duration-200" data-layer="sosial_budaya">
-                            <div class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white">
-                                <i data-lucide="users" class="w-3 h-3"></i>
-                            </div>
-                            <span class="text-sm text-gray-700">Sosial</span>
-                            <button onclick="toggleLayer('sosial_budaya')" class="text-gray-500 hover:text-primary">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -163,21 +154,6 @@
                                     <i data-lucide="eye" class="w-5 h-5"></i>
                                 </button>
                             </div>
-
-                            <div class="flex items-center justify-between transition-opacity duration-200" data-layer="sosial_budaya">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white">
-                                        <i data-lucide="users" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-700 font-medium">Sosial & Budaya</span>
-                                        <div class="text-xs text-gray-500">{{ $locationTypes['sosial_budaya'] ?? 0 }} fasilitas</div>
-                                    </div>
-                                </div>
-                                <button onclick="toggleLayer('sosial_budaya')" class="text-gray-500 hover:text-primary transition-colors">
-                                    <i data-lucide="eye" class="w-5 h-5"></i>
-                                </button>
-                            </div>
                         </div>
                     </div>
 
@@ -204,10 +180,6 @@
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Ekonomi:</span>
                                 <span class="font-semibold text-yellow-600">{{ $locationTypes['ekonomi'] ?? 0 }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Sosial & Budaya:</span>
-                                <span class="font-semibold text-purple-600">{{ $locationTypes['sosial_budaya'] ?? 0 }}</span>
                             </div>
                         </div>
                     </div>
@@ -321,14 +293,12 @@
                                 'pendidikan' => '#16a34a',
                                 'kesehatan' => '#dc2626',
                                 'ekonomi' => '#ca8a04',
-                                'sosial_budaya' => '#9333ea',
                             ];
                             $iconHtml = [
                                 'pelayanan_publik' => '<i class="fas fa-building" style="color: white; font-size: 12px;"></i>',
                                 'pendidikan' => '<i class="fas fa-graduation-cap" style="color: white; font-size: 12px;"></i>',
                                 'kesehatan' => '<i class="fas fa-heartbeat" style="color: white; font-size: 12px;"></i>',
                                 'ekonomi' => '<i class="fas fa-store" style="color: white; font-size: 12px;"></i>',
-                                'sosial_budaya' => '<i class="fas fa-users" style="color: white; font-size: 12px;"></i>',
                             ];
                             $color = $iconColors[$location->type] ?? '#6b7280';
                             $icon = $iconHtml[$location->type] ?? '<i class="fas fa-map-marker-alt" style="color: white; font-size: 12px;"></i>';
@@ -441,8 +411,7 @@
                 pelayanan_publik: true,
                 pendidikan: true,
                 kesehatan: true,
-                ekonomi: true,
-                sosial_budaya: true
+                ekonomi: true
             };
 
             function toggleLayer(layerId) {
