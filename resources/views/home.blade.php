@@ -176,7 +176,7 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-primary mb-3">Pertanian Unggulan</h3>
                         <p class="text-gray-700 mb-4">
-                            Desa Wonokarang memiliki lahan pertanian yang subur dengan sistem irigasi yang baik...
+                            Sektor pertanian menjadi salah satu potensi unggulan Desa Wonokarang, khususnya di wilayah Dusun Tengah yang mayoritas masyarakatnya bertumpu pada bidang ini
                         </p>
                         <a href="{{ route('detailpotensi', 'pertanian') }}"
                             class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
@@ -199,7 +199,7 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-primary mb-3">Budidaya Bunga</h3>
                         <p class="text-gray-700 mb-4">
-                            Sentra budidaya bunga potong dan tanaman hias yang menjadi keunggulan desa...
+                            Desa Wonokarang juga memiliki potensi besar dalam budidaya bunga yang mulai dilirik oleh masyarakat sebagai peluang usaha baru.
                         </p>
                         <a href="{{ route('detailpotensi', 'budidaya-bunga') }}"
                             class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
