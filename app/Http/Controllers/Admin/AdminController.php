@@ -8,6 +8,7 @@ use App\Models\Video;
 use App\Models\MapLocation;
 use App\Models\Aparat;
 use App\Models\Product;
+use App\Models\Fasilitas;
 
 class AdminController extends Controller
 {
@@ -17,6 +18,7 @@ class AdminController extends Controller
             'total_villagers' => Aparat::count(), // Menggunakan Aparat bukan Villager
             'total_videos' => Video::count(),
             'total_locations' => MapLocation::count(),
+            'total_facilities' => Fasilitas::count(),
             'total_views' => Video::sum('views'),
             'pertanian_products' => Product::where('category', 'pertanian')->count(),
             'perkebunan_products' => Product::where('category', 'perkebunan')->count(),

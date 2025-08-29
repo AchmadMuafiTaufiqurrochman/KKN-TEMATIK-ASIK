@@ -47,12 +47,12 @@
                 <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
-                            <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                            <i data-lucide="building" class="w-6 h-6 text-white"></i>
                         </div>
                         <i data-lucide="trending-up" class="w-5 h-5 text-green-600"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total_locations'] }}</h3>
-                    <p class="text-gray-600 text-sm mb-2">Lokasi Peta</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total_facilities'] }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">Total Fasilitas</p>
                     <p class="text-green-600 text-xs font-medium">+2 bulan ini</p>
                 </div>
 
@@ -87,8 +87,8 @@
                             </a>
                             <a href="{{ route('admin.locations.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-gray-800"></i>
-                                <span class="font-medium text-gray-800">Kelola Lokasi Peta</span>
+                                <i data-lucide="building" class="w-5 h-5 text-gray-800"></i>
+                                <span class="font-medium text-gray-800">Kelola Fasilitas</span>
                             </a>
                             <a href="{{ route('admin.products.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
