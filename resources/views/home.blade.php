@@ -55,26 +55,26 @@
 
             <div class="flex flex-wrap justify-center gap-8 md:gap-12">
                 <div class="flex items-center gap-2 text-center">
-                    <i data-lucide="users" class="w-8 h-8 text-secondary"></i>
+                    <i data-lucide="package" class="w-8 h-8 text-secondary"></i>
                     <div>
-                        <div class="text-2xl font-bold">{{ number_format($stats['total_villagers']) }}</div>
-                        <div class="text-sm opacity-90">Warga</div>
+                        <div class="text-2xl font-bold">{{ number_format($stats['total_products'] ?? 0) }}</div>
+                        <div class="text-sm opacity-90">Produk</div>
+                    </div>
+                </div>
+
+               <div class="flex items-center gap-2 text-center">
+                    <i data-lucide="newspaper" class="w-8 h-8 text-secondary"></i>
+                    <div>
+                        <div class="text-2xl font-bold">{{ number_format($stats['total_news'] ?? 0) }}</div>
+                        <div class="text-sm opacity-90">Berita</div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 text-center">
-                    <i data-lucide="leaf" class="w-8 h-8 text-secondary"></i>
+                    <i data-lucide="building" class="w-8 h-8 text-secondary"></i>
                     <div>
-                        <div class="text-2xl font-bold">± 100,87 Ha</div>
-                        <div class="text-sm opacity-90">Luas Keseluruhan Desa</div>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2 text-center">
-                    <i data-lucide="map-pin" class="w-8 h-8 text-secondary"></i>
-                    <div>
-                        <div class="text-2xl font-bold">{{ $stats['total_rt'] }} RT</div>
-                        <div class="text-sm opacity-90">Rukun Tetangga</div>
+                        <div class="text-2xl font-bold">{{ number_format($stats['total_facilities'] ?? 0) }}</div>
+                        <div class="text-sm opacity-90">Fasilitas</div>
                     </div>
                 </div>
             </div>
@@ -163,32 +163,51 @@
             </div>
 
             <div class="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
-                @foreach ($potentials as $potential)
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <div class="relative h-48">
-                            <img src="{{ $potential->image }}" alt="{{ $potential->title }}"
-                                class="w-full h-full object-cover" />
-                            <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
-                                @if ($potential->category === 'pertanian')
-                                    <i data-lucide="leaf" class="w-8 h-8 text-green-600"></i>
-                                @else
-                                    <i data-lucide="flower" class="w-8 h-8 text-pink-600"></i>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-primary mb-3">{{ $potential->title }}</h3>
-                            <p class="text-gray-700 mb-4">
-                                {{ Str::limit($potential->description, 100) }}
-                            </p>
-                            <a href="{{ route('detailpotensi', $potential->id) }}"
-                                class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
-                                Lihat Detail
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                <!-- Potensi Pertanian -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="relative h-48">
+                        <img src="https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1600" 
+                             alt="Pertanian Desa Wonokarang"
+                             class="w-full h-full object-cover" />
+                        <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
+                            <i data-lucide="leaf" class="w-8 h-8 text-green-600"></i>
                         </div>
                     </div>
-                @endforeach
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-3">Pertanian Unggulan</h3>
+                        <p class="text-gray-700 mb-4">
+                            Desa Wonokarang memiliki lahan pertanian yang subur dengan sistem irigasi yang baik...
+                        </p>
+                        <a href="{{ route('detailpotensi', 'pertanian') }}"
+                            class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
+                            Lihat Detail
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Potensi Budidaya Bunga -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="relative h-48">
+                        <img src="https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1600" 
+                             alt="Budidaya Bunga Desa Wonokarang"
+                             class="w-full h-full object-cover" />
+                        <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
+                            <i data-lucide="flower" class="w-8 h-8 text-pink-600"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-3">Budidaya Bunga</h3>
+                        <p class="text-gray-700 mb-4">
+                            Sentra budidaya bunga potong dan tanaman hias yang menjadi keunggulan desa...
+                        </p>
+                        <a href="{{ route('detailpotensi', 'budidaya-bunga') }}"
+                            class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
+                            Lihat Detail
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

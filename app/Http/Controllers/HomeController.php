@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Villager;
 use App\Models\Potential;
 use App\Models\Video;
-
-use App\Models\Aparat; // <--- Tambahkan ini
-
+use App\Models\Aparat;
 use App\Models\Product;
+use App\Models\Fasilitas;
 
 class HomeController extends Controller
 {
@@ -19,6 +18,9 @@ class HomeController extends Controller
             'male_villagers' => Villager::where('gender', 'L')->count(),
             'female_villagers' => Villager::where('gender', 'P')->count(),
             'total_rt' => Villager::distinct('rt')->count(),
+            'total_products' => Product::count(),
+            'total_news' => Video::where('status', 'published')->whereNot('category', 'profil')->count(),
+            'total_facilities' => Fasilitas::count(),
         ];
 
         $potentials = Potential::take(2)->get();
