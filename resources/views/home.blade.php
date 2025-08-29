@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2 text-center">
+               <div class="flex items-center gap-2 text-center">
                     <i data-lucide="newspaper" class="w-8 h-8 text-secondary"></i>
                     <div>
                         <div class="text-2xl font-bold">{{ number_format($stats['total_news'] ?? 0) }}</div>
@@ -89,7 +89,7 @@
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold text-primary mb-4">Tentang Desa Wonokarang</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Desa yang berdiri sejak tahun 1945, kini menjadi salah satu sentra budidaya bunga dan pertanian
+                        Desa yang berdiri sejak tahun 1924, kini menjadi salah satu sentra budidaya bunga dan pertanian
                         terbaik
                     </p>
                 </div>
@@ -106,10 +106,7 @@
 
                     <div>
                         <p class="text-gray-700 mb-6 leading-relaxed">
-                            Desa Wonokarang didirikan pada tahun 1945 oleh para transmigran yang ingin membangun kehidupan
-                            baru.
-                            Dengan tanah yang subur dan iklim yang mendukung, desa ini berkembang menjadi pusat pertanian
-                            dan budidaya bunga.
+                            Desa Wonokarang yang berada di Kecamatan Balongbendo, Kabupaten Sidoarjo, telah melalui perjalanan panjang sejak awal berdirinya. Pada masa lalu, pemimpin desa dikenal dengan sebutan Kalebhun dan Tenggi, sebelum akhirnya sesuai regulasi terbaru berganti menjadi Kepala Desa. Hingga saat ini, sudah enam Kepala Desa yang pernah memimpin dan turut membawa perubahan bagi kemajuan masyarakat Wonokarang.
                         </p>
                         <a href="{{ route('about') }}"
                             class="bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-flex items-center gap-2">
@@ -155,7 +152,7 @@
         </div>
     </section>
 
-    <!-- Potential Preview -->
+     <!-- Potential Preview -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -211,6 +208,56 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Highlight Produk Desa -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Produk Unggulan Desa</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Beberapa produk pilihan hasil karya masyarakat Desa Wonokarang.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                @foreach ($products->take(3) as $product)
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
+                        <div class="relative h-48">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                            <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold capitalize
+                                @if ($product->category === 'pertanian') text-green-700 bg-green-100/80
+                                @elseif($product->category === 'budidaya-bunga') text-pink-700 bg-pink-100/80
+                                @else text-gray-700 bg-gray-100/80 @endif">
+                                {{ str_replace('-', ' ', $product->category) }}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-primary mb-2">{{ $product->title }}</h3>
+                            <p class="text-gray-700 mb-4">
+                                {{ Str::limit($product->description, 80) }}
+                            </p>
+
+                            <a href="{{ route('product') }}"
+                                class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
+                                Lihat Detail
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+
+            <div class="text-center mt-12">
+                <a href="{{ route('product') }}"
+                    class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
+                    Lihat Semua Produk
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
             </div>
         </div>
     </section>

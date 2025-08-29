@@ -55,66 +55,16 @@ class DatabaseSeeder extends Seeder
         Potential::firstOrCreate([
             'title' => 'Pertanian Modern',
             'category' => 'pertanian',
-            'description' => 'Mengembangkan teknologi pertanian modern dengan sistem irigasi tetes dan penggunaan pupuk organik untuk hasil panen yang optimal.',
+            'description' => 'Sektor pertanian menjadi salah satu potensi unggulan Desa Wonokarang, khususnya di wilayah Dusun Tengah yang mayoritas masyarakatnya bertumpu pada bidang ini. Dengan dukungan lahan pertanian yang cukup luas, masyarakat mulai mengembangkan pertanian modern yang lebih efisien melalui penggunaan teknologi, pola tanam yang berkelanjutan, serta pemanfaatan pupuk organik untuk menjaga kualitas tanah. Langkah ini tidak hanya meningkatkan produktivitas hasil panen, tetapi juga menjadi upaya nyata dalam mendukung ketahanan pangan desa.',
             'image' => 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800'
         ]);
 
         Potential::firstOrCreate([
             'title' => 'Budidaya Bunga',
             'category' => 'bunga',
-            'description' => 'Spesialisasi budidaya bunga potong dan tanaman hias dengan kualitas ekspor yang telah menembus pasar nasional dan internasional.',
+            'description' => 'Desa Wonokarang juga memiliki potensi besar dalam budidaya bunga yang mulai dilirik oleh masyarakat sebagai peluang usaha baru. Budidaya bunga tidak hanya bernilai ekonomis tinggi karena tingginya permintaan pasar untuk kebutuhan hias maupun acara, tetapi juga mampu mempercantik lingkungan desa sehingga menghadirkan nilai estetika tersendiri. Kombinasi pertanian modern dan budidaya bunga ini diharapkan dapat membuka lapangan pekerjaan baru, meningkatkan kesejahteraan masyarakat, serta menjadikan Desa Wonokarang sebagai salah satu desa percontohan dalam pengembangan sektor pertanian dan hortikultura di Kecamatan Balongbendo.',
             'image' => 'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=800'
         ]);
-
-      
-        
-
-        
-        $locations = [
-            [
-                'name' => 'Balai Desa Mekar Sari',
-                'latitude' => -7.7956,
-                'longitude' => 110.3695,
-                'type' => 'balai',
-                'description' => 'Kantor pemerintahan desa dan pusat pelayanan masyarakat',
-                'status' => 'active'
-            ],
-            [
-                'name' => 'Area Pertanian Utama',
-                'latitude' => -7.7970,
-                'longitude' => 110.3710,
-                'type' => 'pertanian',
-                'description' => 'Lahan pertanian seluas 150 Ha dengan sistem irigasi modern',
-                'status' => 'active'
-            ],
-            [
-                'name' => 'Kebun Bunga Sari Indah',
-                'latitude' => -7.7940,
-                'longitude' => 110.3680,
-                'type' => 'bunga',
-                'description' => 'Pusat budidaya bunga potong dan tanaman hias',
-                'status' => 'active'
-            ],
-            [
-                'name' => 'Posyandu Melati',
-                'latitude' => -7.7960,
-                'longitude' => 110.3700,
-                'type' => 'posyandu',
-                'description' => 'Pos pelayanan kesehatan terpadu untuk balita dan lansia',
-                'status' => 'active'
-            ]
-        ];
-
-        foreach ($locations as $location) {
-            MapLocation::firstOrCreate(
-                ['name' => $location['name']],
-                $location
-            );
-        }
-
-
-
-         
 
         // Seed fasilitas desa (opsional)
         // $this->call(FacilitySeeder::class);
