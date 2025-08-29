@@ -7,23 +7,13 @@
             'title' => 'Pertanian Unggulan',
             'category' => 'pertanian',
             'image' => 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1600',
-            'description' => 'Desa Wonokarang memiliki lahan pertanian yang sangat subur dengan sistem irigasi yang modern dan terkelola dengan baik. Hasil pertanian utama meliputi padi berkualitas tinggi dengan produktivitas mencapai 7 ton per hektar, jagung hibrida yang tahan terhadap hama, serta berbagai jenis sayuran organik seperti bayam, kangkung, tomat, cabai, dan timun yang dipasok ke pasar-pasar besar di sekitar wilayah. 
-
-Para petani di desa ini telah menerapkan teknologi pertanian modern termasuk penggunaan pupuk organik yang diproduksi sendiri dari kompos limbah pertanian dan peternakan. Sistem tanam tumpang sari juga diterapkan untuk memaksimalkan hasil panen dan menjaga kesuburan tanah secara berkelanjutan.
-
-Selain itu, terdapat program pembinaan berkelanjutan dari dinas pertanian setempat yang memberikan pelatihan teknik budidaya modern, manajemen hama terpadu, dan pengolahan hasil pertanian. Kelompok tani yang aktif di desa ini juga rutin mengadakan diskusi dan sharing pengalaman untuk terus meningkatkan produktivitas dan kualitas hasil pertanian.'
+            'description' => 'Sektor pertanian menjadi salah satu potensi unggulan Desa Wonokarang, khususnya di wilayah Dusun Tengah yang mayoritas masyarakatnya bertumpu pada bidang ini. Dengan dukungan lahan pertanian yang cukup luas, masyarakat mulai mengembangkan pertanian modern yang lebih efisien melalui penggunaan teknologi, pola tanam yang berkelanjutan, serta pemanfaatan pupuk organik untuk menjaga kualitas tanah. Langkah ini tidak hanya meningkatkan produktivitas hasil panen, tetapi juga menjadi upaya nyata dalam mendukung ketahanan pangan desa.'
         ],
         'budidaya-bunga' => [
             'title' => 'Budidaya Bunga',
             'category' => 'budidaya',
             'image' => 'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1600',
-            'description' => 'Desa Wonokarang telah menjadi sentra budidaya bunga potong dan tanaman hias yang terkenal hingga ke luar daerah. Keunggulan utama terletak pada kualitas bunga yang dihasilkan mencapai standar ekspor dengan berbagai jenis unggulan seperti mawar holland, melati putih yang harum, anggrek dendrobium dan phalaenopsis, serta krisan dengan beragam warna yang menarik.
-
-Greenhouse modern dengan sistem kontrol suhu dan kelembaban otomatis telah dibangun untuk menjaga kualitas bunga tetap prima sepanjang tahun. Teknologi hidroponik dan aeroponik juga diterapkan untuk beberapa jenis tanaman hias premium yang membutuhkan perawatan khusus.
-
-Para petani bunga di desa ini memiliki keahlian tinggi yang diperoleh melalui pelatihan intensif dan pengalaman bertahun-tahun. Mereka mampu menghasilkan bunga dengan standar kualitas internasional yang tidak hanya dipasarkan di dalam negeri, tapi juga diekspor ke beberapa negara tetangga.
-
-Sistem pemasaran yang terorganisir dengan baik melalui koperasi petani bunga memungkinkan distribusi yang efisien ke berbagai kota besar. Selain itu, agrowisata bunga juga dikembangkan sebagai daya tarik tambahan yang memberikan edukasi kepada masyarakat tentang proses budidaya bunga yang berkualitas.'
+            'description' => 'Desa Wonokarang juga memiliki potensi besar dalam budidaya bunga yang mulai dilirik oleh masyarakat sebagai peluang usaha baru. Budidaya bunga tidak hanya bernilai ekonomis tinggi karena tingginya permintaan pasar untuk kebutuhan hias maupun acara, tetapi juga mampu mempercantik lingkungan desa sehingga menghadirkan nilai estetika tersendiri. Kombinasi pertanian modern dan budidaya bunga ini diharapkan dapat membuka lapangan pekerjaan baru, meningkatkan kesejahteraan masyarakat, serta menjadikan Desa Wonokarang sebagai salah satu desa percontohan dalam pengembangan sektor pertanian dan hortikultura di Kecamatan Balongbendo.'
         ]
     ];
     
