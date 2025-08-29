@@ -25,7 +25,6 @@ use App\Http\Controllers\WebsiteDocsController;
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
 Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation');
 Route::get('/map', [MapController::class, 'index'])->name('map');
 Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.detail');
@@ -33,11 +32,9 @@ Route::get('/berita/{id}', [VideoController::class, 'detail'])->name('berita.det
 // Special route for website documentation
 Route::get('/qwertyu25', [WebsiteDocsController::class, 'index'])->name('website.docs');
 
-Route::get('/potential', [PotentialController::class, 'index'])->name('potential');
+// Potential routes
 Route::get('/detailpotensi/{id}', [PotentialController::class, 'detailPotensi'])->name('detailpotensi');
 Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('allpotensi');
-
-
 
 // Public
 Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
