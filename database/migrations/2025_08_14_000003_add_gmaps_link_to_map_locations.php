@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('map_locations', function (Blueprint $table) {
-            $table->string('gmaps_link', 500)->nullable()->after('contact');
+            $table->string('gmaps_link', 500)->nullable();
         });
     }
 

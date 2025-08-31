@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // ProductController
-public function index()
-{
-    $products = Product::where('status', 'published')->latest()->get();
-    $categories = Product::where('status', 'published')
-        ->select('category')
-        ->distinct()
-        ->pluck('category');
+    /**
+     * Menampilkan produk unggulan untuk publik
+     */
+    public function index()
+    {
+        // Ambil hanya produk dengan status aktif
+        $products = Product::where('status', 'active')
+            ->latest()
+            ->get();
 
-    return view('product', compact('products', 'categories'));
-}
+        return view('product', compact('products'));
+    }
+
+    /**
+     * Menampilkan detail satu produk (opsional, kalau mau ada detail)
+     */
+    // public function show($id)
+    // {
+    //     $product = Product::where('status', 'active')->findOrFail($id);
+    //     return view('produk-unggulan.show', compact('product'));
+    // }
 }

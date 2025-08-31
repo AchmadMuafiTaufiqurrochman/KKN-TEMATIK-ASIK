@@ -2,27 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = [
-        'title', 'description', 'category', 'image', 'contact', 'status'
-    ];
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-    public function getCategoryTextAttribute()
-    {
-        $categories = [
-            'pertanian' => 'Pertanian',
-            'bunga' => 'Budidaya Bunga',
-            'umkm' => 'UMKM',
-            'kerajinan' => 'Kerajinan',
-            'kuliner' => 'Kuliner',
-        ];
+    use HasFactory;
 
-        return $categories[$this->category] ?? ucfirst($this->category);
-    }
+    protected $table = 'products';
+
+    protected $fillable = [
+        'name_product',
+        'catagory',
+        'owner',
+        'contact',
+        'description',
+        'image',
+        'status',
+    ];
 }
