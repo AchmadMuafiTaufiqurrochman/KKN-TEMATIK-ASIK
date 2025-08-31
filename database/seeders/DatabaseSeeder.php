@@ -4,18 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Villager;
-use App\Models\Video;
-use App\Models\MapLocation;
-use App\Models\Potential;
-use App\Models\Aparat;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-       
+        // === Seed User Admin ===
         User::firstOrCreate(
             ['email' => 'admin@wonokarang.desa.id'],
             [
@@ -34,7 +31,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        
+        // === Seed Villagers ===
         $villagers = [
             ['name' => 'Ahmad Subagyo', 'nik' => '3301012345678901', 'gender' => 'L', 'birth_date' => '1975-03-15', 'job' => 'Petani', 'education' => 'SMA', 'rt' => '01', 'rw' => '01'],
             ['name' => 'Siti Rahayu', 'nik' => '3301012345678902', 'gender' => 'P', 'birth_date' => '1980-07-22', 'job' => 'Ibu Rumah Tangga', 'education' => 'SMP', 'rt' => '01', 'rw' => '01'],
@@ -51,23 +48,48 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        
-        Potential::firstOrCreate([
-            'title' => 'Pertanian Modern',
-            'category' => 'pertanian',
-            'description' => 'Sektor pertanian menjadi salah satu potensi unggulan Desa Wonokarang, khususnya di wilayah Dusun Tengah yang mayoritas masyarakatnya bertumpu pada bidang ini. Dengan dukungan lahan pertanian yang cukup luas, masyarakat mulai mengembangkan pertanian modern yang lebih efisien melalui penggunaan teknologi, pola tanam yang berkelanjutan, serta pemanfaatan pupuk organik untuk menjaga kualitas tanah. Langkah ini tidak hanya meningkatkan produktivitas hasil panen, tetapi juga menjadi upaya nyata dalam mendukung ketahanan pangan desa.',
-            'image' => 'https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800'
-        ]);
+        // === Seed Products ===
+        $products = [
+            [
+                'name_product' => 'Padi Organik Wonokarang',
+                'category' => 'pertanian',
+                'owner' => 'Kelompok Tani Maju Jaya',
+                'contact' => '081234567890',
+                'description' => 'Padi organik ditanam tanpa bahan kimia, kualitas premium.',
+                'image' => 'padi.jpg',
+                'status' => 'active',
+            ],
+            [
+                'name_product' => 'Bunga Mawar Merah',
+                'category' => 'budidaya-bunga',
+                'owner' => 'Sari Bunga Florist',
+                'contact' => '082345678901',
+                'description' => 'Bunga mawar segar hasil budidaya lokal, cocok untuk dekorasi & hadiah.',
+                'image' => 'mawar.jpg',
+                'status' => 'active',
+            ],
+            [
+                'name_product' => 'Sayur Kangkung Segar',
+                'category' => 'pertanian',
+                'owner' => 'Pak Slamet',
+                'contact' => '083456789012',
+                'description' => 'Kangkung segar dipetik langsung dari kebun setiap pagi.',
+                'image' => 'kangkung.jpg',
+                'status' => 'inactive',
+            ],
+        ];
 
-        Potential::firstOrCreate([
-            'title' => 'Budidaya Bunga',
-            'category' => 'bunga',
-            'description' => 'Desa Wonokarang juga memiliki potensi besar dalam budidaya bunga yang mulai dilirik oleh masyarakat sebagai peluang usaha baru. Budidaya bunga tidak hanya bernilai ekonomis tinggi karena tingginya permintaan pasar untuk kebutuhan hias maupun acara, tetapi juga mampu mempercantik lingkungan desa sehingga menghadirkan nilai estetika tersendiri. Kombinasi pertanian modern dan budidaya bunga ini diharapkan dapat membuka lapangan pekerjaan baru, meningkatkan kesejahteraan masyarakat, serta menjadikan Desa Wonokarang sebagai salah satu desa percontohan dalam pengembangan sektor pertanian dan hortikultura di Kecamatan Balongbendo.',
-            'image' => 'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=800'
-        ]);
+        foreach ($products as $product) {
+            DB::table('products')->updateOrInsert(
+                ['name_product' => $product['name_product']],
+                array_merge($product, [
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ])
+            );
+        }
 
-        // Seed fasilitas desa (opsional)
+        // === Tambahan Seeder lain jika ada ===
         // $this->call(FacilitySeeder::class);
-
     }
 }

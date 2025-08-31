@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,15 +10,19 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
-
     protected $fillable = [
         'name_product',
-        'catagory',
         'owner',
-        'contact',
         'description',
+        'category',
+        'contact',
         'image',
+        'map_location_id',
         'status',
     ];
+
+    public function mapLocation()
+    {
+        return $this->belongsTo(MapLocation::class, 'map_location_id');
+    }
 }

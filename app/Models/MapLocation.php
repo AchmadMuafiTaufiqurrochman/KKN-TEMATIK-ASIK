@@ -59,27 +59,27 @@ class MapLocation extends Model
         if (!$this->opening_hours) {
             return false;
         }
-        
+
         $today = date('l'); // Nama hari dalam bahasa Inggris
         $indonesianDays = [
             'Monday' => 'senin',
-            'Tuesday' => 'selasa', 
+            'Tuesday' => 'selasa',
             'Wednesday' => 'rabu',
             'Thursday' => 'kamis',
             'Friday' => 'jumat',
             'Saturday' => 'sabtu',
             'Sunday' => 'minggu'
         ];
-        
+
         $todayIndo = $indonesianDays[$today] ?? strtolower($today);
         $openingHours = strtolower($this->opening_hours);
-        
+
         // Cek jika "setiap hari" atau "senin-minggu"
-        if (strpos($openingHours, 'setiap hari') !== false || 
+        if (strpos($openingHours, 'setiap hari') !== false ||
             strpos($openingHours, 'senin-minggu') !== false) {
             return true;
         }
-        
+
         // Cek jika hari ini disebutkan
         return strpos($openingHours, $todayIndo) !== false;
     }
@@ -90,5 +90,10 @@ class MapLocation extends Model
                    ->groupBy('type')
                    ->pluck('count', 'type')
                    ->toArray();
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'map_location_id');
     }
 }

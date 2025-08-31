@@ -34,6 +34,7 @@
                         <th class="px-6 py-4 text-left">Deskripsi</th>
                         <th class="px-6 py-4 text-left">Kategori</th>
                         <th class="px-6 py-4 text-left">Kontak</th>
+                        <th class="px-6 py-4 text-left">Lokasi</th>
                         <th class="px-6 py-4 text-left">Status</th>
                         <th class="px-6 py-4 text-left">Aksi</th>
                     </tr>
@@ -51,8 +52,11 @@
                         <td class="px-6 py-4 font-medium text-gray-900">{{ $product->name_product }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->owner }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->description }}</td>
-                        <td class="px-6 py-4 text-gray-600">{{ ucfirst(str_replace('-', ' ', $product->catagory)) }}</td>
+                        <td class="px-6 py-4 text-gray-600">{{ ucfirst(str_replace('-', ' ', $product->category)) }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->contact }}</td>
+                        <td class="px-6 py-4 text-gray-600">
+                            {{ $product->mapLocation?->name ?? 'Belum ada lokasi' }}
+                        </td>
                         <td class="px-6 py-4 text-gray-600">
                             @if($product->status == 'active')
                                 <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">Active</span>
@@ -64,7 +68,7 @@
                             <div class="flex items-center gap-2">
                                 <!-- Tombol Edit -->
                                 <button type="button"
-                                    onclick="openEditModal({{ $product->id }}, '{{ addslashes($product->name_product) }}', '{{ addslashes($product->description) }}', '{{ $product->catagory }}', '{{ $product->contact }}', '{{ $product->status }}', '{{ addslashes($product->owner) }}')"
+                                    onclick="openEditModal({{ $product->id }}, '{{ addslashes($product->name_product) }}', '{{ addslashes($product->description) }}', '{{ $product->category }}', '{{ $product->contact }}', '{{ $product->status }}', '{{ addslashes($product->owner) }}', '{{ $product->map_location_id }}')"
                                     class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors">
                                     <i data-lucide="edit" class="w-5 h-5"></i>
                                 </button>
@@ -81,7 +85,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center py-12 text-gray-500">Belum ada produk yang ditambahkan</td>
+                        <td colspan="9" class="text-center py-12 text-gray-500">Belum ada produk yang ditambahkan</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -102,13 +106,22 @@
                     <input name="name_product" placeholder="Nama Produk" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input name="owner" placeholder="Owner" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <textarea name="description" placeholder="Deskripsi" class="w-full border px-3 py-2 rounded-lg text-gray-700"></textarea>
-                    <select name="catagory" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                    <select name="category" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="">Pilih Kategori</option>
                         <option value="pertanian">Pertanian</option>
                         <option value="budidaya-bunga">Budidaya Bunga</option>
                     </select>
                     <input name="contact" placeholder="Kontak (HP/WA)" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
+
+                    <!-- Lokasi -->
+                    <select name="map_location_id" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                        <option value="">Pilih Lokasi</option>
+                        @foreach($locations as $loc)
+                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                        @endforeach
+                    </select>
+
                     <select name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
@@ -136,13 +149,22 @@
                     <input id="edit_name_product" name="name_product" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input id="edit_owner" name="owner" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <textarea id="edit_description" name="description" class="w-full border px-3 py-2 rounded-lg text-gray-700"></textarea>
-                    <select id="edit_catagory" name="catagory" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                    <select id="edit_category" name="category" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="">Pilih Kategori</option>
                         <option value="pertanian">Pertanian</option>
                         <option value="budidaya-bunga">Budidaya Bunga</option>
                     </select>
                     <input id="edit_contact" name="contact" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
+
+                    <!-- Lokasi -->
+                    <select id="edit_map_location_id" name="map_location_id" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
+                        <option value="">Pilih Lokasi</option>
+                        @foreach($locations as $loc)
+                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                        @endforeach
+                    </select>
+
                     <select id="edit_status" name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
@@ -170,13 +192,14 @@ document.getElementById('productModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
 
-function openEditModal(id, name_product, description, catagory, contact, status, owner) {
+function openEditModal(id, name_product, description, category, contact, status, owner, map_location_id) {
     document.getElementById('edit_name_product').value = name_product;
     document.getElementById('edit_description').value = description;
-    document.getElementById('edit_catagory').value = catagory;
+    document.getElementById('edit_category').value = category;
     document.getElementById('edit_contact').value = contact;
     document.getElementById('edit_status').value = status;
     document.getElementById('edit_owner').value = owner;
+    document.getElementById('edit_map_location_id').value = map_location_id;
 
     document.getElementById('editProductForm').action = `/admin/products/${id}`;
 

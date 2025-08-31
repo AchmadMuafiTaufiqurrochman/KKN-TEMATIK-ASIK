@@ -8,16 +8,19 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('lokasi_id')->nullable()->after('id');
-            $table->foreign('lokasi_id')->references('id')->on('map_locations')->onDelete('cascade');
+            $table->unsignedBigInteger('map_location_id')->nullable()->after('id');
+
+            $table->foreign('map_location_id')
+                  ->references('id')->on('map_locations')
+                  ->onDelete('set null');
         });
     }
 
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['lokasi_id']);
-            $table->dropColumn('lokasi_id');
+            $table->dropForeign(['map_location_id']);
+            $table->dropColumn('map_location_id');
         });
     }
 };

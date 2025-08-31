@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->text('name_product');
-            $table->enum('catagory', ['pertanian', 'budidaya-bunga']);
+            $table->enum('category', ['pertanian', 'budidaya-bunga']);
             $table->text('owner');
             $table->string('contact', 20);
             $table->text('description')->nullable();

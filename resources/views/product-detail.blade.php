@@ -19,7 +19,7 @@
 
             <div class="flex space-x-4">
                 <a href="https://wa.me/{{ $product->contact }}" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Hubungi via WA</a>
-                <a href="{{ route('products.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
+                <a href="{{ route('product') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
             </div>
         </div>
     </div>
