@@ -10,12 +10,30 @@ use Illuminate\Support\Facades\Storage;
 class AdminProductController extends Controller
 {
     /**
-     * Tampilkan daftar produk
+     * Tampilkan daftar produk + statistik
      */
     public function index()
     {
         $products = Product::latest()->get();
-        return view('admin.product.index', compact('products'));
+
+        // Statistik global
+        $stats = [
+            'total'    => Product::count(),
+            'active'   => Product::where('status', 'active')->count(),
+            'inactive' => Product::where('status', 'inactive')->count(),
+        ];
+
+        // Statistik per kategori (otomatis, nggak hardcode)
+        $categories = Product::select('category')
+            ->distinct()
+            ->pluck('category');
+
+        $categoryStats = [];
+        foreach ($categories as $category) {
+            $categoryStats[$category] = Product::where('category', $category)->count();
+        }
+
+        return view('admin.product.index', compact('products', 'stats', 'categoryStats'));
     }
 
     /**
@@ -35,7 +53,6 @@ class AdminProductController extends Controller
             'image'        => 'nullable|image|max:2048',
         ]);
 
-        // upload gambar
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
@@ -63,7 +80,6 @@ class AdminProductController extends Controller
             'image'        => 'nullable|image|max:2048',
         ]);
 
-        // update gambar kalau ada
         if ($request->hasFile('image')) {
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
