@@ -21,7 +21,7 @@ class AdminController extends Controller
             'total_facilities' => Fasilitas::count(),
             'total_views' => Video::sum('views'),
             'pertanian_products' => Product::where('category', 'pertanian')->count(),
-            'perkebunan_products' => Product::where('category', 'perkebunan')->count(),
+            'perkebunan_products' => Product::where('category', 'budidaya-bunga')->count(),
             'total_products' => Product::count(),
             'published_videos' => Video::where('status', 'published')->count(),
             'draft_videos' => Video::where('status', 'draft')->count(),
@@ -29,7 +29,7 @@ class AdminController extends Controller
 
         // Mendapatkan video dengan views paling banyak
         $topViewedVideo = Video::orderBy('views', 'desc')->first();
-        
+
         $recentActivities = [
             ['action' => 'Menambah berita baru', 'user' => 'Admin', 'time' => '2 jam yang lalu'],
             ['action' => 'Mengedit berita', 'user' => 'Admin', 'time' => '5 jam yang lalu'],

@@ -94,7 +94,7 @@
                     </p>
                 </div>
 
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                {{-- <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
                     <div class="flex flex-col items-center">
                         <div class="w-[300px] h-[300px] rounded-full overflow-hidden mb-6 border-2 border-gray-300">
                             <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
@@ -102,7 +102,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-2">{{ $kepalaDesa->name }}</h4>
                         <p class="text-gray-600">{{ $kepalaDesa->position }}</p>
-                    </div>
+                    </div> --}}
 
                     <div>
                         <p class="text-gray-700 mb-6 leading-relaxed">
@@ -166,7 +166,7 @@
                 <!-- Potensi Pertanian -->
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                     <div class="relative h-48">
-                        <img src="https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1600" 
+                        <img src="https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1600"
                              alt="Pertanian Desa Wonokarang"
                              class="w-full h-full object-cover" />
                         <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
@@ -189,7 +189,7 @@
                 <!-- Potensi Budidaya Bunga -->
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                     <div class="relative h-48">
-                        <img src="https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1600" 
+                        <img src="https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1600"
                              alt="Budidaya Bunga Desa Wonokarang"
                              class="w-full h-full object-cover" />
                         <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">

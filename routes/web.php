@@ -41,8 +41,7 @@ Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('
     Route::get('/Aparatur-Desa', [AparatController::class, 'public'])->name('aparat');
     Route::get('/potential', [ProductController::class, 'index'])->name('potential');
     Route::get('/product', [ProductController::class, 'index'])->name('product');
-    Route::get('/produk-desa', [ProductController::class, 'index'])->name('products.index');
-
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 
 

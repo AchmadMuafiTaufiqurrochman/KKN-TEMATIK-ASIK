@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->decimal('latitude', 10, 7)->nullable(); // Koordinat lintang
             $table->decimal('longitude', 10, 7)->nullable(); // Koordinat bujur
             $table->timestamps();
+
         });
     }
 
