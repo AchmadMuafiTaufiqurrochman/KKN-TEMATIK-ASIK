@@ -24,8 +24,8 @@
             Tambah Produk
         </button>
 
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <table class="w-full">
+        <div class="bg-white rounded-lg shadow-lg overflow-x-auto">
+            <table class="w-full min-w-max">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th class="px-6 py-4 text-left">Gambar</th>
@@ -34,8 +34,8 @@
                         <th class="px-6 py-4 text-left">Deskripsi</th>
                         <th class="px-6 py-4 text-left">Kategori</th>
                         <th class="px-6 py-4 text-left">Kontak</th>
-                        <th class="px-6 py-4 text-left">Lokasi</th>
                         <th class="px-6 py-4 text-left">Status</th>
+                        <th class="px-6 py-4 text-left">Lokasi (Gmaps)</th>
                         <th class="px-6 py-4 text-left">Aksi</th>
                     </tr>
                 </thead>
@@ -55,25 +55,38 @@
                         <td class="px-6 py-4 text-gray-600">{{ ucfirst(str_replace('-', ' ', $product->category)) }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->contact }}</td>
                         <td class="px-6 py-4 text-gray-600">
-                            {{ $product->mapLocation?->name ?? 'Belum ada lokasi' }}
-                        </td>
-                        <td class="px-6 py-4 text-gray-600">
                             @if($product->status == 'active')
                                 <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">Active</span>
                             @else
                                 <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">Inactive</span>
                             @endif
                         </td>
+                        <td class="px-6 py-4 text-blue-600">
+                            @if($product->latitude && $product->longitude)
+                                <a href="https://www.google.com/maps?q={{ $product->latitude }},{{ $product->longitude }}" target="_blank" class="underline hover:text-blue-800">
+                                    Lihat di Maps
+                                </a>
+                            @else
+                                <span class="text-gray-400 italic">Belum ada lokasi</span>
+                            @endif
+                        </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
-                                <!-- Tombol Edit -->
                                 <button type="button"
-                                    onclick="openEditModal({{ $product->id }}, '{{ addslashes($product->name_product) }}', '{{ addslashes($product->description) }}', '{{ $product->category }}', '{{ $product->contact }}', '{{ $product->status }}', '{{ addslashes($product->owner) }}', '{{ $product->map_location_id }}')"
+                                    onclick="openEditModal(
+                                        {{ $product->id }},
+                                        '{{ addslashes($product->name_product) }}',
+                                        '{{ addslashes($product->description) }}',
+                                        '{{ $product->category }}',
+                                        '{{ $product->contact }}',
+                                        '{{ $product->status }}',
+                                        '{{ addslashes($product->owner) }}',
+                                        '{{ $product->latitude ?? '' }}',
+                                        '{{ $product->longitude ?? '' }}'
+                                    )"
                                     class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors">
                                     <i data-lucide="edit" class="w-5 h-5"></i>
                                 </button>
-
-                                <!-- Tombol Hapus -->
                                 <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
                                     @csrf @method('DELETE')
                                     <button class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors">
@@ -94,12 +107,11 @@
     </div>
 </div>
 
-<!-- Modal Tambah Produk -->
-<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+{{-- Modal Tambah Produk --}}
+<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg max-w-md w-full p-6">
+        <div class="bg-white rounded-lg max-w-2xl w-full p-6">
             <h3 class="text-lg font-bold text-primary mb-4">Tambah Produk</h3>
-
             <form id="productForm" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-4">
@@ -113,19 +125,16 @@
                     </select>
                     <input name="contact" placeholder="Kontak (HP/WA)" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
-
-                    <!-- Lokasi -->
-                    <select name="map_location_id" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="">Pilih Lokasi</option>
-                        @foreach($locations as $loc)
-                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                        @endforeach
-                    </select>
-
                     <select name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
+                    <div>
+                        <label class="block font-semibold mb-2">Pilih Lokasi Produk</label>
+                        <div id="addMap" class="h-64 w-full rounded border"></div>
+                        <input type="hidden" name="latitude" id="add_latitude">
+                        <input type="hidden" name="longitude" id="add_longitude">
+                    </div>
                 </div>
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Simpan</button>
@@ -136,15 +145,13 @@
     </div>
 </div>
 
-<!-- Modal Edit Produk -->
-<div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+{{-- Modal Edit Produk --}}
+<div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg max-w-md w-full p-6">
+        <div class="bg-white rounded-lg max-w-2xl w-full p-6">
             <h3 class="text-lg font-bold text-primary mb-4">Edit Produk</h3>
-
             <form id="editProductForm" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+                @csrf @method('PUT')
                 <div class="space-y-4">
                     <input id="edit_name_product" name="name_product" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input id="edit_owner" name="owner" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
@@ -156,19 +163,16 @@
                     </select>
                     <input id="edit_contact" name="contact" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                     <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
-
-                    <!-- Lokasi -->
-                    <select id="edit_map_location_id" name="map_location_id" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="">Pilih Lokasi</option>
-                        @foreach($locations as $loc)
-                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                        @endforeach
-                    </select>
-
                     <select id="edit_status" name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
+                    <div>
+                        <label class="block font-semibold mb-2">Pilih Lokasi Produk</label>
+                        <div id="editMap" class="h-64 w-full rounded border"></div>
+                        <input type="hidden" name="latitude" id="edit_latitude">
+                        <input type="hidden" name="longitude" id="edit_longitude">
+                    </div>
                 </div>
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Update</button>
@@ -179,37 +183,105 @@
     </div>
 </div>
 
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+@endpush
+
+@push('scripts')
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-function openAddModal() {
-    document.getElementById('productModal').classList.remove('hidden');
-}
+    // Pusat Desa Wonokarang, Balongbendo, Sidoarjo
+    const desaCenter = [-7.4118, 112.5169]; // lat, lng
 
-function closeModal() {
-    document.getElementById('productModal').classList.add('hidden');
-}
+    let addMap, addMarker, editMap, editMarker;
 
-document.getElementById('productModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-});
+    function openAddModal() {
+        document.getElementById('productModal').classList.remove('hidden');
 
-function openEditModal(id, name_product, description, category, contact, status, owner, map_location_id) {
-    document.getElementById('edit_name_product').value = name_product;
-    document.getElementById('edit_description').value = description;
-    document.getElementById('edit_category').value = category;
-    document.getElementById('edit_contact').value = contact;
-    document.getElementById('edit_status').value = status;
-    document.getElementById('edit_owner').value = owner;
-    document.getElementById('edit_map_location_id').value = map_location_id;
+        setTimeout(() => {
+            if (!addMap) {
+                addMap = L.map('addMap', {
+                    center: desaCenter,
+                    zoom: 16
+                });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(addMap);
 
-    document.getElementById('editProductForm').action = `/admin/products/${id}`;
+                // default marker & default nilai form (biar langsung terset ke desaCenter)
+                addMarker = L.marker(desaCenter).addTo(addMap);
+                document.getElementById('add_latitude').value = desaCenter[0];
+                document.getElementById('add_longitude').value = desaCenter[1];
 
-    document.getElementById('editProductModal').classList.remove('hidden');
-}
-function closeEditModal() {
-    document.getElementById('editProductModal').classList.add('hidden');
-}
-document.getElementById('editProductModal').addEventListener('click', function(e) {
-    if (e.target === this) closeEditModal();
-});
+                addMap.on('click', function(e) {
+                    if (addMarker) addMap.removeLayer(addMarker);
+                    addMarker = L.marker(e.latlng).addTo(addMap);
+                    document.getElementById('add_latitude').value = e.latlng.lat;
+                    document.getElementById('add_longitude').value = e.latlng.lng;
+                });
+            } else {
+                addMap.setView(desaCenter, 16);
+                if (addMarker) addMap.removeLayer(addMarker);
+                addMarker = L.marker(desaCenter).addTo(addMap);
+                document.getElementById('add_latitude').value = desaCenter[0];
+                document.getElementById('add_longitude').value = desaCenter[1];
+            }
+            addMap.invalidateSize();
+        }, 300);
+    }
+
+    function closeModal() {
+        document.getElementById('productModal').classList.add('hidden');
+    }
+
+    function openEditModal(id, name_product, description, category, contact, status, owner, lat, lng) {
+        document.getElementById('edit_name_product').value = name_product;
+        document.getElementById('edit_description').value = description;
+        document.getElementById('edit_category').value = category;
+        document.getElementById('edit_contact').value = contact;
+        document.getElementById('edit_status').value = status;
+        document.getElementById('edit_owner').value = owner;
+
+        // fallback ke desaCenter kalau belum ada koordinat
+        const hasCoords = lat && lng;
+        const startLatLng = hasCoords ? [parseFloat(lat), parseFloat(lng)] : desaCenter;
+
+        document.getElementById('edit_latitude').value = startLatLng[0];
+        document.getElementById('edit_longitude').value = startLatLng[1];
+
+        document.getElementById('editProductForm').action = `/admin/products/${id}`;
+        document.getElementById('editProductModal').classList.remove('hidden');
+
+        setTimeout(() => {
+            if (!editMap) {
+                editMap = L.map('editMap', {
+                    center: startLatLng,
+                    zoom: 16
+                });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(editMap);
+
+                editMarker = L.marker(startLatLng).addTo(editMap);
+
+                editMap.on('click', function(e) {
+                    if (editMarker) editMap.removeLayer(editMarker);
+                    editMarker = L.marker(e.latlng).addTo(editMap);
+                    document.getElementById('edit_latitude').value = e.latlng.lat;
+                    document.getElementById('edit_longitude').value = e.latlng.lng;
+                });
+            } else {
+                editMap.setView(startLatLng, 16);
+                if (editMarker) editMap.removeLayer(editMarker);
+                editMarker = L.marker(startLatLng).addTo(editMap);
+            }
+            editMap.invalidateSize();
+        }, 300);
+    }
+
+    function closeEditModal() {
+        document.getElementById('editProductModal').classList.add('hidden');
+    }
 </script>
+@endpush
 @endsection

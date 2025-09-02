@@ -16,8 +16,12 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamps();
 
+            // Lokasi langsung di tabel products
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -26,5 +30,3 @@ return new class extends Migration {
         Schema::dropIfExists('products');
     }
 };
-
-

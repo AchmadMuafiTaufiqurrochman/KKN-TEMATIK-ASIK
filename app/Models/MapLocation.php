@@ -10,6 +10,7 @@ class MapLocation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_id',
         'name',
         'latitude',
         'longitude',

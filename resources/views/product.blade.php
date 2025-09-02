@@ -12,66 +12,58 @@
     </h1>
 
     {{-- Hero Section --}}
-    {{-- Tambahkan ini di <head> layout utama --}}
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-<section class="relative py-20 bg-cover bg-center rounded-2xl overflow-hidden shadow-lg"
-         style="background-image: url('https://images.pexels.com/photos/2165740/pexels-photo-2165740.jpeg')">
-    <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
-    <div class="relative container mx-auto px-6 text-white">
-        {{-- Judul & Deskripsi --}}
-        <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
-                Potensi Desa Wonokarang
-            </h2>
-            <p class="text-base md:text-lg max-w-3xl mx-auto text-gray-200">
-                Desa Wonokarang memiliki beragam potensi unggulan yang menjadi kebanggaan masyarakat,
-                mulai dari hasil pertanian, kerajinan, hingga produk olahan khas bernilai tinggi.
-            </p>
-        </div>
-
-        {{-- Grid Potensi --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {{-- Pertanian --}}
-            <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-8 flex flex-col items-center text-center
-                        transform hover:-translate-y-3 hover:shadow-xl transition duration-500"
-                 data-aos="fade-right" data-aos-duration="1200">
-                <div class="text-6xl mb-4">🌾</div>
-                <h3 class="font-bold text-xl mb-3 text-primary">Pertanian</h3>
-                <p class="text-gray-700 text-sm leading-relaxed">
-                    Hasil bumi melimpah seperti padi, jagung, dan sayuran segar dari ladang warga,
-                    menjadi penopang ekonomi desa dan pasokan pangan berkualitas.
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <section class="relative py-20 bg-cover bg-center rounded-2xl overflow-hidden shadow-lg"
+             style="background-image: url('https://images.pexels.com/photos/2165740/pexels-photo-2165740.jpeg')">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
+        <div class="relative container mx-auto px-6 text-white">
+            {{-- Judul & Deskripsi --}}
+            <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
+                    Potensi Desa Wonokarang
+                </h2>
+                <p class="text-base md:text-lg max-w-3xl mx-auto text-gray-200">
+                    Desa Wonokarang memiliki beragam potensi unggulan yang menjadi kebanggaan masyarakat,
+                    mulai dari hasil pertanian, kerajinan, hingga produk olahan khas bernilai tinggi.
                 </p>
             </div>
 
-            {{-- Budidaya Bunga --}}
-            <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-8 flex flex-col items-center text-center
-                        transform hover:-translate-y-3 hover:shadow-xl transition duration-500"
-                 data-aos="fade-left" data-aos-duration="1200">
-                <div class="text-6xl mb-4">🌸</div>
-                <h3 class="font-bold text-xl mb-3 text-primary">Budidaya Bunga</h3>
-                <p class="text-gray-700 text-sm leading-relaxed">
-                    Berbagai jenis bunga hias berkualitas tinggi yang menarik pasar lokal maupun luar daerah,
-                    sekaligus mempercantik lingkungan sekitar.
-                </p>
+            {{-- Grid Potensi --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-8 flex flex-col items-center text-center
+                            transform hover:-translate-y-3 hover:shadow-xl transition duration-500"
+                     data-aos="fade-right" data-aos-duration="1200">
+                    <div class="text-6xl mb-4">🌾</div>
+                    <h3 class="font-bold text-xl mb-3 text-primary">Pertanian</h3>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Hasil bumi melimpah seperti padi, jagung, dan sayuran segar dari ladang warga,
+                        menjadi penopang ekonomi desa dan pasokan pangan berkualitas.
+                    </p>
+                </div>
+
+                <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-8 flex flex-col items-center text-center
+                            transform hover:-translate-y-3 hover:shadow-xl transition duration-500"
+                     data-aos="fade-left" data-aos-duration="1200">
+                    <div class="text-6xl mb-4">🌸</div>
+                    <h3 class="font-bold text-xl mb-3 text-primary">Budidaya Bunga</h3>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Berbagai jenis bunga hias berkualitas tinggi yang menarik pasar lokal maupun luar daerah,
+                        sekaligus mempercantik lingkungan sekitar.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-
+    </section>
 
 
     {{-- Search & Filter --}}
     <div class="mt-16 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
-        {{-- Search Input --}}
         <div class="w-full md:w-1/2">
             <input type="text" x-model="search" @input.debounce.500ms="fetchProducts()"
                    placeholder="Cari produk..."
                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none">
         </div>
 
-        {{-- Filter Kategori --}}
         <div class="w-full md:w-1/4">
             <select x-model="category" @change="fetchProducts()"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none">
@@ -85,7 +77,6 @@
 
     {{-- Tabel Produk --}}
     <div class="overflow-x-auto bg-white shadow-md rounded-lg relative">
-        {{-- Loader --}}
         <div x-show="loading" class="absolute inset-0 flex items-center justify-center bg-white/70 z-10">
             <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -159,12 +150,13 @@
 <script>
   AOS.init();
 </script>
+
 {{-- Alpine.js --}}
 <script>
 function productTable() {
     return {
         search: '{{ request("search") }}',
-        catagory: '{{ request("catagory") }}',
+        category: '{{ request("category") }}',
         products: { data: [], links: [] },
         loading: false,
         async fetchProducts(url = '{{ route("product") }}') {
