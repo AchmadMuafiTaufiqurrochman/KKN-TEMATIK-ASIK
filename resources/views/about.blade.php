@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="flex flex-col items-center">
-                            <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-secondary">
+                            <div class="w-[300px] h-[300px] rounded-full overflow-hidden mb-6 border-2 border-gray-300">
                                 <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
                                     class="w-full h-full object-cover" />
                             </div>

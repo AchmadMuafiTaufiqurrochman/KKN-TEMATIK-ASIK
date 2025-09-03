@@ -8,8 +8,9 @@
             <!-- About Section -->
             <div class="min-w-[250px]">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
-                        <span class="text-primary font-bold text-xl">MS</span>
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center">
+                       <img src="{{ asset('img/logo_sidoarjo.png') }}" alt="Logo Sidoarjo"
+                        class="w-full h-full object-contain">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold">Desa Wonokarang</h3>

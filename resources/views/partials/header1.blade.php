@@ -3,8 +3,9 @@
         <div class="flex items-center justify-between py-4 transition-all duration-300">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
-                    <span class="text-primary font-bold text-xl">MS</span>
+               <div class="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="{{ asset('img/logo_sidoarjo.png') }}" alt="Logo Sidoarjo"
+                        class="w-full h-full object-contain">
                 </div>
                 <div>
                     <h1 class="text-xl font-bold">Desa Wonokarang</h1>

@@ -85,7 +85,7 @@
                                 <i data-lucide="video" class="w-5 h-5 text-gray-800"></i>
                                 <span class="font-medium text-gray-800">Kelola Berita</span>
                             </a>
-                            <a href="{{ route('admin.locations.index') }}"
+                            <a href="{{ route('admin.fasilitas.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
                                 <i data-lucide="building" class="w-5 h-5 text-gray-800"></i>
                                 <span class="font-medium text-gray-800">Kelola Fasilitas</span>
@@ -174,15 +174,15 @@
 
                     <!-- Video Statistics -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-lg font-bold text-primary mb-6">Statistik Video</h3>
+                        <h3 class="text-lg font-bold text-primary mb-6">Statistik Berita</h3>
                         <div class="grid grid-cols-2 gap-6">
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-green-600 mb-2">{{ $stats['published_videos'] }}</div>
-                                <div class="text-gray-600">Video Published</div>
+                                <div class="text-gray-600">Berita Published</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-orange-600 mb-2">{{ $stats['draft_videos'] }}</div>
-                                <div class="text-gray-600">Video Draft</div>
+                                <div class="text-gray-600">Berita Draft</div>
                             </div>
                         </div>
                     </div>

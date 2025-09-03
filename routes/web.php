@@ -49,6 +49,10 @@ Route::get('/detailpotensi', [PotentialController::class, 'allPotensi'])->name('
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Reset password routes
+    Route::get('/login/rstpw', [AuthController::class, 'showResetPassword'])->name('reset.password');
+    Route::post('/login/rstpw', [AuthController::class, 'resetPassword'])->name('reset.password.submit');
 
 // Session keep-alive route
 Route::middleware('auth')->post('/session/keep-alive', function () {
