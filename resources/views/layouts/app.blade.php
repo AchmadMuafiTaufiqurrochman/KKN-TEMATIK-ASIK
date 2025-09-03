@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Profil Digital Desa Wonokarang')</title>
+    <link rel="icon" href="{{ asset('img/logo_sidoarjo.png') }}" type="image/png">
     <meta name="description" content="Desa Wonokarang - Sentra Budidaya Bunga dan Pertanian Modern dengan Teknologi Terdepan">
     <meta name="keywords" content="desa wonokarang, pertanian, budidaya bunga, profil desa, wisata agro">
     <script src="//unpkg.com/alpinejs" defer></script>
