@@ -12,6 +12,67 @@
     </div>
 
     <div class="container mx-auto px-4 py-8">
+        {{-- Statistik Card --}}
+            <div class="grid md:grid-cols-5 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="package" class="w-6 h-6 text-white"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['total'] ?? 0 }}</h3>
+                <p class="text-gray-600 text-sm">Total Produk</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-white"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['active'] ?? 0 }}</h3>
+                <p class="text-gray-600 text-sm">Produk Aktif</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="x-circle" class="w-6 h-6 text-white"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $stats['inactive'] ?? 0 }}</h3>
+                <p class="text-gray-600 text-sm">Produk Tidak Aktif</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="wheat" class="w-6 h-6 text-white"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $categoryStats['pertanian'] ?? 0 }}</h3>
+                <p class="text-gray-600 text-sm">Produk Pertanian</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="flower" class="w-6 h-6 text-white"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $categoryStats['budidaya-bunga'] ?? 0 }}</h3>
+                <p class="text-gray-600 text-sm">Budidaya Bunga</p>
+            </div>
+        </div>
+
+
+        {{-- Preview Map --}}
+        <div class="bg-white rounded-lg shadow-lg mb-8 p-4">
+            <h2 class="text-lg font-semibold text-primary mb-4">Peta Lokasi Produk</h2>
+            <div id="previewMap" class="h-96 w-full rounded border"></div>
+        </div>
+
+        {{-- Alert Sukses --}}
         @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
                 <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
@@ -19,89 +80,145 @@
             </div>
         @endif
 
-        <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2 mb-6">
+        {{-- Tombol Tambah Produk --}}
+        <button onclick="openAddModal()"
+                class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2 mb-6">
             <i data-lucide="plus" class="w-5 h-5"></i>
             Tambah Produk
         </button>
 
-        <div class="bg-white rounded-lg shadow-lg overflow-x-auto">
-            <table class="w-full min-w-max">
+        {{-- Tabel Produk --}}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <table class="w-full table-fixed">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="px-6 py-4 text-left">Gambar</th>
-                        <th class="px-6 py-4 text-left">Nama Produk</th>
-                        <th class="px-6 py-4 text-left">Owner</th>
-                        <th class="px-6 py-4 text-left">Deskripsi</th>
-                        <th class="px-6 py-4 text-left">Kategori</th>
-                        <th class="px-6 py-4 text-left">Kontak</th>
-                        <th class="px-6 py-4 text-left">Status</th>
-                        <th class="px-6 py-4 text-left">Lokasi (Gmaps)</th>
-                        <th class="px-6 py-4 text-left">Aksi</th>
+                        <th class="px-4 py-3 text-left w-20">Gambar</th>
+                        <th class="px-4 py-3 text-left w-40">Nama Produk</th>
+                        <th class="px-4 py-3 text-left w-32">Owner</th>
+                        <th class="px-4 py-3 text-left w-60">Deskripsi</th>
+                        <th class="px-4 py-3 text-left w-32">Kategori</th>
+                        <th class="px-4 py-3 text-left w-32">Kontak</th>
+                        <th class="px-4 py-3 text-left w-24">Status</th>
+                        <th class="px-4 py-3 text-left w-36">Lokasi</th>
+                        <th class="px-4 py-3 text-left w-24">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($products as $product)
-                    <tr>
-                        <td class="px-6 py-4">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name_product }}" class="h-16 w-16 object-cover rounded">
-                            @else
-                                <span class="text-gray-400 italic">Tidak ada gambar</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900">{{ $product->name_product }}</td>
-                        <td class="px-6 py-4 text-gray-600">{{ $product->owner }}</td>
-                        <td class="px-6 py-4 text-gray-600">{{ $product->description }}</td>
-                        <td class="px-6 py-4 text-gray-600">{{ ucfirst(str_replace('-', ' ', $product->category)) }}</td>
-                        <td class="px-6 py-4 text-gray-600">{{ $product->contact }}</td>
-                        <td class="px-6 py-4 text-gray-600">
-                            @if($product->status == 'active')
-                                <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">Active</span>
-                            @else
-                                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">Inactive</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 text-blue-600">
-                            @if($product->latitude && $product->longitude)
-                                <a href="https://www.google.com/maps?q={{ $product->latitude }},{{ $product->longitude }}" target="_blank" class="underline hover:text-blue-800">
-                                    Lihat di Maps
-                                </a>
-                            @else
-                                <span class="text-gray-400 italic">Belum ada lokasi</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <button type="button"
-                                    onclick="openEditModal(
-                                        {{ $product->id }},
-                                        '{{ addslashes($product->name_product) }}',
-                                        '{{ addslashes($product->description) }}',
-                                        '{{ $product->category }}',
-                                        '{{ $product->contact }}',
-                                        '{{ $product->status }}',
-                                        '{{ addslashes($product->owner) }}',
-                                        '{{ $product->latitude ?? '' }}',
-                                        '{{ $product->longitude ?? '' }}'
-                                    )"
-                                    class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors">
-                                    <i data-lucide="edit" class="w-5 h-5"></i>
-                                </button>
-                                <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
-                                    @csrf @method('DELETE')
-                                    <button class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors">
-                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="9" class="text-center py-12 text-gray-500">Belum ada produk yang ditambahkan</td>
-                    </tr>
-                    @endforelse
-                </tbody>
+    @forelse($products as $product)
+    <tr class="border-b">
+        {{-- Gambar --}}
+        <td class="px-4 py-3">
+            @if($product->image)
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name_product }}" class="h-12 w-12 object-cover rounded">
+            @else
+                <span class="text-gray-400 italic text-sm">-</span>
+            @endif
+        </td>
+
+        {{-- Nama Produk + Tooltip --}}
+        <td class="px-4 py-3 font-medium text-gray-900 truncate relative group max-w-[150px]">
+            <span>{{ $product->name_product }}</span>
+            <div class="absolute z-10 hidden group-hover:block bg-gray-900 text-white text-xs rounded px-2 py-1 -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap shadow-lg">
+                {{ $product->name_product }}
+            </div>
+        </td>
+
+        {{-- Owner + Tooltip --}}
+        <td class="px-4 py-3 text-gray-600 truncate relative group max-w-[120px]">
+            <span>{{ $product->owner }}</span>
+            <div class="absolute z-10 hidden group-hover:block bg-gray-900 text-white text-xs rounded px-2 py-1 -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap shadow-lg">
+                {{ $product->owner }}
+            </div>
+        </td>
+
+        {{-- Deskripsi + Tooltip --}}
+        <td class="px-4 py-3 text-gray-600 truncate relative group max-w-xs">
+            <span>{{ $product->description }}</span>
+            <div class="absolute z-10 hidden group-hover:block bg-gray-900 text-white text-xs rounded px-2 py-1 -top-10 left-1/2 -translate-x-1/2 max-w-xs whitespace-normal shadow-lg">
+                {{ $product->description }}
+            </div>
+        </td>
+
+        {{-- Kategori --}}
+        <td class="px-4 py-3 text-gray-600">
+            @if($product->category == 'pertanian')
+                <span class="flex items-center gap-2">
+                    <i data-lucide="wheat" class="w-4 h-4 text-green-600"></i> Pertanian
+                </span>
+            @elseif($product->category == 'budidaya-bunga')
+                <span class="flex items-center gap-2">
+                    <i data-lucide="flower" class="w-4 h-4 text-pink-600"></i> Budidaya Bunga
+                </span>
+            @else
+                <span class="italic text-gray-400">-</span>
+            @endif
+        </td>
+
+        {{-- Kontak + Tooltip --}}
+        <td class="px-4 py-3 text-gray-600 truncate relative group max-w-[140px]">
+            <span>{{ $product->contact }}</span>
+            <div class="absolute z-10 hidden group-hover:block bg-gray-900 text-white text-xs rounded px-2 py-1 -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap shadow-lg">
+                {{ $product->contact }}
+            </div>
+        </td>
+
+        {{-- Status --}}
+        <td class="px-4 py-3">
+            @if($product->status == 'active')
+                <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">Active</span>
+            @else
+                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">Inactive</span>
+            @endif
+        </td>
+
+        {{-- Lokasi --}}
+        <td class="px-4 py-3 text-blue-600">
+            @if($product->latitude && $product->longitude)
+                <a href="https://www.google.com/maps?q={{ $product->latitude }},{{ $product->longitude }}" target="_blank" class="underline hover:text-blue-800 text-sm">
+                    Lihat
+                </a>
+            @else
+                <span class="text-gray-400 italic">-</span>
+            @endif
+        </td>
+
+        {{-- Aksi --}}
+        <td class="px-4 py-3">
+            <div class="flex items-center gap-3">
+                <button type="button"
+                    onclick="openEditModal(
+                        {{ $product->id }},
+                        '{{ addslashes($product->name_product) }}',
+                        '{{ addslashes($product->description) }}',
+                        '{{ $product->category }}',
+                        '{{ $product->contact }}',
+                        '{{ $product->status }}',
+                        '{{ addslashes($product->owner) }}',
+                        '{{ $product->latitude ?? '' }}',
+                        '{{ $product->longitude ?? '' }}'
+                    )"
+                    class="text-blue-600 hover:text-blue-800 transition-colors"
+                    title="Edit Produk">
+                    <i data-lucide="edit" class="w-5 h-5"></i>
+                </button>
+                <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
+                    @csrf @method('DELETE')
+                    <button type="submit"
+                        class="text-red-600 hover:text-red-800 transition-colors"
+                        title="Hapus Produk">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="9" class="text-center py-6 text-gray-500">Belum ada produk</td>
+    </tr>
+    @endforelse
+</tbody>
+
             </table>
         </div>
     </div>
@@ -192,6 +309,20 @@
 <script>
     // Pusat Desa Wonokarang, Balongbendo, Sidoarjo
     const desaCenter = [-7.4118, 112.5169]; // lat, lng
+
+       const previewMap = L.map('previewMap', {
+        center: desaCenter,
+        zoom: 14
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(previewMap);
+    @foreach($products as $product)
+        @if($product->latitude && $product->longitude)
+            L.marker([{{ $product->latitude }}, {{ $product->longitude }}]).addTo(previewMap)
+                .bindPopup(`<strong>{{ addslashes($product->name_product) }}</strong><br>{{ addslashes($product->owner) }}`);
+        @endif
+    @endforeach
 
     let addMap, addMarker, editMap, editMarker;
 
