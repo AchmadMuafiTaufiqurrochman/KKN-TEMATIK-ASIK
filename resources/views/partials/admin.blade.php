@@ -27,9 +27,10 @@
             <!-- Logo -->
             <div class="px-6 py-6 border-b border-white/10">
                 <a href="#" class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
-                        <i data-lucide="map-pin" class="w-6 h-6 text-primary"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center overflow-hidden">
+    <img src="{{ asset('img/logo_sidoarjo.png') }}" alt="Logo Sidoarjo" class="w-6 h-6 object-contain">
+</div>
+
                     <div>
                         <h1 class="text-xl font-bold leading-tight">Desa Wonokarang</h1>
                         <p class="text-sm opacity-90 -mt-1 text-gray-300">Admin Panel</p>
@@ -96,8 +97,9 @@
             <!-- Logo -->
             <div class="px-6 py-6 border-b border-white/10">
                 <a href="#" class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
-                        <i data-lucide="map-pin" class="w-6 h-6 text-primary"></i>
+                    <div class="w-12 h-12  rounded-lg flex items-center justify-center">
+                      <img src="{{ asset('img/logo_sidoarjo.png') }}" alt="Logo Sidoarjo"
+                        class="w-full h-full object-contain">
                     </div>
                     <div>
                         <h1 class="text-xl font-bold leading-tight">Desa Wonokarang</h1>

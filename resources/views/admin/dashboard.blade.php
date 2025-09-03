@@ -85,7 +85,7 @@
                                 <i data-lucide="video" class="w-5 h-5 text-gray-800"></i>
                                 <span class="font-medium text-gray-800">Kelola Berita</span>
                             </a>
-                            <a href="{{ route('admin.locations.index') }}"
+                            <a href="{{ route('admin.fasilitas.index') }}"
                                 class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
                                 <i data-lucide="building" class="w-5 h-5 text-gray-800"></i>
                                 <span class="font-medium text-gray-800">Kelola Fasilitas</span>
