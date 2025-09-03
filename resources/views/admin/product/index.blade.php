@@ -2,6 +2,28 @@
 
 @section('title', 'Manajemen Produk Desa - Admin Desa Wonokarang')
 
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+    /* === FIX Z-INDEX MAP DAN MODAL === */
+    /* Modal selalu di atas */
+    #productModal,
+    #editProductModal {
+        z-index: 10000 !important;
+    }
+
+    /* Map Leaflet diturunkan z-index supaya tidak menimpa modal */
+    .leaflet-pane {
+        z-index: 1 !important;
+    }
+    .leaflet-top,
+    .leaflet-bottom {
+        z-index: 1 !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-0">
     <div class="bg-white shadow-sm border-b">
@@ -224,6 +246,7 @@
     </div>
 </div>
 
+
 {{-- Modal Tambah Produk --}}
 <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
@@ -232,27 +255,71 @@
             <form id="productForm" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-4">
-                    <input name="name_product" placeholder="Nama Produk" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <input name="owner" placeholder="Owner" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <textarea name="description" placeholder="Deskripsi" class="w-full border px-3 py-2 rounded-lg text-gray-700"></textarea>
-                    <select name="category" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="">Pilih Kategori</option>
-                        <option value="pertanian">Pertanian</option>
-                        <option value="budidaya-bunga">Budidaya Bunga</option>
-                    </select>
-                    <input name="contact" placeholder="Kontak (HP/WA)" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
-                    <select name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
+
                     <div>
-                        <label class="block font-semibold mb-2">Pilih Lokasi Produk</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
+                        <input type="text" name="name_product" placeholder="Contoh: Beras Organik" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
+                        <input type="text" name="owner" placeholder="Nama pemilik usaha" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                        <textarea name="description" rows="3" placeholder="Tuliskan deskripsi produk" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                        <select name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Pilih Kategori</option>
+                            <option value="pertanian">Pertanian</option>
+                            <option value="budidaya-bunga">Budidaya Bunga</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
+                        <input type="text" name="contact" placeholder="08123xxxx" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <!-- Tombol Upload -->
+                            <label for="image-input"
+                                class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                                Pilih File
+                            </label>
+                            <!-- Nama File -->
+                            <span id="file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
+                                Belum ada file
+                            </span>
+                            <!-- Input File Asli (disembunyikan) -->
+                            <input type="file" id="image-input" name="image" accept="image/*" class="hidden"
+                                onchange="document.getElementById('file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
                         <div id="addMap" class="h-64 w-full rounded border"></div>
                         <input type="hidden" name="latitude" id="add_latitude">
                         <input type="hidden" name="longitude" id="add_longitude">
                     </div>
                 </div>
+
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Simpan</button>
                     <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
@@ -262,6 +329,8 @@
     </div>
 </div>
 
+
+
 {{-- Modal Edit Produk --}}
 <div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
@@ -270,27 +339,71 @@
             <form id="editProductForm" method="POST" enctype="multipart/form-data">
                 @csrf @method('PUT')
                 <div class="space-y-4">
-                    <input id="edit_name_product" name="name_product" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <input id="edit_owner" name="owner" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <textarea id="edit_description" name="description" class="w-full border px-3 py-2 rounded-lg text-gray-700"></textarea>
-                    <select id="edit_category" name="category" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="">Pilih Kategori</option>
-                        <option value="pertanian">Pertanian</option>
-                        <option value="budidaya-bunga">Budidaya Bunga</option>
-                    </select>
-                    <input id="edit_contact" name="contact" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                    <input type="file" name="image" accept="image/*" class="w-full border px-3 py-2 rounded-lg">
-                    <select id="edit_status" name="status" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
+
                     <div>
-                        <label class="block font-semibold mb-2">Pilih Lokasi Produk</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
+                        <input id="edit_name_product" type="text" name="name_product" placeholder="Contoh: Beras Organik" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
+                        <input id="edit_owner" type="text" name="owner" placeholder="Nama pemilik usaha" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                        <textarea id="edit_description" name="description" rows="3" placeholder="Tuliskan deskripsi produk" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                        <select id="edit_category" name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Pilih Kategori</option>
+                            <option value="pertanian">Pertanian</option>
+                            <option value="budidaya-bunga">Budidaya Bunga</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
+                        <input id="edit_contact" type="text" name="contact" placeholder="08123xxxx" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <!-- Tombol Upload -->
+                            <label for="image-input"
+                                class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                                Pilih File
+                            </label>
+                            <!-- Nama File -->
+                            <span id="file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
+                                Belum ada file
+                            </span>
+                            <!-- Input File Asli (disembunyikan) -->
+                            <input type="file" id="image-input" name="image" accept="image/*" class="hidden"
+                                onchange="document.getElementById('file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select id="edit_status" name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
                         <div id="editMap" class="h-64 w-full rounded border"></div>
                         <input type="hidden" name="latitude" id="edit_latitude">
                         <input type="hidden" name="longitude" id="edit_longitude">
                     </div>
                 </div>
+
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Update</button>
                     <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
@@ -300,6 +413,9 @@
     </div>
 </div>
 
+
+
+{{-- LeafletJS --}}
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 @endpush
@@ -310,26 +426,54 @@
     // Pusat Desa Wonokarang, Balongbendo, Sidoarjo
     const desaCenter = [-7.4118, 112.5169]; // lat, lng
 
-       const previewMap = L.map('previewMap', {
+    // ==== MAP PREVIEW (Halaman Utama) ====
+    const previewMap = L.map('previewMap', {
         center: desaCenter,
         zoom: 14
     });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap'
     }).addTo(previewMap);
-    @foreach($products as $product)
-        @if($product->latitude && $product->longitude)
-            L.marker([{{ $product->latitude }}, {{ $product->longitude }}]).addTo(previewMap)
-                .bindPopup(`<strong>{{ addslashes($product->name_product) }}</strong><br>{{ addslashes($product->owner) }}`);
-        @endif
-    @endforeach
 
+    // @foreach($products as $product)
+    //     @if($product->latitude && $product->longitude)
+    //         L.marker([{{ $product->latitude }}, {{ $product->longitude }}]).addTo(previewMap)
+    //             .bindPopup(`<strong>{{ addslashes($product->name_product) }}</strong><br>{{ addslashes($product->owner) }}`);
+    //     @endif
+    // @endforeach
+
+    @foreach($products as $product)
+    @if($product->latitude && $product->longitude)
+        L.marker([{{ $product->latitude }}, {{ $product->longitude }}], {
+        icon: L.divIcon({
+        html: `
+            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-600 text-white shadow-md">
+                <i data-lucide="store" class="w-4 h-4"></i>
+            </div>
+        `,
+        className: '',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+        })
+        }).addTo(previewMap)
+        .bindPopup(`<strong>{{ addslashes($product->name_product) }}</strong><br>{{ addslashes($product->owner) }}`);
+    @endif
+@endforeach
+
+// setelah semua marker ditambahkan
+lucide.createIcons();
+
+
+
+    // ==== MAP TAMBAH & EDIT ====
     let addMap, addMarker, editMap, editMarker;
 
     function openAddModal() {
-        document.getElementById('productModal').classList.remove('hidden');
+        const modal = document.getElementById('productModal');
+        modal.classList.remove('hidden');
 
-        setTimeout(() => {
+        // Jalankan setelah render selesai
+        requestAnimationFrame(() => {
             if (!addMap) {
                 addMap = L.map('addMap', {
                     center: desaCenter,
@@ -339,7 +483,7 @@
                     attribution: '&copy; OpenStreetMap'
                 }).addTo(addMap);
 
-                // default marker & default nilai form (biar langsung terset ke desaCenter)
+                // default marker
                 addMarker = L.marker(desaCenter).addTo(addMap);
                 document.getElementById('add_latitude').value = desaCenter[0];
                 document.getElementById('add_longitude').value = desaCenter[1];
@@ -357,8 +501,10 @@
                 document.getElementById('add_latitude').value = desaCenter[0];
                 document.getElementById('add_longitude').value = desaCenter[1];
             }
-            addMap.invalidateSize();
-        }, 300);
+
+            // anti-glitch
+            setTimeout(() => addMap.invalidateSize(), 100);
+        });
     }
 
     function closeModal() {
@@ -383,7 +529,7 @@
         document.getElementById('editProductForm').action = `/admin/products/${id}`;
         document.getElementById('editProductModal').classList.remove('hidden');
 
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             if (!editMap) {
                 editMap = L.map('editMap', {
                     center: startLatLng,
@@ -406,13 +552,19 @@
                 if (editMarker) editMap.removeLayer(editMarker);
                 editMarker = L.marker(startLatLng).addTo(editMap);
             }
-            editMap.invalidateSize();
-        }, 300);
+
+            // anti-glitch
+            setTimeout(() => editMap.invalidateSize(), 100);
+        });
     }
 
     function closeEditModal() {
         document.getElementById('editProductModal').classList.add('hidden');
     }
+
+
 </script>
+
+
 @endpush
 @endsection

@@ -94,7 +94,7 @@
                     </p>
                 </div>
 
-                {{-- <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
                     <div class="flex flex-col items-center">
                         <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-secondary">
                             <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
@@ -102,7 +102,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-2">{{ $kepalaDesa->name }}</h4>
                         <p class="text-gray-600">{{ $kepalaDesa->position }}</p>
-                    </div> --}}
+                    </div>
 
                     <div>
                         <p class="text-gray-700 mb-6 leading-relaxed">
