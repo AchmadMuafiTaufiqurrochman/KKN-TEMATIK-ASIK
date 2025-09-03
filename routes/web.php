@@ -76,6 +76,7 @@ Route::middleware('auth')->post('/session/keep-alive', function () {
     Route::post('/videos', [AdminVideoController::class, 'store'])->name('videos.store');
     Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('videos.update');
     Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
+    
 
     // Product Catalog management
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');

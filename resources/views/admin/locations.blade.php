@@ -3,8 +3,8 @@
 @section('title', 'Manajemen Fasilitas Desa - Admin Desa Wonokarang')
 
 @push('styles')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin="" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
@@ -31,7 +31,7 @@
                     <h1 class="text-2xl font-bold text-primary">Manajemen Fasilitas Desa</h1>
                     <p class="text-gray-600">Kelola fasilitas dan layanan desa pada peta interaktif</p>
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2 py-1 rounded-full text-xs font-semibold 
+                                        <span class="px-2 py-1 rounded-full text-xs font-semibold
                                             @if($fasilitasItem->type === 'pelayanan_publik') bg-blue-100 text-blue-800
                                             @elseif($fasilitasItem->type === 'pendidikan') bg-green-100 text-green-800
                                             @elseif($fasilitasItem->type === 'kesehatan') bg-red-100 text-red-800
@@ -178,7 +178,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 text-sm">
                                         @if($fasilitasItem->gmaps_link)
-                                            <a href="{{ $fasilitasItem->gmaps_link }}" target="_blank" 
+                                            <a href="{{ $fasilitasItem->gmaps_link }}" target="_blank"
                                                class="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 text-xs">
                                                 <i data-lucide="map-pin" class="w-3 h-3"></i>
                                                 Lihat Maps
@@ -194,7 +194,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex gap-2">
-                                           
+
                                             <button onclick="openEditLocationModal({{ $fasilitasItem->id }})" class="text-blue-600 hover:text-blue-800 transition-colors">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
@@ -262,28 +262,35 @@
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <h3 id="locationModalTitle" class="text-lg font-bold text-primary mb-4">Tambah Fasilitas Baru</h3>
-            
+
             <form id="locationForm" method="POST">
                 @csrf
                 <div id="locationMethodField"></div>
-                
+
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Fasilitas</label>
                         <input type="text" name="name" required class="w-full px-3 text-gray-800 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
-                    
+
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude <span class="text-xs text-gray-500">(Klik peta untuk mengisi otomatis)</span></label>
-                            <input type="number" name="latitude" step="0.00000001" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                            <input type="number" name="latitude" step="0.00000001" required class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude <span class="text-xs text-gray-500">(Klik peta untuk mengisi otomatis)</span></label>
-                            <input type="number" name="longitude" step="0.00000001" required class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                            <input type="number" name="longitude" step="0.00000001" required class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                     </div>
-                    
+
+                    <!-- Tambahan Peta dalam Modal -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi di Peta</label>
+                        <div id="modalMap" class="h-64 w-full rounded-lg border"></div>
+                        <p class="text-xs text-gray-500 mt-1">Klik peta untuk memilih lokasi, otomatis mengisi Latitude & Longitude</p>
+                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Kategori Fasilitas</label>
                         <select name="type" required class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
@@ -294,17 +301,17 @@
                             <option value="ekonomi">Ekonomi</option>
                         </select>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
                         <textarea name="description" required rows="3" class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Jam Operasional</label>
                         <input type="text" name="opening_hours" placeholder="Contoh: Senin-Jumat 08:00-16:00" class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
-                    
+
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Penanggung Jawab</label>
@@ -315,13 +322,13 @@
                             <input type="text" name="contact" placeholder="No. telepon / email" class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Link Google Maps</label>
                         <input type="url" name="gmaps_link" placeholder="https://maps.google.com/..." class="w-full px-3 py-2 border  text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         <p class="text-xs text-gray-500 mt-1">Link ke Google Maps untuk navigasi lebih mudah</p>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                         <select name="status" required class="w-full px-3 py-2 border text-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
@@ -330,7 +337,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="flex gap-4 mt-6">
                     <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">
                         Simpan
@@ -346,9 +353,16 @@
 
 
 
+
 <script>
+const desaCenter = [-7.4118, 112.5169]; // Pusat Desa Wonokarang
+
+let modalMap, modalMarker;
+
+// =============================
+// DETAIL MODAL
+// =============================
 function openDetailModal(id) {
-    // Fetch data untuk detail
     fetch(`/admin/fasilitas/${id}`)
         .then(response => response.json())
         .then(data => {
@@ -358,14 +372,14 @@ function openDetailModal(id) {
                 'kesehatan': 'Kesehatan',
                 'ekonomi': 'Ekonomi'
             };
-            
+
             const typeColors = {
                 'pelayanan_publik': 'bg-blue-100 text-blue-800',
                 'pendidikan': 'bg-green-100 text-green-800',
                 'kesehatan': 'bg-red-100 text-red-800',
                 'ekonomi': 'bg-yellow-100 text-yellow-800'
             };
-            
+
             const detailContent = `
                 <div class="bg-white p-4 rounded-lg shadow-lg border max-w-80">
                     <div class="flex items-start gap-3 mb-3">
@@ -379,48 +393,43 @@ function openDetailModal(id) {
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="space-y-2 text-sm">
                         ${data.description ? `
                         <div class="flex items-start gap-2">
                             <i class="fas fa-info-circle text-gray-400 mt-0.5 flex-shrink-0"></i>
                             <p class="text-gray-700">${data.description}</p>
-                        </div>
-                        ` : ''}
-                        
+                        </div>` : ''}
+
                         ${data.opening_hours ? `
                         <div class="flex items-center gap-2">
                             <i class="fas fa-clock text-gray-400 flex-shrink-0"></i>
                             <span class="text-gray-600">${data.opening_hours}</span>
-                        </div>
-                        ` : ''}
-                        
+                        </div>` : ''}
+
                         ${data.pic_name ? `
                         <div class="flex items-center gap-2">
                             <i class="fas fa-user text-gray-400 flex-shrink-0"></i>
                             <span class="text-gray-600">${data.pic_name}</span>
-                        </div>
-                        ` : ''}
-                        
+                        </div>` : ''}
+
                         ${data.contact ? `
                         <div class="flex items-center gap-2">
                             <i class="fas fa-phone text-gray-400 flex-shrink-0"></i>
                             <a href="tel:${data.contact}" class="text-blue-600 hover:underline">${data.contact}</a>
-                        </div>
-                        ` : ''}
+                        </div>` : ''}
                     </div>
-                    
+
                     ${data.gmaps_link ? `
                     <div class="mt-3 pt-3 border-t border-gray-100">
-                        <a href="${data.gmaps_link}" target="_blank" 
+                        <a href="${data.gmaps_link}" target="_blank"
                            class="inline-flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors">
                             <i class="fas fa-map-marker-alt"></i>
                             Google Maps
                             <i class="fas fa-external-link-alt"></i>
                         </a>
-                    </div>
-                    ` : ''}
-                    
+                    </div>` : ''}
+
                     <div class="mt-3 pt-3 border-t border-gray-100">
                         <div class="grid grid-cols-2 gap-2 text-xs">
                             <div>
@@ -439,7 +448,7 @@ function openDetailModal(id) {
                     </div>
                 </div>
             `;
-            
+
             document.getElementById('detailContent').innerHTML = detailContent;
             document.getElementById('detailModal').classList.remove('hidden');
             lucide.createIcons();
@@ -454,45 +463,75 @@ function closeDetailModal() {
     document.getElementById('detailModal').classList.add('hidden');
 }
 
+// =============================
+// MODAL ADD / EDIT + MAP
+// =============================
+
+function initModalMap() {
+    if (modalMap) {
+        modalMap.invalidateSize();
+        return;
+    }
+
+    modalMap = L.map('modalMap').setView(desaCenter, 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(modalMap);
+
+    modalMap.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(8);
+        const lng = e.latlng.lng.toFixed(8);
+
+        document.querySelector('input[name="latitude"]').value = lat;
+        document.querySelector('input[name="longitude"]').value = lng;
+
+        if (modalMarker) {
+            modalMap.removeLayer(modalMarker);
+        }
+        modalMarker = L.marker([lat, lng]).addTo(modalMap);
+    });
+}
+
 function openAddLocationModal() {
     document.getElementById('locationModalTitle').textContent = 'Tambah Fasilitas Baru';
     document.getElementById('locationForm').action = '{{ route("admin.fasilitas.store") }}';
     document.getElementById('locationMethodField').innerHTML = '';
     document.getElementById('locationForm').reset();
     document.getElementById('locationModal').classList.remove('hidden');
+
+    setTimeout(() => {
+        initModalMap();
+        modalMap.setView(desaCenter, 15);
+        if (modalMarker) modalMap.removeLayer(modalMarker);
+    }, 300);
 }
 
 function openAddLocationModalWithCoordinates(lat, lng) {
-    console.log('Opening modal with coordinates:', lat, lng);
-    
-    // Buka modal dulu
     openAddLocationModal();
-    
-    // Set koordinat setelah modal terbuka
     setTimeout(() => {
         const latInput = document.querySelector('input[name="latitude"]');
         const lngInput = document.querySelector('input[name="longitude"]');
-        
+
         if (latInput && lngInput) {
             latInput.value = lat.toFixed(8);
             lngInput.value = lng.toFixed(8);
-            console.log('Coordinates set in form:', latInput.value, lngInput.value);
-        } else {
-            console.error('Could not find coordinate input fields');
+
+            if (modalMarker) modalMap.removeLayer(modalMarker);
+            modalMarker = L.marker([lat, lng]).addTo(modalMap);
+            modalMap.setView([lat, lng], 16);
         }
-    }, 100);
+    }, 300);
 }
 
 function openEditLocationModal(id) {
-    // Fetch data untuk edit
     fetch(`/admin/fasilitas/${id}/edit`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('locationModalTitle').textContent = 'Edit Fasilitas';
             document.getElementById('locationForm').action = `/admin/fasilitas/${id}`;
             document.getElementById('locationMethodField').innerHTML = '@method("PUT")';
-            
-            // Populate form fields
+
             document.querySelector('input[name="name"]').value = data.name || '';
             document.querySelector('input[name="latitude"]').value = data.latitude || '';
             document.querySelector('input[name="longitude"]').value = data.longitude || '';
@@ -503,22 +542,28 @@ function openEditLocationModal(id) {
             document.querySelector('input[name="contact"]').value = data.contact || '';
             document.querySelector('input[name="gmaps_link"]').value = data.gmaps_link || '';
             document.querySelector('select[name="status"]').value = data.status || 'active';
-            
+
             document.getElementById('locationModal').classList.remove('hidden');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Fallback untuk edit manual
-            document.getElementById('locationModalTitle').textContent = 'Edit Fasilitas';
-            document.getElementById('locationForm').action = `/admin/fasilitas/${id}`;
-            document.getElementById('locationMethodField').innerHTML = '@method("PUT")';
-            document.getElementById('locationModal').classList.remove('hidden');
+
+            setTimeout(() => {
+                initModalMap();
+                const lat = data.latitude || desaCenter[0];
+                const lng = data.longitude || desaCenter[1];
+                modalMap.setView([lat, lng], 16);
+
+                if (modalMarker) modalMap.removeLayer(modalMarker);
+                modalMarker = L.marker([lat, lng]).addTo(modalMap);
+            }, 300);
         });
 }
 
 function closeLocationModal() {
     document.getElementById('locationModal').classList.add('hidden');
 }
+
+// =============================
+// EVENTS
+// =============================
 
 // Close modal when clicking outside
 document.getElementById('locationModal').addEventListener('click', function(e) {
@@ -527,7 +572,7 @@ document.getElementById('locationModal').addEventListener('click', function(e) {
     }
 });
 
-// Auto-populate jam operasional berdasarkan kategori
+// Auto populate jam operasional
 document.querySelector('select[name="type"]').addEventListener('change', function() {
     const openingHoursInput = document.querySelector('input[name="opening_hours"]');
     const defaultHours = {
@@ -536,7 +581,7 @@ document.querySelector('select[name="type"]').addEventListener('change', functio
         'kesehatan': 'Senin-Sabtu 08:00-15:00',
         'ekonomi': 'Setiap hari 06:00-18:00'
     };
-    
+
     if (defaultHours[this.value] && !openingHoursInput.value) {
         openingHoursInput.value = defaultHours[this.value];
     }
@@ -548,19 +593,31 @@ window.facilitiesData = @json($fasilitas ?? []);
 // Initialize map setelah DOM loaded
 document.addEventListener('DOMContentLoaded', function() {
     if (window.adminMap && window.facilitiesData) {
-        // Add all existing facilities to map
+        // Tambah semua marker fasilitas
         window.facilitiesData.forEach(facility => {
-            window.adminMap.addMarker(facility);
+            const marker = window.adminMap.addMarker(facility);
+            if (marker) {
+                marker.on('click', () => openEditLocationModal(facility.id));
+            }
+        });
+
+        // Klik kanan peta utama → tambah fasilitas di koordinat itu
+        window.adminMap.on('contextmenu', function(e) {
+            openAddLocationModalWithCoordinates(e.latlng.lat, e.latlng.lng);
         });
     }
 });
 </script>
 
+
 @push('scripts')
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
 <script src="{{ asset('js/admin-map.js') }}"></script>
 @endpush
 
 @endsection
+
+
+

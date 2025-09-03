@@ -42,7 +42,7 @@
                        class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700">
                         💬 Hubungi via WhatsApp
                     </a>
-                    <a href="{{ url('/products') }}"
+                    <a href="{{ url('/product') }}"
                        class="inline-flex items-center bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow hover:bg-gray-300">
                         ← Kembali
                     </a>

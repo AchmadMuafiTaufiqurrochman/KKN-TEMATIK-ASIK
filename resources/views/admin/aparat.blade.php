@@ -131,72 +131,108 @@
     </div>
 
     <!-- Modal -->
-    <div id="aparatModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white p-6 rounded-lg w-[90%] max-w-[700px] max-h-[90vh] overflow-y-auto">
-                <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Aparat</h3>
+        <div id="aparatModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white p-6 rounded-lg w-[90%] max-w-[700px] max-h-[90vh] overflow-y-auto">
+                    <h3 id="modalTitle" class="text-lg font-bold text-primary mb-4">Tambah Aparat</h3>
 
-                <form id="aparatForm" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div id="methodField"></div>
+                    <form id="aparatForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div id="methodField"></div>
 
-                    <div class="space-y-4">
-                        <input name="name" placeholder="Nama Lengkap" required
-                            class="w-full border px-3 py-2 rounded-lg  text-gray-700">
-                        <input name="nip" placeholder="NIP" required
-                            class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                        <select id="position" name="position" required
-                            class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                            <option value="">Pilih Jabatan</option>
-                            <option value="Kepala Desa">Kepala Desa</option>
-                            <option value="Sekretaris Desa">Sekretaris Desa</option>
-                            <option value="Kaur Tata Usaha dan UMKM">Kaur Tata Usaha dan UMKM</option>
-                            <option value="Kaur Keuangan">Kaur Keuangan</option>
-                            <option value="Kaur Perencanaan">Kaur Perencanaan</option>
-                            <option value="Kasi Pemerintahan">Kasi Pemerintahan</option>
-                            <option value="Kasi Kesejahteraan">Kasi Kesejahteraan</option>
-                            <option value="Kasi Pelayanan">Kasi Pelayanan</option>
-                            <option value="Kepala Dusun">Kepala Dusun</option>
-                        </select>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                                <input type="text" name="name" placeholder="Masukkan nama lengkap" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
 
-                        <div id="kepalaDesaFields" class="hidden space-y-4">
-                            <textarea name="motto" placeholder="Motto"
-                                class="w-full border px-6 py-5 rounded-lg text-gray-700 resize-none break-words overflow-hidden" rows="1"
-                                oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">NIP</label>
+                                <input type="text" name="nip" placeholder="Masukkan NIP" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
 
-                            <textarea name="visi" placeholder="Visi"
-                                class="w-full border px-6 py-5 rounded-lg text-gray-700 resize-none break-words overflow-hidden" rows="1"
-                                oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+                                <select id="position" name="position" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Pilih Jabatan</option>
+                                    <option value="Kepala Desa">Kepala Desa</option>
+                                    <option value="Sekretaris Desa">Sekretaris Desa</option>
+                                    <option value="Kaur Tata Usaha dan UMKM">Kaur Tata Usaha dan UMKM</option>
+                                    <option value="Kaur Keuangan">Kaur Keuangan</option>
+                                    <option value="Kaur Perencanaan">Kaur Perencanaan</option>
+                                    <option value="Kasi Pemerintahan">Kasi Pemerintahan</option>
+                                    <option value="Kasi Kesejahteraan">Kasi Kesejahteraan</option>
+                                    <option value="Kasi Pelayanan">Kasi Pelayanan</option>
+                                    <option value="Kepala Dusun">Kepala Dusun</option>
+                                </select>
+                            </div>
 
-                            <textarea name="misi" placeholder="Misi"
-                                class="w-full border px-6 py-5 rounded-lg text-gray-700 resize-none break-words overflow-hidden" rows="1"
-                                oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                            {{-- Khusus Kepala Desa --}}
+                            <div id="kepalaDesaFields" class="hidden space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Motto</label>
+                                    <textarea name="motto" placeholder="Tuliskan motto kepala desa"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                        rows="2"></textarea>
+                                </div>
 
-                            <textarea name="prestasi" placeholder="Prestasi"
-                                class="w-full border px-6 py-5 rounded-lg text-gray-700 resize-none break-words overflow-hidden" rows="1"
-                                oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Visi</label>
+                                    <textarea name="visi" placeholder="Tuliskan visi kepala desa"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                        rows="2"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Misi</label>
+                                    <textarea name="misi" placeholder="Tuliskan misi kepala desa"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                        rows="2"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Prestasi</label>
+                                    <textarea name="prestasi" placeholder="Tuliskan prestasi kepala desa"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                        rows="2"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                                <select name="gender" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Foto</label>
+                                <input type="file" name="photo" accept="image/*"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
                         </div>
 
-
-                        <select name="gender" required class="w-full border px-3 py-2 rounded-lg text-gray-700">
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
-                        <input type="file" name="photo" accept="image/*"
-                            class="w-full border px-3 py-2 rounded-lg">
-                    </div>
-
-                    <div class="flex gap-4 mt-6">
-                        <button type="submit"
-                            class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Simpan</button>
-                        <button type="button" onclick="closeModal()"
-                            class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
-                    </div>
-                </form>
+                        <div class="flex gap-4 mt-6">
+                            <button type="submit"
+                                class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">
+                                Simpan
+                            </button>
+                            <button type="button" onclick="closeModal()"
+                                class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
 
     <script>
         function openAddModal() {
@@ -204,14 +240,14 @@
             document.getElementById('aparatForm').action = '{{ route('admin.aparat.store') }}';
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('aparatForm').reset();
-            
+
             // Reset dan sembunyikan field Kepala Desa
             document.getElementById('kepalaDesaFields').classList.add('hidden');
             document.querySelector('textarea[name="motto"]').value = '';
             document.querySelector('textarea[name="visi"]').value = '';
             document.querySelector('textarea[name="misi"]').value = '';
             document.querySelector('textarea[name="prestasi"]').value = '';
-            
+
             document.getElementById('aparatModal').classList.remove('hidden');
         }
 
@@ -222,7 +258,7 @@
 
     document.getElementById('methodField').innerHTML =
         '<input type="hidden" name="_method" value="PUT">';
-    
+
     // Fetch data untuk edit
     fetch(`/admin/aparat/${id}/edit`)
         .then(response => response.json())
@@ -232,22 +268,22 @@
             document.querySelector('input[name="nip"]').value = data.nip || '';
             document.querySelector('select[name="position"]').value = data.position || '';
             document.querySelector('select[name="gender"]').value = data.gender || '';
-            
+
             // Populate field tambahan Kepala Desa jika ada
             if (data.position === 'Kepala Desa') {
                 document.getElementById('kepalaDesaFields').classList.remove('hidden');
-                
+
                 // Set value dan auto resize untuk textarea
                 const mottoField = document.querySelector('textarea[name="motto"]');
                 const visiField = document.querySelector('textarea[name="visi"]');
                 const misiField = document.querySelector('textarea[name="misi"]');
                 const prestasiField = document.querySelector('textarea[name="prestasi"]');
-                
+
                 mottoField.value = data.motto || '';
                 visiField.value = data.visi || '';
                 misiField.value = data.misi || '';
                 prestasiField.value = data.prestasi || '';
-                
+
                 // Auto resize textarea setelah value diset
                 [mottoField, visiField, misiField, prestasiField].forEach(field => {
                     field.style.height = '';
@@ -256,7 +292,7 @@
             } else {
                 document.getElementById('kepalaDesaFields').classList.add('hidden');
             }
-            
+
             // Buka modal setelah data terisi
             document.getElementById('aparatModal').classList.remove('hidden');
         })
@@ -272,7 +308,7 @@
             // Reset form dan sembunyikan field Kepala Desa saat menutup modal
             document.getElementById('aparatForm').reset();
             document.getElementById('kepalaDesaFields').classList.add('hidden');
-            
+
             // Reset tinggi textarea
             document.querySelectorAll('textarea').forEach(textarea => {
                 textarea.style.height = '';
@@ -295,7 +331,7 @@
         // Validasi Form
         document.getElementById('aparatForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission
-            
+
             // Validasi form
             if (validateAparatForm()) {
                 this.submit(); // Submit form jika validasi berhasil
@@ -368,7 +404,7 @@
                     errorMessages.push('• Ukuran foto maksimal 25MB');
                     isValid = false;
                 }
-                
+
                 // Validasi tipe file
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
                 if (!allowedTypes.includes(photoFile.type)) {
