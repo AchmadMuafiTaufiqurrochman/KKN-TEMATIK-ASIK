@@ -385,6 +385,79 @@
                             </div>
                         `);
                     @endforeach
+
+                    // Tambahkan marker produk sebagai kategori ekonomi
+                    @foreach ($products as $product)
+                        var customIcon = L.divIcon({
+                            html: `
+                                <div style="background-color: #ca8a04; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 2px solid white;">
+                                    <i class="fas fa-store" style="color: white; font-size: 12px;"></i>
+                                </div>
+                            `,
+                            className: "marker-wrapper ekonomi",
+                            iconSize: [28, 28],
+                            iconAnchor: [14, 14]
+                        });
+
+                        var marker = L.marker([{{ $product->latitude }}, {{ $product->longitude }}], {
+                            icon: customIcon
+                        }).addTo(map);
+
+                        // Store reference untuk toggle functionality
+                        marker._layerType = 'ekonomi';
+                        
+                        // Store marker reference in global object untuk easier access
+                        if (!window.mapMarkers) {
+                            window.mapMarkers = {};
+                        }
+                        if (!window.mapMarkers['ekonomi']) {
+                            window.mapMarkers['ekonomi'] = [];
+                        }
+                        window.mapMarkers['ekonomi'].push(marker);
+
+                        marker.bindPopup(`
+                            <div style="font-family: Arial; font-size: 13px; max-width: 250px;">
+                                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                    <div style="background-color: #ca8a04; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                                        <i class="fas fa-store" style="color: white; font-size: 12px;"></i>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 14px; color: #1e293b;">{{ e($product->name_product) }}</strong><br>
+                                        <small style="color: #475569;">Produk Ekonomi</small>
+                                    </div>
+                                </div>
+
+                                @if ($product->description)
+                                    <p style="margin: 6px 0; color: #334155; font-size: 12px;">{{ e($product->description) }}</p>
+                                @endif
+
+                                <p style="margin: 4px 0; display: flex; align-items: center; color: #475569; font-size: 12px;">
+                                    <i class="fas fa-user" style="margin-right: 6px; color: #6b7280; font-size: 10px;"></i>
+                                    {{ e($product->owner) }}
+                                </p>
+
+                                @if ($product->contact)
+                                    <p style="margin: 4px 0; display: flex; align-items: center; color: #475569; font-size: 12px;">
+                                        <i class="fas fa-phone" style="margin-right: 6px; color: #6b7280; font-size: 10px;"></i>
+                                        <a href="tel:{{ e($product->contact) }}" style="color: #2563eb; text-decoration: none;">{{ e($product->contact) }}</a>
+                                    </p>
+                                @endif
+
+                                <p style="margin-top: 6px;">
+                                    <span style="display:inline-block; padding:2px 6px; border-radius: 4px; font-size: 10px; 
+                                        {{ $product->status === 'active' ? 'background:#dcfce7; color:#166534;' : 'background:#f1f5f9; color:#475569;' }}">
+                                        {{ $product->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                    </span>
+                                </p>
+
+                                <p style="margin-top: 6px;">
+                                    <a href="{{ route('product.show', $product->id) }}" target="_blank" style="color: #2563eb; text-decoration: none; display: inline-flex; align-items: center; font-size: 11px;">
+                                        <i class="fas fa-eye" style="margin-right: 4px; font-size: 10px;"></i> Lihat Detail Produk
+                                    </a>
+                                </p>
+                            </div>
+                        `);
+                    @endforeach
                 }
 
                 // Tambah markers ke map yang aktif
