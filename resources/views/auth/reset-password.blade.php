@@ -7,7 +7,7 @@
     <div class="max-w-md w-full space-y-8">
         <div>
             <div class="flex justify-center">
-                <div class="w-16 h-16 rounded-full flex items-center justify-center">
+                <div class="w-16 h-16git rounded-full flex items-center justify-center">
                    <img src="{{ asset('img/logo_sidoarjo.png') }}" alt="Logo Sidoarjo"
                         class="w-full h-full object-contain">
                 </div>
