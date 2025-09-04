@@ -221,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Sidebar Controls -->
+            {{-- <!-- Sidebar Controls -->
             <div class="space-y-6">
                 <!-- Statistics by Category -->
                 <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -252,7 +252,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
