@@ -20,6 +20,7 @@
     .leaflet-top,
     .leaflet-bottom {
         z-index: 1 !important;
+
     }
 </style>
 @endpush
@@ -248,161 +249,178 @@
 
 
 {{-- Modal Tambah Produk --}}
-<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg max-w-2xl w-full p-6">
-            <h3 class="text-lg font-bold text-primary mb-4">Tambah Produk</h3>
-            <form id="productForm" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="space-y-4">
+<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-2xl w-full p-6 mx-2 max-h-screen overflow-y-auto">
+        <h3 class="text-lg font-bold text-primary mb-4">Tambah Produk</h3>
+        <form id="productForm" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="space-y-4">
+                <!-- Nama Produk -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
+                    <input type="text" name="name_product" placeholder="Contoh: Beras Organik" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
-                        <input type="text" name="name_product" placeholder="Contoh: Beras Organik" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
+                <!-- Owner -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
+                    <input type="text" name="owner" placeholder="Nama pemilik usaha" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
-                        <input type="text" name="owner" placeholder="Nama pemilik usaha" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
+                <!-- Deskripsi -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                    <textarea name="description" rows="3" placeholder="Tuliskan deskripsi produk"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="description" rows="3" placeholder="Tuliskan deskripsi produk" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                    </div>
+                <!-- Kategori -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                    <select name="category" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="">Pilih Kategori</option>
+                        <option value="pertanian">Pertanian</option>
+                        <option value="budidaya-bunga">Budidaya Bunga</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                        <select name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="">Pilih Kategori</option>
-                            <option value="pertanian">Pertanian</option>
-                            <option value="budidaya-bunga">Budidaya Bunga</option>
-                        </select>
-                    </div>
+                <!-- Kontak -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
+                    <input type="text" name="contact" placeholder="08123xxxx" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
-                        <input type="text" name="contact" placeholder="08123xxxx" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
-                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                            <!-- Tombol Upload -->
-                            <label for="add-image-input" class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
-                                Pilih File
-                            </label>
-                            <span id="add-file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
-                                Belum ada file
-                            </span>
-                            <input type="file" id="add-image-input" name="image" accept="image/*" class="hidden"
-                                onchange="document.getElementById('add-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
-                        </div>
-                    </div>
-
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
-                        <div id="addMap" class="h-64 w-full rounded border"></div>
-                        <input type="hidden" name="latitude" id="add_latitude">
-                        <input type="hidden" name="longitude" id="add_longitude">
+                <!-- Gambar Produk -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <label for="add-image-input"
+                            class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                            Pilih File
+                        </label>
+                        <span id="add-file-name"
+                            class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">Belum ada file</span>
+                        <input type="file" id="add-image-input" name="image" accept="image/*" class="hidden"
+                            onchange="document.getElementById('add-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
                     </div>
                 </div>
 
-                <div class="flex gap-4 mt-6">
-                    <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Simpan</button>
-                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
+                <!-- Status -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select name="status" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
                 </div>
-            </form>
-        </div>
+
+                <!-- Lokasi -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
+                    <div id="addMap" class="h-64 w-full rounded border"></div>
+                    <input type="hidden" name="latitude" id="add_latitude">
+                    <input type="hidden" name="longitude" id="add_longitude">
+                </div>
+            </div>
+
+            <div class="flex gap-4 mt-6">
+                <button type="submit"
+                    class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Simpan</button>
+                <button type="button" onclick="closeModal()"
+                    class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
+            </div>
+        </form>
     </div>
 </div>
 
 {{-- Modal Edit Produk --}}
-<div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg max-w-2xl w-full p-6">
-            <h3 class="text-lg font-bold text-primary mb-4">Edit Produk</h3>
-            <form id="editProductForm" method="POST" enctype="multipart/form-data">
-                @csrf @method('PUT')
-                <div class="space-y-4">
+<div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-2xl w-full p-6 mx-2 max-h-screen overflow-y-auto">
+        <h3 class="text-lg font-bold text-primary mb-4">Edit Produk</h3>
+        <form id="editProductForm" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
+            <div class="space-y-4">
+                <!-- Sama persis dengan form tambah, hanya beda id untuk input -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
+                    <input id="edit_name_product" type="text" name="name_product" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
-                        <input id="edit_name_product" type="text" name="name_product" placeholder="Contoh: Beras Organik" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
+                    <input id="edit_owner" type="text" name="owner" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Owner</label>
-                        <input id="edit_owner" type="text" name="owner" placeholder="Nama pemilik usaha" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                    <textarea id="edit_description" name="description" rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea id="edit_description" name="description" rows="3" placeholder="Tuliskan deskripsi produk" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                    <select id="edit_category" name="category" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="">Pilih Kategori</option>
+                        <option value="pertanian">Pertanian</option>
+                        <option value="budidaya-bunga">Budidaya Bunga</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                        <select id="edit_category" name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="">Pilih Kategori</option>
-                            <option value="pertanian">Pertanian</option>
-                            <option value="budidaya-bunga">Budidaya Bunga</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
+                    <input id="edit_contact" type="text" name="contact" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kontak (HP/WA)</label>
-                        <input id="edit_contact" type="text" name="contact" placeholder="08123xxxx" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
-                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                            <!-- Tombol Upload -->
-                            <label for="edit-image-input" class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
-                                Pilih File
-                            </label>
-                            <span id="edit-file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
-                                Belum ada file
-                            </span>
-                            <input type="file" id="edit-image-input" name="image" accept="image/*" class="hidden"
-                                onchange="document.getElementById('edit-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select id="edit_status" name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
-                        <div id="editMap" class="h-64 w-full rounded border"></div>
-                        <input type="hidden" name="latitude" id="edit_latitude">
-                        <input type="hidden" name="longitude" id="edit_longitude">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <label for="edit-image-input"
+                            class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                            Pilih File
+                        </label>
+                        <span id="edit-file-name"
+                            class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">Belum ada file</span>
+                        <input type="file" id="edit-image-input" name="image" accept="image/*" class="hidden"
+                            onchange="document.getElementById('edit-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
                     </div>
                 </div>
 
-                <div class="flex gap-4 mt-6">
-                    <button type="submit" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Perbarui</button>
-                    <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="edit_status" name="status" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
                 </div>
-            </form>
-        </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Lokasi Produk</label>
+                    <div id="editMap" class="h-64 w-full rounded border"></div>
+                    <input type="hidden" name="latitude" id="edit_latitude">
+                    <input type="hidden" name="longitude" id="edit_longitude">
+                </div>
+            </div>
+
+            <div class="flex gap-4 mt-6">
+                <button type="submit"
+                    class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">Perbarui</button>
+                <button type="button" onclick="closeEditModal()"
+                    class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">Batal</button>
+            </div>
+        </form>
     </div>
 </div>
+
 
 
 

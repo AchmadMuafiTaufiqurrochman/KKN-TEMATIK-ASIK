@@ -82,11 +82,14 @@
 {{-- LeafletJS --}}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{{-- Tambahkan Font Awesome untuk ikon --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let lat = {{ $product->latitude ?? -7.4395 }};
     let lng = {{ $product->longitude ?? 112.5797 }};
+    let category = "{{ $product->catagory ?? 'ekonomi' }}";
 
     // Inisialisasi map
     let map = L.map('map').setView([lat, lng], 15);
@@ -95,20 +98,52 @@ document.addEventListener("DOMContentLoaded", function () {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Custom icon toko
-    let storeIcon = L.icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/512/814/814513.png", // icon toko
+    // Mapping kategori -> warna & ikon
+    const categoryConfig = {
+        "pelayanan-publik": { color: "bg-blue-600", icon: `<i class='fas fa-bus'></i>` },
+        "pendidikan":      { color: "bg-green-600", icon: `<i class='fas fa-book'></i>` },
+        "kesehatan":       { color: "bg-red-600", icon: `<i class='fas fa-plus'></i>` },
+        "ekonomi":         { color: "bg-yellow-600", icon: `<i class='fas fa-store'></i>` }
+    };
+
+    // Ambil setting sesuai kategori, default abu-abu
+    let cfg = categoryConfig[category] || { color: "bg-gray-500", icon: `<i class='fas fa-map-marker-alt'></i>` };
+
+    // Custom icon marker (bulat warna + ikon putih)
+    let customIcon = L.divIcon({
+        className: "custom-marker",
+        html: `
+            <div class="w-10 h-10 ${cfg.color} rounded-full flex items-center justify-center shadow-lg text-white text-lg">
+                ${cfg.icon}
+            </div>
+        `,
         iconSize: [40, 40],
         iconAnchor: [20, 40],
         popupAnchor: [0, -35]
     });
 
-    // Marker dengan popup (hanya nama + pemilik)
-    L.marker([lat, lng], { icon: storeIcon }).addTo(map)
+    // Marker dengan popup lengkap
+    L.marker([lat, lng], { icon: customIcon }).addTo(map)
         .bindPopup(`
-            <div class="text-center">
-                <b>{{ $product->name_product }}</b><br>
-                {{ $product->owner }}
+            <div class="text-left">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 ${cfg.color} rounded-full flex items-center justify-center text-white">
+                        ${cfg.icon}
+                    </div>
+                    <div>
+                        <b>{{ $product->name_product }}</b><br>
+                        <span class="text-sm text-gray-500">Produk {{ ucfirst($product->catagory) }}</span>
+                    </div>
+                </div>
+                <p>{{ $product->description }}</p>
+                <p class="mt-1"><i class="fas fa-user"></i> {{ $product->owner }}</p>
+                <p class="mt-1"><i class="fas fa-phone"></i> <a href="tel:{{ $product->contact }}" class="text-blue-600">{{ $product->contact }}</a></p>
+                <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-700 rounded text-xs">Aktif</span>
+                <div class="mt-2">
+                    <a href="{{ url('/product/' . $product->id) }}" class="text-blue-600 hover:underline text-sm">
+                        <i class="fas fa-eye"></i> Lihat Detail Produk
+                    </a>
+                </div>
             </div>
         `)
         .openPopup();
