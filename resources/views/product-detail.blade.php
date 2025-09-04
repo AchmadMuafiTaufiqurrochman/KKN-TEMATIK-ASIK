@@ -2,6 +2,22 @@
 
 @section('title', $product->name_product . ' - Desa Wonokarang')
 
+
+@push('styles')
+<style>
+    /* Turunkan z-index leaflet supaya tidak menutupi navbar */
+    .leaflet-container {
+        z-index: 1 !important;
+    }
+
+    /* Kalau navbar Anda pakai Tailwind fixed + z-50 */
+    nav.navbar-fixed {
+        z-index: 50 !important;
+    }
+</style>
+@endpush
+
+
 @section('content')
 <div class="container mx-auto px-4 py-12">
 
@@ -42,6 +58,11 @@
                        class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700">
                         💬 Hubungi via WhatsApp
                     </a>
+                    <a href="https://www.google.com/maps?q={{ $product->latitude ?? -7.4395 }},{{ $product->longitude ?? 112.5797 }}"
+                       target="_blank"
+                       class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">
+                        📍 Lihat di Google Maps
+                    </a>
                     <a href="{{ url('/product') }}"
                        class="inline-flex items-center bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow hover:bg-gray-300">
                         ← Kembali
@@ -67,14 +88,29 @@ document.addEventListener("DOMContentLoaded", function () {
     let lat = {{ $product->latitude ?? -7.4395 }};
     let lng = {{ $product->longitude ?? 112.5797 }};
 
+    // Inisialisasi map
     let map = L.map('map').setView([lat, lng], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    L.marker([lat, lng]).addTo(map)
-        .bindPopup(`<b>{{ $product->name_product }}</b><br>{{ $product->owner }}`)
+    // Custom icon toko
+    let storeIcon = L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/814/814513.png", // icon toko
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -35]
+    });
+
+    // Marker dengan popup (hanya nama + pemilik)
+    L.marker([lat, lng], { icon: storeIcon }).addTo(map)
+        .bindPopup(`
+            <div class="text-center">
+                <b>{{ $product->name_product }}</b><br>
+                {{ $product->owner }}
+            </div>
+        `)
         .openPopup();
 });
 </script>

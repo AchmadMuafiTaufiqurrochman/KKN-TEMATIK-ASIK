@@ -289,17 +289,14 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
                         <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                             <!-- Tombol Upload -->
-                            <label for="image-input"
-                                class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                            <label for="add-image-input" class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
                                 Pilih File
                             </label>
-                            <!-- Nama File -->
-                            <span id="file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
+                            <span id="add-file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
                                 Belum ada file
                             </span>
-                            <!-- Input File Asli (disembunyikan) -->
-                            <input type="file" id="image-input" name="image" accept="image/*" class="hidden"
-                                onchange="document.getElementById('file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
+                            <input type="file" id="add-image-input" name="image" accept="image/*" class="hidden"
+                                onchange="document.getElementById('add-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
                         </div>
                     </div>
 
@@ -328,8 +325,6 @@
         </div>
     </div>
 </div>
-
-
 
 {{-- Modal Edit Produk --}}
 <div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
@@ -373,20 +368,16 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
                         <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                             <!-- Tombol Upload -->
-                            <label for="image-input"
-                                class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
+                            <label for="edit-image-input" class="bg-gray-100 px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700 whitespace-nowrap">
                                 Pilih File
                             </label>
-                            <!-- Nama File -->
-                            <span id="file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
+                            <span id="edit-file-name" class="flex-1 px-3 py-2 text-gray-600 text-sm truncate">
                                 Belum ada file
                             </span>
-                            <!-- Input File Asli (disembunyikan) -->
-                            <input type="file" id="image-input" name="image" accept="image/*" class="hidden"
-                                onchange="document.getElementById('file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
+                            <input type="file" id="edit-image-input" name="image" accept="image/*" class="hidden"
+                                onchange="document.getElementById('edit-file-name').textContent = this.files.length ? this.files[0].name : 'Belum ada file';">
                         </div>
                     </div>
-
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -434,13 +425,6 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap'
     }).addTo(previewMap);
-
-    // @foreach($products as $product)
-    //     @if($product->latitude && $product->longitude)
-    //         L.marker([{{ $product->latitude }}, {{ $product->longitude }}]).addTo(previewMap)
-    //             .bindPopup(`<strong>{{ addslashes($product->name_product) }}</strong><br>{{ addslashes($product->owner) }}`);
-    //     @endif
-    // @endforeach
 
     @foreach($products as $product)
     @if($product->latitude && $product->longitude)
@@ -512,51 +496,59 @@ lucide.createIcons();
     }
 
     function openEditModal(id, name_product, description, category, contact, status, owner, lat, lng) {
-        document.getElementById('edit_name_product').value = name_product;
-        document.getElementById('edit_description').value = description;
-        document.getElementById('edit_category').value = category;
-        document.getElementById('edit_contact').value = contact;
-        document.getElementById('edit_status').value = status;
-        document.getElementById('edit_owner').value = owner;
+    // Isi form
+    document.getElementById('edit_name_product').value = name_product;
+    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_category').value = category;
+    document.getElementById('edit_contact').value = contact;
+    document.getElementById('edit_status').value = status;
+    document.getElementById('edit_owner').value = owner;
 
-        // fallback ke desaCenter kalau belum ada koordinat
-        const hasCoords = lat && lng;
-        const startLatLng = hasCoords ? [parseFloat(lat), parseFloat(lng)] : desaCenter;
+    // Konversi koordinat aman
+    let hasCoords = (lat !== null && lng !== null && !isNaN(lat) && !isNaN(lng));
+    let startLatLng = hasCoords ? [parseFloat(lat), parseFloat(lng)] : desaCenter;
 
-        document.getElementById('edit_latitude').value = startLatLng[0];
-        document.getElementById('edit_longitude').value = startLatLng[1];
+    // Simpan ke hidden input
+    document.getElementById('edit_latitude').value = startLatLng[0];
+    document.getElementById('edit_longitude').value = startLatLng[1];
 
-        document.getElementById('editProductForm').action = `/admin/products/${id}`;
-        document.getElementById('editProductModal').classList.remove('hidden');
+    // Set action form
+    document.getElementById('editProductForm').action = `/admin/products/${id}`;
 
-        requestAnimationFrame(() => {
-            if (!editMap) {
-                editMap = L.map('editMap', {
-                    center: startLatLng,
-                    zoom: 16
-                });
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap'
-                }).addTo(editMap);
+    // Tampilkan modal
+    document.getElementById('editProductModal').classList.remove('hidden');
 
-                editMarker = L.marker(startLatLng).addTo(editMap);
+    requestAnimationFrame(() => {
+        if (!editMap) {
+            editMap = L.map('editMap', {
+                center: startLatLng,
+                zoom: 16
+            });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(editMap);
 
-                editMap.on('click', function(e) {
-                    if (editMarker) editMap.removeLayer(editMarker);
-                    editMarker = L.marker(e.latlng).addTo(editMap);
-                    document.getElementById('edit_latitude').value = e.latlng.lat;
-                    document.getElementById('edit_longitude').value = e.latlng.lng;
-                });
-            } else {
-                editMap.setView(startLatLng, 16);
+            editMarker = L.marker(startLatLng).addTo(editMap);
+
+            // Klik untuk pindahkan marker
+            editMap.on('click', function(e) {
                 if (editMarker) editMap.removeLayer(editMarker);
-                editMarker = L.marker(startLatLng).addTo(editMap);
-            }
+                editMarker = L.marker(e.latlng).addTo(editMap);
+                document.getElementById('edit_latitude').value = e.latlng.lat;
+                document.getElementById('edit_longitude').value = e.latlng.lng;
+            });
+        } else {
+            if (editMarker) editMap.removeLayer(editMarker);
+            editMarker = L.marker(startLatLng).addTo(editMap);
+        }
 
-            // anti-glitch
-            setTimeout(() => editMap.invalidateSize(), 100);
-        });
-    }
+        // Refresh map setelah modal terbuka
+        setTimeout(() => {
+            editMap.invalidateSize();
+            editMap.setView(startLatLng, 16);
+        }, 200);
+    });
+}
 
     function closeEditModal() {
         document.getElementById('editProductModal').classList.add('hidden');
