@@ -212,56 +212,75 @@
         </div>
     </section>
 
-   <!-- Highlight Produk Desa -->
-    <section class="py-20 bg-gray-50">
+   {{-- Highlight Produk --}}
+    <section class="py-12">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-primary mb-4">Produk Unggulan Desa</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Beberapa produk pilihan hasil karya masyarakat Desa Wonokarang.
-                </p>
-            </div>
+            <h2 class="text-2xl font-bold text-primary mb-8 text-center">Produk Terbaru</h2>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                @foreach ($products->take(3) as $product)
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden group">
-                        <div class="relative h-48">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                            <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold capitalize
-                                @if ($product->category === 'pertanian') text-green-700 bg-green-100/80
-                                @elseif($product->category === 'budidaya-bunga') text-pink-700 bg-pink-100/80
-                                @else text-gray-700 bg-gray-100/80 @endif">
-                                {{ str_replace('-', ' ', $product->category) }}
+            <div class="grid md:grid-cols-3 gap-8">
+                @forelse($products->take(6) as $product)
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                        {{-- Gambar Produk --}}
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}"
+                                 alt="{{ $product->name_product }}"
+                                 class="h-48 w-full object-cover">
+                        @else
+                            <div class="h-48 w-full flex items-center justify-center bg-gray-100 text-gray-400">
+                                Tidak ada gambar
+                            </div>
+                        @endif
+
+                        {{-- Konten --}}
+                        <div class="p-5">
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $product->name_product }}</h3>
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-3">{{ $product->description }}</p>
+
+                            {{-- Kategori --}}
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                @if($product->category == 'pertanian')
+                                    <i data-lucide="wheat" class="w-4 h-4 mr-2 text-green-600"></i>
+                                    <span>Pertanian</span>
+                                @elseif($product->category == 'budidaya-bunga')
+                                    <i data-lucide="flower" class="w-4 h-4 mr-2 text-pink-600"></i>
+                                    <span>Budidaya Bunga</span>
+                                @else
+                                    <span class="italic text-gray-400">-</span>
+                                @endif
+                            </div>
+
+                            {{-- Tombol --}}
+                            <div class="flex justify-between items-center">
+                                <a href="{{ $product->latitude && $product->longitude
+                                    ? 'https://www.google.com/maps?q='.$product->latitude.','.$product->longitude
+                                    : '#' }}"
+                                   target="_blank"
+                                   class="text-blue-600 hover:underline text-sm flex items-center gap-1">
+                                    <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Lokasi
+                                </a>
+                                <a href="{{ route('product.show', $product) }}"
+                                   class="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800 transition">
+                                   Detail
+                                </a>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-primary mb-2">{{ $product->title }}</h3>
-                            <p class="text-gray-700 mb-4">
-                                {{ Str::limit($product->description, 80) }}
-                            </p>
-
-                            <a href="{{ route('product') }}"
-                                class="text-secondary font-semibold hover:text-yellow-600 transition-colors inline-flex items-center gap-2">
-                                Lihat Detail
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
-                        </div>
                     </div>
-                @endforeach
+                @empty
+                    <p class="text-center text-gray-500 col-span-3">Belum ada produk ditambahkan.</p>
+                @endforelse
             </div>
 
-
-            <div class="text-center mt-12">
+            {{-- Tombol Lihat Semua --}}
+            <div class="text-center mt-10">
                 <a href="{{ route('product') }}"
-                    class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors inline-flex items-center gap-2">
-                    Lihat Semua Produk
-                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                   class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+                   Lihat Semua Produk
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- Video Profil Desa -->
     <section class="py-20 bg-white pt-10">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">

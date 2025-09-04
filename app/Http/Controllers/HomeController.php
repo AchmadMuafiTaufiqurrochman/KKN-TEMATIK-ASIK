@@ -15,24 +15,26 @@ class HomeController extends Controller
     {
         $stats = [
             'total_villagers' => Villager::count(),
-            'male_villagers' => Villager::where('gender', 'L')->count(),
-            'female_villagers' => Villager::where('gender', 'P')->count(),
-            'total_rt' => Villager::distinct('rt')->count(),
-            'total_products' => Product::count(),
-            'total_news' => Video::where('status', 'published')->whereNot('category', 'profil')->count(),
-            'total_facilities' => Fasilitas::count(),
+            'male_villagers'  => Villager::where('gender', 'L')->count(),
+            'female_villagers'=> Villager::where('gender', 'P')->count(),
+            'total_rt'        => Villager::distinct('rt')->count(),
+            'total_products'  => Product::where('status', 'active')->count(),
+            'total_news'      => Video::where('status', 'published')
+                                      ->whereNot('category', 'profil')
+                                      ->count(),
+            'total_facilities'=> Fasilitas::count(),
         ];
 
         $potentials = Potential::take(2)->get();
-       
-        // Ambil video profil terbaru berdasarkan started_at
+
+        // Ambil video profil terbaru
         $video = Video::where('category', 'profil')
                       ->where('status', 'published')
                       ->orderByRaw('
-                          CASE 
+                          CASE
                               WHEN started_at IS NULL THEN 3
-                              WHEN started_at <= NOW() THEN 1 
-                              ELSE 2 
+                              WHEN started_at <= NOW() THEN 1
+                              ELSE 2
                           END
                       ')
                       ->orderBy('started_at', 'desc')
@@ -42,40 +44,35 @@ class HomeController extends Controller
             $video->incrementViews();
         }
 
-        // Featured videos berdasarkan started_at
-
-        // Produk unggulan (3 terbaru)
-        $products = Product::where('status', 'published')
+        // Produk unggulan (3 terbaru, status aktif)
+        $products = Product::where('status', 'active')
             ->latest()
             ->take(3)
             ->get();
 
-
-        $featured_video = Video::where('category', 'profil')
-            ->where('status', 'published')
-            ->first();
-
-        // Tambahan: Ambil 3 dokumentasi unggulan terbaru dengan status published
-
+        // Featured videos
         $featuredVideos = Video::where('status', 'published')
             ->whereNot('category', 'profil')
             ->orderByRaw('
-                CASE 
+                CASE
                     WHEN started_at IS NULL THEN 3
-                    WHEN started_at <= NOW() THEN 1 
-                    ELSE 2 
+                    WHEN started_at <= NOW() THEN 1
+                    ELSE 2
                 END
             ')
             ->orderBy('started_at', 'desc')
             ->take(4)
             ->get();
 
-
-
         $kepalaDesa = Aparat::where('position', 'Kepala Desa')->first();
 
-        return view('home', compact('stats', 'potentials', 'featuredVideos', 'kepalaDesa', 'video', 'products'));
-
-        return view('home', compact('stats', 'products', 'featured_video', 'featuredVideos'));
+        return view('home', compact(
+            'stats',
+            'potentials',
+            'featuredVideos',
+            'kepalaDesa',
+            'video',
+            'products'
+        ));
     }
 }
