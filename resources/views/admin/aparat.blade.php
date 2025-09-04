@@ -221,7 +221,7 @@
                         <div class="flex gap-4 mt-6">
                             <button type="submit"
                                 class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition-colors">
-                                Perbarui
+                                Simpan
                             </button>
                             <button type="button" onclick="closeModal()"
                                 class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">
