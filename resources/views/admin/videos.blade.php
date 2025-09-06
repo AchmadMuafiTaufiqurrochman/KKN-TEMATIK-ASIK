@@ -145,7 +145,7 @@
                                     </div>
                                     <input type="text" name="search" value="{{ request('search') }}" 
                                         placeholder="Cari berita..."
-                                        class="w-full pl-10 pr-4 py-2.5 lg:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm lg:text-base bg-white hover:bg-gray-50 transition-colors">
+                                        class="w-full pl-10 pr-4 py-2.5 lg:py-3 border text-black border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm lg:text-base bg-white hover:bg-gray-50 transition-colors">
                                 </div>
                             </div>
                             <div class="flex gap-2">
