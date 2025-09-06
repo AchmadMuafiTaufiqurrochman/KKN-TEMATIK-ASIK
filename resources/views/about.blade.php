@@ -30,7 +30,7 @@
                             </p>
                             <div class="bg-secondary p-6 rounded-lg">
                                 <blockquote class="text-primary font-semibold text-lg italic">
-                                    "{{ $kepalaDesa->motto }}"
+                                    "{!! $kepalaDesa->motto !!}"
                                 </blockquote>
                                 <cite class="text-primary font-medium mt-2 block">- {{ $kepalaDesa->name }}</cite>
                             </div>
@@ -51,15 +51,15 @@
                     <div class="grid md:grid-cols-3 gap-8 mt-8">
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
-                            <p class="text-gray-600">{{ $kepalaDesa->misi }}</p>
+                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->misi !!}</div>
                         </div>
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
-                            <p class="text-gray-600">{{ $kepalaDesa->visi }}</p>
+                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->visi !!}</div>
                         </div>
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
-                            <p class="text-gray-600">{{ $kepalaDesa->prestasi }}</p>
+                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->prestasi !!}</div>
                         </div>
                     </div>
                 @endif

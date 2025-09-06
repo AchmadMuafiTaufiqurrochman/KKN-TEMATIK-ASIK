@@ -122,9 +122,9 @@
                             <i data-lucide="target" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->misi ?? 'Misi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->misi ?? 'Misi belum diisi' !!}
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -132,9 +132,9 @@
                             <i data-lucide="eye" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->visi ?? 'Visi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->visi ?? 'Visi belum diisi' !!}
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -142,9 +142,9 @@
                             <i data-lucide="award" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->prestasi ?? 'Prestasi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->prestasi ?? 'Prestasi belum diisi' !!}
+                        </div>
                     </div>
                 </div>
             </div>

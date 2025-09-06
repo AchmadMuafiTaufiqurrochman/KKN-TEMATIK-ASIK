@@ -174,30 +174,26 @@
                             <div id="kepalaDesaFields" class="hidden space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Motto</label>
-                                    <textarea name="motto" placeholder="Tuliskan motto kepala desa"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-                                        rows="2"></textarea>
+                                    <div id="quill-motto" class="h-32 text-gray-800 bg-white border border-gray-300 rounded-lg"></div>
+                                    <input type="hidden" name="motto" id="motto-input">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Visi</label>
-                                    <textarea name="visi" placeholder="Tuliskan visi kepala desa"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-                                        rows="2"></textarea>
+                                    <div id="quill-visi" class="h-32 text-gray-800 bg-white border border-gray-300 rounded-lg"></div>
+                                    <input type="hidden" name="visi" id="visi-input">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Misi</label>
-                                    <textarea name="misi" placeholder="Tuliskan misi kepala desa"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-                                        rows="2"></textarea>
+                                    <div id="quill-misi" class="h-32 text-gray-800 bg-white border border-gray-300 rounded-lg"></div>
+                                    <input type="hidden" name="misi" id="misi-input">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Prestasi</label>
-                                    <textarea name="prestasi" placeholder="Tuliskan prestasi kepala desa"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-                                        rows="2"></textarea>
+                                    <div id="quill-prestasi" class="h-32 text-gray-800 bg-white border border-gray-300 rounded-lg"></div>
+                                    <input type="hidden" name="prestasi" id="prestasi-input">
                                 </div>
                             </div>
 
@@ -236,6 +232,8 @@
 
     <script>
         function openAddModal() {
+            console.log('Opening add modal');
+            
             document.getElementById('modalTitle').textContent = 'Tambah Aparat';
             document.getElementById('aparatForm').action = '{{ route('admin.aparat.store') }}';
             document.getElementById('methodField').innerHTML = '';
@@ -243,15 +241,34 @@
 
             // Reset dan sembunyikan field Kepala Desa
             document.getElementById('kepalaDesaFields').classList.add('hidden');
-            document.querySelector('textarea[name="motto"]').value = '';
-            document.querySelector('textarea[name="visi"]').value = '';
-            document.querySelector('textarea[name="misi"]').value = '';
-            document.querySelector('textarea[name="prestasi"]').value = '';
+            
+            // Reset Quill editors dengan pengecekan
+            setTimeout(function() {
+                if (quillMottoEditor) {
+                    quillMottoEditor.setContents([]);
+                    console.log('Motto editor reset');
+                }
+                if (quillVisiEditor) {
+                    quillVisiEditor.setContents([]);
+                    console.log('Visi editor reset');
+                }
+                if (quillMisiEditor) {
+                    quillMisiEditor.setContents([]);
+                    console.log('Misi editor reset');
+                }
+                if (quillPrestasiEditor) {
+                    quillPrestasiEditor.setContents([]);
+                    console.log('Prestasi editor reset');
+                }
+            }, 100);
 
             document.getElementById('aparatModal').classList.remove('hidden');
+            console.log('Add modal opened');
         }
 
       function openEditModal(id) {
+    console.log('Opening edit modal for ID:', id);
+    
     document.getElementById('modalTitle').textContent = 'Edit Aparat';
     let url = "{{ route('admin.aparat.update', ':id') }}".replace(':id', id);
     document.getElementById('aparatForm').action = url;
@@ -261,8 +278,15 @@
 
     // Fetch data untuk edit
     fetch(`/admin/aparat/${id}/edit`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Data received:', data);
+            
             // Populate form fields dengan data awal
             document.querySelector('input[name="name"]').value = data.name || '';
             document.querySelector('input[name="nip"]').value = data.nip || '';
@@ -273,54 +297,70 @@
             if (data.position === 'Kepala Desa') {
                 document.getElementById('kepalaDesaFields').classList.remove('hidden');
 
-                // Set value untuk textarea
-                document.querySelector('textarea[name="motto"]').value = data.motto || '';
-                document.querySelector('textarea[name="visi"]').value = data.visi || '';
-                document.querySelector('textarea[name="misi"]').value = data.misi || '';
-                document.querySelector('textarea[name="prestasi"]').value = data.prestasi || '';
+                // Set value untuk Quill editors dengan delay untuk memastikan editors sudah siap
+                setTimeout(function() {
+                    if (quillMottoEditor) {
+                        quillMottoEditor.root.innerHTML = data.motto || '';
+                        console.log('Motto set:', data.motto);
+                    }
+                    if (quillVisiEditor) {
+                        quillVisiEditor.root.innerHTML = data.visi || '';
+                        console.log('Visi set:', data.visi);
+                    }
+                    if (quillMisiEditor) {
+                        quillMisiEditor.root.innerHTML = data.misi || '';
+                        console.log('Misi set:', data.misi);
+                    }
+                    if (quillPrestasiEditor) {
+                        quillPrestasiEditor.root.innerHTML = data.prestasi || '';
+                        console.log('Prestasi set:', data.prestasi);
+                    }
+                }, 200);
             } else {
                 document.getElementById('kepalaDesaFields').classList.add('hidden');
             }
 
             // Buka modal setelah data terisi
             document.getElementById('aparatModal').classList.remove('hidden');
+            console.log('Edit modal opened');
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengambil data');
+            alert('Terjadi kesalahan saat mengambil data: ' + error.message);
         });
 }
 
 
         function closeModal() {
+            console.log('Closing modal');
+            
             document.getElementById('aparatModal').classList.add('hidden');
             // Reset form dan sembunyikan field Kepala Desa saat menutup modal
             document.getElementById('aparatForm').reset();
             document.getElementById('kepalaDesaFields').classList.add('hidden');
+            
+            // Reset Quill editors dengan pengecekan
+            setTimeout(function() {
+                if (quillMottoEditor) {
+                    quillMottoEditor.setContents([]);
+                    console.log('Motto editor reset on close');
+                }
+                if (quillVisiEditor) {
+                    quillVisiEditor.setContents([]);
+                    console.log('Visi editor reset on close');
+                }
+                if (quillMisiEditor) {
+                    quillMisiEditor.setContents([]);
+                    console.log('Misi editor reset on close');
+                }
+                if (quillPrestasiEditor) {
+                    quillPrestasiEditor.setContents([]);
+                    console.log('Prestasi editor reset on close');
+                }
+            }, 100);
+            
+            console.log('Modal closed');
         }
-
-        document.getElementById('aparatModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        document.getElementById('position').addEventListener('change', function() {
-            let extraFields = document.getElementById('kepalaDesaFields');
-            if (this.value === 'Kepala Desa') {
-                extraFields.classList.remove('hidden');
-            } else {
-                extraFields.classList.add('hidden');
-            }
-        });
-
-        // Validasi Form
-        document.getElementById('aparatForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission
-
-            // Validasi form
-            if (validateAparatForm()) {
-                this.submit(); // Submit form jika validasi berhasil
-            }
-        });
 
         function validateAparatForm() {
             let isValid = true;
@@ -356,24 +396,31 @@
 
             // Validasi khusus untuk Kepala Desa
             if (position === 'Kepala Desa') {
-                const motto = document.querySelector('textarea[name="motto"]').value.trim();
-                const visi = document.querySelector('textarea[name="visi"]').value.trim();
-                const misi = document.querySelector('textarea[name="misi"]').value.trim();
-                const prestasi = document.querySelector('textarea[name="prestasi"]').value.trim();
+                // Pastikan Quill editors sudah diinisialisasi
+                if (!quillMottoEditor || !quillVisiEditor || !quillMisiEditor || !quillPrestasiEditor) {
+                    errorMessages.push('• Editor belum siap, silakan coba lagi');
+                    isValid = false;
+                    return isValid;
+                }
 
-                if (!motto) {
+                const mottoContent = quillMottoEditor.root.innerHTML.trim();
+                const visiContent = quillVisiEditor.root.innerHTML.trim();
+                const misiContent = quillMisiEditor.root.innerHTML.trim();
+                const prestasiContent = quillPrestasiEditor.root.innerHTML.trim();
+
+                if (!mottoContent || mottoContent === '<p><br></p>' || mottoContent === '<p></p>') {
                     errorMessages.push('• Motto harus diisi untuk Kepala Desa');
                     isValid = false;
                 }
-                if (!visi) {
+                if (!visiContent || visiContent === '<p><br></p>' || visiContent === '<p></p>') {
                     errorMessages.push('• Visi harus diisi untuk Kepala Desa');
                     isValid = false;
                 }
-                if (!misi) {
+                if (!misiContent || misiContent === '<p><br></p>' || misiContent === '<p></p>') {
                     errorMessages.push('• Misi harus diisi untuk Kepala Desa');
                     isValid = false;
                 }
-                if (!prestasi) {
+                if (!prestasiContent || prestasiContent === '<p><br></p>' || prestasiContent === '<p></p>') {
                     errorMessages.push('• Prestasi harus diisi untuk Kepala Desa');
                     isValid = false;
                 }
@@ -404,5 +451,157 @@
 
             return isValid;
         }
+    </script>
+
+    {{-- QUILL CSS dan JS --}}
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        .ql-editor p[style*="text-align: center"] {
+            text-align: center !important;
+        }
+        .ql-editor p[style*="text-align: right"] {
+            text-align: right !important;
+        }
+        .ql-editor p[style*="text-align: left"] {
+            text-align: left !important;
+        }
+        .ql-editor p[style*="text-align: justify"] {
+            text-align: justify !important;
+        }
+        
+        .ql-editor .ql-align-center {
+            text-align: center;
+        }
+        .ql-editor .ql-align-right {
+            text-align: right;
+        }
+        .ql-editor .ql-align-left {
+            text-align: left;
+        }
+        .ql-editor .ql-align-justify {
+            text-align: justify;
+        }
+    </style>
+
+    <script>
+        let quillMottoEditor, quillVisiEditor, quillMisiEditor, quillPrestasiEditor;
+
+        // Initialize Quill editors
+        function initializeQuillEditors() {
+            // Pastikan elemen DOM sudah ada
+            if (!document.getElementById('quill-motto')) {
+                console.log('Quill elements not found, retrying...');
+                setTimeout(initializeQuillEditors, 100);
+                return;
+            }
+
+            const toolbarOptions = [
+                [{ 'header': [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                [{ 'align': [] }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['link'],
+                ['clean']
+            ];
+
+            try {
+                quillMottoEditor = new Quill('#quill-motto', {
+                    theme: 'snow',
+                    placeholder: 'Tuliskan motto kepala desa...',
+                    modules: { toolbar: toolbarOptions }
+                });
+
+                quillVisiEditor = new Quill('#quill-visi', {
+                    theme: 'snow',
+                    placeholder: 'Tuliskan visi kepala desa...',
+                    modules: { toolbar: toolbarOptions }
+                });
+
+                quillMisiEditor = new Quill('#quill-misi', {
+                    theme: 'snow',
+                    placeholder: 'Tuliskan misi kepala desa...',
+                    modules: { toolbar: toolbarOptions }
+                });
+
+                quillPrestasiEditor = new Quill('#quill-prestasi', {
+                    theme: 'snow',
+                    placeholder: 'Tuliskan prestasi kepala desa...',
+                    modules: { toolbar: toolbarOptions }
+                });
+
+                console.log('Quill editors initialized successfully');
+            } catch (error) {
+                console.error('Error initializing Quill editors:', error);
+            }
+        }
+
+        // Initialize editors when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            
+            // Initialize Quill editors
+            initializeQuillEditors();
+            
+            // Event listeners untuk modal
+            const modal = document.getElementById('aparatModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeModal();
+                });
+            }
+
+            // Event listener untuk perubahan jabatan
+            const positionSelect = document.getElementById('position');
+            if (positionSelect) {
+                positionSelect.addEventListener('change', function() {
+                    const extraFields = document.getElementById('kepalaDesaFields');
+                    if (this.value === 'Kepala Desa') {
+                        extraFields.classList.remove('hidden');
+                    } else {
+                        extraFields.classList.add('hidden');
+                        // Reset Quill editors saat menyembunyikan field
+                        if (quillMottoEditor) quillMottoEditor.setContents([]);
+                        if (quillVisiEditor) quillVisiEditor.setContents([]);
+                        if (quillMisiEditor) quillMisiEditor.setContents([]);
+                        if (quillPrestasiEditor) quillPrestasiEditor.setContents([]);
+                    }
+                });
+            }
+
+            // Event listener untuk submit form
+            const form = document.getElementById('aparatForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent form submission
+
+                    console.log('Form submission started');
+
+                    // Set nilai dari Quill editors ke hidden inputs
+                    const selectedPosition = document.querySelector('select[name="position"]').value;
+                    if (selectedPosition === 'Kepala Desa') {
+                        if (quillMottoEditor && quillVisiEditor && quillMisiEditor && quillPrestasiEditor) {
+                            document.getElementById('motto-input').value = quillMottoEditor.root.innerHTML;
+                            document.getElementById('visi-input').value = quillVisiEditor.root.innerHTML;
+                            document.getElementById('misi-input').value = quillMisiEditor.root.innerHTML;
+                            document.getElementById('prestasi-input').value = quillPrestasiEditor.root.innerHTML;
+                            
+                            console.log('Quill data set to hidden inputs');
+                        }
+                    }
+
+                    // Validasi form
+                    if (validateAparatForm()) {
+                        console.log('Validation passed, submitting form');
+                        this.submit(); // Submit form jika validasi berhasil
+                    } else {
+                        console.log('Validation failed');
+                    }
+                });
+            }
+            
+            console.log('Event listeners attached');
+        });
     </script>
 @endsection
