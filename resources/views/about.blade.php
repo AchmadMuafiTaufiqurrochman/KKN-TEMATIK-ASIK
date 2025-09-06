@@ -51,15 +51,15 @@
                     <div class="grid md:grid-cols-3 gap-8 mt-8">
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
-                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->misi !!}</div>
+                            <div class="text-gray-600">{!! $kepalaDesa->misi !!}</div>
                         </div>
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
-                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->visi !!}</div>
+                            <div class="text-gray-600">{!! $kepalaDesa->visi !!}</div>
                         </div>
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
-                            <div class="text-gray-600 text-justify">{!! $kepalaDesa->prestasi !!}</div>
+                            <div class="text-gray-600">{!! $kepalaDesa->prestasi !!}</div>
                         </div>
                     </div>
                 @endif
