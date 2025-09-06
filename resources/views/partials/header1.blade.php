@@ -40,9 +40,10 @@
             <!-- User Menu & Social Media -->
             <div class="hidden lg:flex items-center space-x-4">
                <div class="flex items-center space-x-2">
-                    <i data-lucide="facebook" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="instagram" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
-                    <i data-lucide="youtube" class="w-5 h-5 hover:text-secondary cursor-pointer transition-colors"></i>
+                    {{-- <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a> --}}
+                    <a href="https://www.instagram.com/pemdes_wonokarang/?hl=en" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    {{-- <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a> --}}
+                    <a href="https://wonokarang.projekfilkom.com/" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="globe" class="w-5 h-5"></i></a>
                 </div>
                 
                 @auth

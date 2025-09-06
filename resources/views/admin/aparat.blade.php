@@ -273,22 +273,11 @@
             if (data.position === 'Kepala Desa') {
                 document.getElementById('kepalaDesaFields').classList.remove('hidden');
 
-                // Set value dan auto resize untuk textarea
-                const mottoField = document.querySelector('textarea[name="motto"]');
-                const visiField = document.querySelector('textarea[name="visi"]');
-                const misiField = document.querySelector('textarea[name="misi"]');
-                const prestasiField = document.querySelector('textarea[name="prestasi"]');
-
-                mottoField.value = data.motto || '';
-                visiField.value = data.visi || '';
-                misiField.value = data.misi || '';
-                prestasiField.value = data.prestasi || '';
-
-                // Auto resize textarea setelah value diset
-                [mottoField, visiField, misiField, prestasiField].forEach(field => {
-                    field.style.height = '';
-                    field.style.height = field.scrollHeight + 'px';
-                });
+                // Set value untuk textarea
+                document.querySelector('textarea[name="motto"]').value = data.motto || '';
+                document.querySelector('textarea[name="visi"]').value = data.visi || '';
+                document.querySelector('textarea[name="misi"]').value = data.misi || '';
+                document.querySelector('textarea[name="prestasi"]').value = data.prestasi || '';
             } else {
                 document.getElementById('kepalaDesaFields').classList.add('hidden');
             }
@@ -308,11 +297,6 @@
             // Reset form dan sembunyikan field Kepala Desa saat menutup modal
             document.getElementById('aparatForm').reset();
             document.getElementById('kepalaDesaFields').classList.add('hidden');
-
-            // Reset tinggi textarea
-            document.querySelectorAll('textarea').forEach(textarea => {
-                textarea.style.height = '';
-            });
         }
 
         document.getElementById('aparatModal').addEventListener('click', function(e) {
