@@ -132,11 +132,11 @@
                                 <div class="bg-gray-50 p-4 rounded-lg">
                                     <h4 class="font-semibold text-primary mb-2">Highlight Video:</h4>
                                     <ul class="text-gray-700 space-y-1">
-                                        <li>• Pemandangan udara hamparan sawah dan kebun bunga</li>
-                                        <li>• Aktivitas petani dengan teknologi modern</li>
-                                        <li>• Proses budidaya bunga dari bibit hingga panen</li>
-                                        <li>• Kehidupan sosial dan budaya masyarakat</li>
-                                        <li>• Fasilitas desa dan infrastruktur pendukung</li>
+                                        <li>Pemandangan udara hamparan sawah dan kebun bunga</li>
+                                        <li>Aktivitas petani dengan teknologi modern</li>
+                                        <li>Proses budidaya bunga dari bibit hingga panen</li>
+                                        <li>Kehidupan sosial dan budaya masyarakat</li>
+                                        <li>Fasilitas desa dan infrastruktur pendukung</li>
                                     </ul>
                                 </div>
                             </div>

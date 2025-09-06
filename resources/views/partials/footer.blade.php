@@ -66,10 +66,10 @@
             <div class="min-w-[200px]">
                 <h4 class="text-lg font-semibold mb-6">Sosial Media</h4>
                 <div class="space-x-4">
-                    <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="globe" class="w-5 h-5"></i></a>
+                    {{-- <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a> --}}
+                    <a href="https://www.instagram.com/pemdes_wonokarang/?hl=en" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    {{-- <a href="#" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a> --}}
+                    <a href="https://wonokarang.projekfilkom.com/" class="text-gray-300 hover:text-secondary transition-colors"><i data-lucide="globe" class="w-5 h-5"></i></a>
                 </div>
             </div>
         </div>
