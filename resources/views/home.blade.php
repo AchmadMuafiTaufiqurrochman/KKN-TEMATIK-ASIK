@@ -94,7 +94,7 @@
                     </p>
                 </div>
 
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                {{-- <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
                     <div class="flex flex-col items-center">
                         <div class="w-[300px] h-[300px] rounded-full overflow-hidden mb-6 border-2 border-gray-300">
                             <img src="{{ asset('storage/' . $kepalaDesa->photo) }}" alt="{{ $kepalaDesa->name }}"
@@ -114,7 +114,7 @@
                             <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </a>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -122,9 +122,9 @@
                             <i data-lucide="target" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Misi Desa</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->misi ?? 'Misi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->misi ?? 'Misi belum diisi' !!}
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -132,9 +132,9 @@
                             <i data-lucide="eye" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Visi Desa</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->visi ?? 'Visi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->visi ?? 'Visi belum diisi' !!}
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -142,9 +142,9 @@
                             <i data-lucide="award" class="w-8 h-8 text-white"></i>
                         </div>
                         <h4 class="text-xl font-bold text-primary mb-4">Prestasi</h4>
-                        <p class="text-gray-600">
-                            {{ $kepalaDesa->prestasi ?? 'Prestasi belum diisi' }}
-                        </p>
+                        <div class="text-gray-600 text-justify">
+                            {!! $kepalaDesa->prestasi ?? 'Prestasi belum diisi' !!}
+                        </div>
                     </div>
                 </div>
             </div>
